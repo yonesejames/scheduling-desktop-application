@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="475.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.schedulingdesktopapplication.controller.ModifyCustomercontroller">
+    <children>
+        <Label layoutX="122.0" layoutY="41.0" style="-fx-text-fill: black; -fx-font-weight: bold; -fx-font-size: 20" text="SCHEDULING DESKTOP APPLICATION" />
+        <Label layoutX="122.0" layoutY="94.0" text="MODIFY CUSTOMER" />
+        <Label layoutX="151.0" layoutY="160.0" text="ID" />
+        <Label layoutX="151.0" layoutY="190.0" text="Name" />
+        <Label layoutX="151.0" layoutY="220.0" text="Address" />
+        <Label layoutX="151.0" layoutY="250.0" text="Phone Number" />
+        <Label layoutX="151.0" layoutY="280.0" text="Country" />
+        <Label layoutX="151.0" layoutY="310.0" text="State/Province" />
+        <Label layoutX="151.0" layoutY="340.0" text="Postal Code" />
+        <TextField fx:id="modifyCustomerIDTextField" layoutX="265.0" layoutY="156.0" prefHeight="25.0" prefWidth="185.0" />
+        <TextField fx:id="modifyCustomerNameTextField" layoutX="265.0" layoutY="186.0" prefHeight="25.0" prefWidth="185.0" />
+        <TextField fx:id="modifyCustomerAddressTextField" layoutX="265.0" layoutY="216.0" prefHeight="25.0" prefWidth="185.0" />
+        <TextField fx:id="modifyCustomerPhoneNumberTextField" layoutX="265.0" layoutY="246.0" prefHeight="25.0" prefWidth="185.0" />
+        <ChoiceBox layoutX="265.0" layoutY="276.0" prefHeight="25.0" prefWidth="185.0" />
+        <ChoiceBox layoutX="265.0" layoutY="306.0" prefHeight="25.0" prefWidth="185.0" />
+        <Button layoutX="458.0" layoutY="423.0" mnemonicParsing="false" onAction="#modifyCustomerSaveButtonAction" text="Save" />
+        <Button layoutX="514.0" layoutY="423.0" mnemonicParsing="false" onAction="#modifyCustomerCancelButtonAction" text="Cancel" />
+        <TextField fx:id="modifyCustomerPostalCodeTextField" layoutX="265.0" layoutY="336.0" prefHeight="25.0" prefWidth="185.0" />
+    </children>
+</AnchorPane>

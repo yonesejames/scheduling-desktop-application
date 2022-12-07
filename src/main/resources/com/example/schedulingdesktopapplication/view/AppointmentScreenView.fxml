@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.schedulingdesktopapplication.controller.AppointmentScreenController">
+    <children>
+        <Label layoutX="198.0" layoutY="29.0" style="-fx-text-fill: black; -fx-font-weight: bold; -fx-font-size: 20" text="SCHEDULING DESKTOP APPLICATION" />
+        <AnchorPane layoutY="70.0" prefHeight="217.0" prefWidth="751.0">
+            <children>
+                <Label layoutX="14.0" layoutY="14.0" text="APPOINTMENTS" />
+                <TableView layoutX="7.0" layoutY="42.0" prefHeight="366.0" prefWidth="736.0">
+                    <columns>
+                        <TableColumn prefWidth="32.0" text="ID" />
+                        <TableColumn prefWidth="51.0" text="Title" />
+                        <TableColumn prefWidth="50.0" text="Type" />
+                        <TableColumn prefWidth="84.0" text="Description" />
+                        <TableColumn prefWidth="70.0" text="Location" />
+                        <TableColumn prefWidth="102.0" text="Start Date/Time" />
+                        <TableColumn prefWidth="111.0" text="End Date/Time" />
+                        <TableColumn prefWidth="70.0" text="Contact" />
+                        <TableColumn prefWidth="107.0" text="Customer ID" />
+                        <TableColumn prefWidth="64.0" text="User ID" />
+                    </columns>
+                </TableView>
+                <RadioButton fx:id="appointmentCurrentWeekRadioButton" layoutX="253.0" layoutY="14.0" mnemonicParsing="false" onAction="#appointmentCurrentWeekRadioButtonAction" text="Current Week" />
+                <RadioButton fx:id="appointmentCurrentMonthRadioButton" layoutX="376.0" layoutY="15.0" mnemonicParsing="false" onAction="#appointmentCurrentMonthRadioButtonAction" text="Current Month" />
+                <RadioButton fx:id="allAppointmentsRadioButton" layoutX="498.0" layoutY="15.0" mnemonicParsing="false" onAction="#allAppointmentsRadioButtonAction" text="All Appointments" />
+            </children>
+        </AnchorPane>
+          <Button layoutX="7.0" layoutY="500.0" mnemonicParsing="false" onAction="#appointmentReportsButtonAction" prefHeight="25.0" prefWidth="88.0" text="Reports" />
+      <Button layoutX="325.0" layoutY="500.0" mnemonicParsing="false" onAction="#appointmentsAddButtonAction" text="Add" />
+      <Button layoutX="246.0" layoutY="501.0" mnemonicParsing="false" onAction="#appointmentsModifyButtonAction" text="Modify" />
+      <Button layoutX="387.0" layoutY="500.0" mnemonicParsing="false" onAction="#appointmentsDeleteButtonAction" text="Delete" />
+      <Button layoutX="671.0" layoutY="513.0" mnemonicParsing="false" onAction="#appointmentsLogoutButtonAction" text="Logout" />
+      <Label layoutX="554.0" layoutY="483.0" text="Your TimeZone: " />
+      <Label layoutX="652.0" layoutY="483.0" text="America/Chicago" />
+    </children>
+</AnchorPane>

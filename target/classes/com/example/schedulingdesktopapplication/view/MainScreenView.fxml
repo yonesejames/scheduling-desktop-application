@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="337.0" prefWidth="431.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.schedulingdesktopapplication.controller.MainScreenController">
+    <children>
+      <AnchorPane layoutX="117.0" layoutY="82.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-radius: 50;">
+         <children>
+            <Button layoutX="62.0" layoutY="57.0" mnemonicParsing="false" text="Customers" />
+            <Button layoutX="53.0" layoutY="100.0" mnemonicParsing="false" text="Appointments" />
+            <Label layoutX="85.0" layoutY="22.0" text="Menu" />
+         </children>
+      </AnchorPane>
+        <Label layoutX="52.0" layoutY="35.0" style="-fx-text-fill: black; -fx-font-weight: bold; -fx-font-size: 20" text="SCHEDULING DESKTOP APPLICATION" />
+      <Button layoutX="188.0" layoutY="225.0" mnemonicParsing="false" text="Reports" />
+      <Button layoutX="356.0" layoutY="282.0" mnemonicParsing="false" text="Logout" />
+    </children>
+</AnchorPane>
