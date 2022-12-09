@@ -8,17 +8,17 @@
       <Label layoutX="211.0" layoutY="126.0" style="-fx-text-fill: black; -fx-font-weight: bold; -fx-font-size: 20" text="SCHEDULING DESKTOP APPLICATION" />
       <AnchorPane layoutX="204.0" layoutY="168.0" prefHeight="263.0" prefWidth="368.0">
          <children>
-            <TextField fx:id="loginUsernameTextField" layoutX="60.0" layoutY="69.0" prefHeight="25.0" prefWidth="265.0" />
+            <TextField fx:id="loginUsernameTextField" layoutX="60.0" layoutY="69.0" onAction="#loginUsernameTextFieldAction" prefHeight="25.0" prefWidth="265.0" />
             <Label layoutX="155.0" layoutY="43.0" text="Username" />
             <Button layoutX="156.0" layoutY="214.0" mnemonicParsing="false" onAction="#loginButtonAction" text="LOGIN" />
-            <PasswordField fx:id="loginPasswordTextField" layoutX="60.0" layoutY="155.0" prefHeight="25.0" prefWidth="265.0" />
+            <PasswordField fx:id="loginPasswordTextField" layoutX="60.0" layoutY="155.0" onAction="#loginPasswordTextFieldAction" prefHeight="25.0" prefWidth="265.0" />
             <Label layoutX="157.0" layoutY="128.0" text="Password" />
          </children>
       </AnchorPane>
-      <Button layoutX="672.0" layoutY="493.0" mnemonicParsing="false" onAction="#loginExitButtonAction" text="EXIT" />
+      <Button fx:id="loginExitButton" layoutX="672.0" layoutY="493.0" mnemonicParsing="false" onAction="#loginExitButtonAction" text="EXIT" />
       <Label layoutX="42.0" layoutY="485.0" text="TimeZone" />
-      <TextField layoutX="110.0" layoutY="481.0" />
+      <TextField fx:id="loginTimeZone" layoutX="110.0" layoutY="481.0" onAction="#loginTimeZoneAction" />
       <Label layoutX="42.0" layoutY="450.0" text="Language" />
-      <ChoiceBox layoutX="110.0" layoutY="446.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="loginLanguageChoiceBox" layoutX="110.0" layoutY="446.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

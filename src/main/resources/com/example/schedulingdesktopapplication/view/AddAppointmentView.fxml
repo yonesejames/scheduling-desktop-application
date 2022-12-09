@@ -24,14 +24,14 @@
       <TextField fx:id="addAppointmentTypeTextField" layoutX="237.0" layoutY="204.0" prefHeight="25.0" prefWidth="185.0" />
       <TextField fx:id="addAppointmentDescriptionTextField" layoutX="237.0" layoutY="234.0" prefHeight="25.0" prefWidth="185.0" />
       <TextField fx:id="addAppointmentLocationTextField" layoutX="237.0" layoutY="264.0" prefHeight="25.0" prefWidth="185.0" />
-      <ChoiceBox layoutX="237.0" layoutY="354.0" prefHeight="25.0" prefWidth="185.0" />
-      <ChoiceBox layoutX="237.0" layoutY="474.0" prefHeight="25.0" prefWidth="185.0" />
-      <ChoiceBox layoutX="237.0" layoutY="444.0" prefHeight="25.0" prefWidth="185.0" />
-      <ChoiceBox layoutX="237.0" layoutY="414.0" prefHeight="25.0" prefWidth="185.0" />
-      <ChoiceBox layoutX="237.0" layoutY="384.0" prefHeight="25.0" prefWidth="185.0" />
-      <DatePicker layoutX="237.0" layoutY="294.0" prefHeight="25.0" prefWidth="185.0" />
+      <ChoiceBox fx:id="addAppointmentStartTimeChoiceBox" layoutX="237.0" layoutY="354.0" prefHeight="25.0" prefWidth="185.0" />
+      <ChoiceBox fx:id="addAppointmentContactChoiceBox" layoutX="237.0" layoutY="474.0" prefHeight="25.0" prefWidth="185.0" />
+      <ChoiceBox fx:id="addAppointmentUserIDChoiceBox" layoutX="237.0" layoutY="444.0" prefHeight="25.0" prefWidth="185.0" />
+      <ChoiceBox fx:id="addAppointmentCustomerIDChoiceBox" layoutX="237.0" layoutY="414.0" prefHeight="25.0" prefWidth="185.0" />
+      <ChoiceBox fx:id="addAppointmentEndTimeChoiceBox" layoutX="237.0" layoutY="384.0" prefHeight="25.0" prefWidth="185.0" />
+      <DatePicker fx:id="addAppointmentStartDateDatePicker" layoutX="237.0" layoutY="294.0" prefHeight="25.0" prefWidth="185.0" />
       <DatePicker layoutX="237.0" layoutY="324.0" prefHeight="25.0" prefWidth="185.0" />
-      <Button layoutX="370.0" layoutY="550.0" mnemonicParsing="false" onAction="#addAppointmentSaveAction" text="Save" />
-      <Button layoutX="422.0" layoutY="550.0" mnemonicParsing="false" onAction="#addAppointmentCancelAction" text="Cancel" />
+      <Button fx:id="addAppointmentSaveButton" layoutX="370.0" layoutY="550.0" mnemonicParsing="false" onAction="#addAppointmentSaveAction" text="Save" />
+      <Button fx:id="addAppointmentCancelButton" layoutX="422.0" layoutY="550.0" mnemonicParsing="false" onAction="#addAppointmentCancelAction" text="Cancel" />
     </children>
 </AnchorPane>
