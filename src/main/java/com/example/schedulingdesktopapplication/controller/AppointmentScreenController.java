@@ -201,7 +201,7 @@ public class AppointmentScreenController implements Initializable {
     }
 
     /**
-     * allAppointmentsRadioButtonAction method to logout of the application.
+     * allAppointmentsRadioButtonAction method to exit the application.
      *
      * @param actionEvent
      */

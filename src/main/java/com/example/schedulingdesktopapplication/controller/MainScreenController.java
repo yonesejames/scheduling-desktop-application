@@ -1,7 +1,10 @@
 package com.example.schedulingdesktopapplication.controller;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -11,6 +14,30 @@ import java.util.ResourceBundle;
  * @author Yonese James
  */
 public class MainScreenController implements Initializable {
+    /**
+     *  FXML customers button variable to go to the customers page.
+     */
+    @FXML
+    public Button mainCustomersButton;
+
+    /**
+     *  FXML appointments button variable to go to the appointments page.
+     */
+    @FXML
+    public Button mainAppointmentsButton;
+
+    /**
+     *  FXML reports button variable to go to the customers page.
+     */
+    @FXML
+    public Button mainReportsButton;
+
+    /**
+     *  FXML logout button variable to exit the application.
+     */
+    @FXML
+    public Button mainLogoutButton;
+
     /**
      * Initialize method for the MainScreenController to initialize the stage and items.
      *
