@@ -14,30 +14,123 @@ import java.util.ResourceBundle;
  */
 public class AppointmentScreenController implements Initializable {
     /**
-     * Variables for the AddCustomerController within the view files.
+     * FXML radio button field variable to view current week appointments.
      */
     @FXML
     public RadioButton appointmentCurrentWeekRadioButton;
+
+    /**
+     * FXML radio button field variable to view current month appointments.
+     */
     @FXML
     public RadioButton appointmentCurrentMonthRadioButton;
+
+    /**
+     * FXML radio button field variable to view all appointments.
+     */
     @FXML
     public RadioButton allAppointmentsRadioButton;
+
+    /**
+     *  FXML table view variable for the appointments.
+     */
+    @FXML
     public TableView appointmentTableView;
+
+    /**
+     *  FXML table column variable for the appointment's IDs.
+     */
+    @FXML
     public TableColumn appointmentTableColumnID;
+
+    /**
+     *  FXML table column variable for the appointment's titles.
+     */
+    @FXML
     public TableColumn appointmentTableColumnTitle;
+
+    /**
+     *  FXML table column variable for the appointment's types.
+     */
+    @FXML
     public TableColumn appointmentTableColumnType;
+
+    /**
+     *  FXML table column variable for the appointment's description.
+     */
+    @FXML
     public TableColumn appointmentTableColumnDescription;
+
+    /**
+     *  FXML table column variable for the appointment's location.
+     */
+    @FXML
     public TableColumn appointmentTableColumnLocation;
+
+    /**
+     *  FXML table column variable for the appointment's start date and time.
+     */
+    @FXML
     public TableColumn appointmentTableColumnStartDateAndTime;
+
+    /**
+     *  FXML table column variable for the appointment's end date and time.
+     */
+    @FXML
     public TableColumn appointmentTableColumnEndDateAndTime;
+
+    /**
+     *  FXML table column variable for the appointment's contact.
+     */
+    @FXML
     public TableColumn appointmentTableColumnContact;
+
+    /**
+     *  FXML table column variable for the appointment's customer IDs.
+     */
+    @FXML
     public TableColumn appointmentTableColumnCustomerID;
+
+    /**
+     *  FXML table column variable for the appointment's user IDs.
+     */
+    @FXML
     public TableColumn appointmentTableColumnUserID;
+
+    /**
+     *  FXML reports button variable to view reports.
+     */
+    @FXML
     public Button appointmentReportsButton;
+
+    /**
+     *  FXML add button variable to add appointment.
+     */
+    @FXML
     public Button appointmentAddButton;
+
+    /**
+     *  FXML modify button variable to modify the selected appointment.
+     */
+    @FXML
     public Button appointmentModifyButton;
+
+    /**
+     *  FXML delete button variable to delete the selected appointment.
+     */
+    @FXML
     public Button appointmentDeleteButton;
+
+    /**
+     *  FXML logout button variable to exit the application.
+     */
+    @FXML
     public Button appointmentsLogoutButton;
+
+    /**
+     *  FXML label variable for the appointment's timezone.
+     */
+    @FXML
     public Label appointmentTimeZone;
 
     /**
