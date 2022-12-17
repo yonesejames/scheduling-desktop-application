@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="593.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.schedulingdesktopapplication.controller.AddAppointmentController">
+<AnchorPane prefHeight="593.0" prefWidth="497.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.schedulingdesktopapplication.controller.AddAppointmentController">
     <children>
         <Label layoutX="71.0" layoutY="39.0" style="-fx-text-fill: black; -fx-font-weight: bold; -fx-font-size: 20" text="SCHEDULING DESKTOP APPLICATION" />
       <Label layoutX="68.0" layoutY="95.0" text="ADD APPOINTMENT" />
@@ -19,19 +19,19 @@
       <Label layoutX="123.0" layoutY="418.0" text="Customer ID" />
       <Label layoutX="123.0" layoutY="448.0" text="User ID" />
       <Label layoutX="123.0" layoutY="478.0" text="Contact" />
-      <TextField layoutX="237.0" layoutY="144.0" prefHeight="25.0" prefWidth="185.0" />
-      <TextField layoutX="237.0" layoutY="174.0" prefHeight="25.0" prefWidth="185.0" />
-      <TextField layoutX="237.0" layoutY="204.0" prefHeight="25.0" prefWidth="185.0" />
-      <TextField layoutX="237.0" layoutY="234.0" prefHeight="25.0" prefWidth="185.0" />
-      <TextField layoutX="237.0" layoutY="264.0" prefHeight="25.0" prefWidth="185.0" />
-      <ChoiceBox layoutX="237.0" layoutY="354.0" prefHeight="25.0" prefWidth="185.0" />
-      <ChoiceBox layoutX="237.0" layoutY="474.0" prefHeight="25.0" prefWidth="185.0" />
-      <ChoiceBox layoutX="237.0" layoutY="444.0" prefHeight="25.0" prefWidth="185.0" />
-      <ChoiceBox layoutX="237.0" layoutY="414.0" prefHeight="25.0" prefWidth="185.0" />
-      <ChoiceBox layoutX="237.0" layoutY="384.0" prefHeight="25.0" prefWidth="185.0" />
-      <DatePicker layoutX="237.0" layoutY="294.0" prefHeight="25.0" prefWidth="185.0" />
+      <TextField fx:id="addAppointmentIDTextField" layoutX="237.0" layoutY="144.0" prefHeight="25.0" prefWidth="185.0" />
+      <TextField fx:id="addAppointmentTitleTextField" layoutX="237.0" layoutY="174.0" prefHeight="25.0" prefWidth="185.0" />
+      <TextField fx:id="addAppointmentTypeTextField" layoutX="237.0" layoutY="204.0" prefHeight="25.0" prefWidth="185.0" />
+      <TextField fx:id="addAppointmentDescriptionTextField" layoutX="237.0" layoutY="234.0" prefHeight="25.0" prefWidth="185.0" />
+      <TextField fx:id="addAppointmentLocationTextField" layoutX="237.0" layoutY="264.0" prefHeight="25.0" prefWidth="185.0" />
+      <ChoiceBox fx:id="addAppointmentStartTimeChoiceBox" layoutX="237.0" layoutY="354.0" prefHeight="25.0" prefWidth="185.0" />
+      <ChoiceBox fx:id="addAppointmentContactChoiceBox" layoutX="237.0" layoutY="474.0" prefHeight="25.0" prefWidth="185.0" />
+      <ChoiceBox fx:id="addAppointmentUserIDChoiceBox" layoutX="237.0" layoutY="444.0" prefHeight="25.0" prefWidth="185.0" />
+      <ChoiceBox fx:id="addAppointmentCustomerIDChoiceBox" layoutX="237.0" layoutY="414.0" prefHeight="25.0" prefWidth="185.0" />
+      <ChoiceBox fx:id="addAppointmentEndTimeChoiceBox" layoutX="237.0" layoutY="384.0" prefHeight="25.0" prefWidth="185.0" />
+      <DatePicker fx:id="addAppointmentStartDateDatePicker" layoutX="237.0" layoutY="294.0" prefHeight="25.0" prefWidth="185.0" />
       <DatePicker layoutX="237.0" layoutY="324.0" prefHeight="25.0" prefWidth="185.0" />
-      <Button layoutX="370.0" layoutY="550.0" mnemonicParsing="false" text="Save" />
-      <Button layoutX="422.0" layoutY="550.0" mnemonicParsing="false" text="Cancel" />
+      <Button fx:id="addAppointmentSaveButton" layoutX="370.0" layoutY="550.0" mnemonicParsing="false" onAction="#addAppointmentSaveAction" text="Save" />
+      <Button fx:id="addAppointmentCancelButton" layoutX="422.0" layoutY="550.0" mnemonicParsing="false" onAction="#addAppointmentCancelAction" text="Cancel" />
     </children>
 </AnchorPane>

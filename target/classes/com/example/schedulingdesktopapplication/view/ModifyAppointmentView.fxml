@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.schedulingdesktopapplication.controller.ModifyAppointmentController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="616.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.schedulingdesktopapplication.controller.ModifyAppointmentController">
+    <children>
+        <Label layoutX="71.0" layoutY="39.0" style="-fx-text-fill: black; -fx-font-weight: bold; -fx-font-size: 20" text="SCHEDULING DESKTOP APPLICATION" />
+        <Label layoutX="68.0" layoutY="95.0" text="MODIFY APPOINTMENT" />
+        <Label layoutX="123.0" layoutY="148.0" text="ID" />
+        <Label layoutX="123.0" layoutY="178.0" text="Title" />
+        <Label layoutX="123.0" layoutY="208.0" text="Type" />
+        <Label layoutX="123.0" layoutY="238.0" text="Description" />
+        <Label layoutX="123.0" layoutY="268.0" text="Location" />
+        <Label layoutX="123.0" layoutY="298.0" text="Start Date" />
+        <Label layoutX="123.0" layoutY="328.0" text="End Date" />
+        <Label layoutX="123.0" layoutY="358.0" text="Start Time" />
+        <Label layoutX="123.0" layoutY="388.0" text="EndTime" />
+        <Label layoutX="123.0" layoutY="418.0" text="Customer ID" />
+        <Label layoutX="123.0" layoutY="448.0" text="User ID" />
+        <Label layoutX="123.0" layoutY="478.0" text="Contact" />
+        <TextField fx:id="modifyAppointmentIDTextField" layoutX="237.0" layoutY="144.0" onAction="#modifyAppointmentIDTextFieldAction" prefHeight="25.0" prefWidth="185.0" />
+        <TextField fx:id="modifyAppointmentTitleTextField" layoutX="237.0" layoutY="174.0" onAction="#modifyAppointmentTitleTextFieldAction" prefHeight="25.0" prefWidth="185.0" />
+        <TextField fx:id="modifyAppointmentTypeTextField" layoutX="237.0" layoutY="204.0" onAction="#modifyAppointmentTypeTextFieldAction" prefHeight="25.0" prefWidth="185.0" />
+        <TextField fx:id="modifyAppointmentDescriptionTextField" layoutX="237.0" layoutY="234.0" onAction="#modifyAppointmentDescriptionTextFieldAction" prefHeight="25.0" prefWidth="185.0" />
+        <TextField fx:id="modifyAppointmentLocationTextField" layoutX="237.0" layoutY="264.0" onAction="#modifyAppointmentLocationTextFieldAction" prefHeight="25.0" prefWidth="185.0" />
+        <ChoiceBox fx:id="modifyAppointmentStartTimeChoiceBox" layoutX="237.0" layoutY="354.0" prefHeight="25.0" prefWidth="185.0" />
+        <ChoiceBox fx:id="modifyAppointmentContactChoiceBox" layoutX="237.0" layoutY="474.0" prefHeight="25.0" prefWidth="185.0" />
+        <ChoiceBox fx:id="modifyAppointmentUserIDChoiceBox" layoutX="237.0" layoutY="444.0" prefHeight="25.0" prefWidth="185.0" />
+        <ChoiceBox fx:id="modifyAppointmentCustomerIDChoiceBox" layoutX="237.0" layoutY="414.0" prefHeight="25.0" prefWidth="185.0" />
+        <ChoiceBox fx:id="modifyAppointmentEndTimeChoiceBox" layoutX="237.0" layoutY="384.0" prefHeight="25.0" prefWidth="185.0" />
+        <DatePicker fx:id="modifyAppointmentStartDateDatePicker" layoutX="237.0" layoutY="294.0" onAction="#modifyAppointmentStartDateDatePickerAction" prefHeight="25.0" prefWidth="185.0" />
+        <DatePicker fx:id="modifyAppointmentEndDateDatePicker" layoutX="237.0" layoutY="324.0" onAction="#modifyAppointmentEndDateDatePickerAction" prefHeight="25.0" prefWidth="185.0" />
+        <Button fx:id="modifyAppointmentSaveButton" layoutX="460.0" layoutY="563.0" mnemonicParsing="false" onAction="#modifyAppointmentSaveButtonAction" text="Save" />
+        <Button fx:id="modifyAppointmentCancelButton" layoutX="515.0" layoutY="563.0" mnemonicParsing="false" onAction="#modifyAppointmentCancelButtonAction" text="Cancel" />
+    </children>
 </AnchorPane>

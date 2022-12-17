@@ -8,4 +8,6 @@ module com.example.schedulingdesktopapplication {
     exports com.example.schedulingdesktopapplication;
     exports com.example.schedulingdesktopapplication.controller;
     opens com.example.schedulingdesktopapplication.controller to javafx.fxml;
+    exports com.example.schedulingdesktopapplication.model;
+    opens com.example.schedulingdesktopapplication.model to javafx.fxml;
 }
