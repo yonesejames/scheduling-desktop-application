@@ -3,7 +3,7 @@ package com.example.schedulingdesktopapplication.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -22,6 +22,23 @@ public class AppointmentScreenController implements Initializable {
     public RadioButton appointmentCurrentMonthRadioButton;
     @FXML
     public RadioButton allAppointmentsRadioButton;
+    public TableView appointmentTableView;
+    public TableColumn appointmentTableColumnID;
+    public TableColumn appointmentTableColumnTitle;
+    public TableColumn appointmentTableColumnType;
+    public TableColumn appointmentTableColumnDescription;
+    public TableColumn appointmentTableColumnLocation;
+    public TableColumn appointmentTableColumnStartDateAndTime;
+    public TableColumn appointmentTableColumnEndDateAndTime;
+    public TableColumn appointmentTableColumnContact;
+    public TableColumn appointmentTableColumnCustomerID;
+    public TableColumn appointmentTableColumnUserID;
+    public Button appointmentReportsButton;
+    public Button appointmentAddButton;
+    public Button appointmentModifyButton;
+    public Button appointmentDeleteButton;
+    public Button appointmentsLogoutButton;
+    public Label appointmentTimeZone;
 
     /**
      * Initialize method for the AppointmentScreenController to initialize the stage and items.
@@ -98,5 +115,29 @@ public class AppointmentScreenController implements Initializable {
      * @param actionEvent
      */
     public void appointmentsLogoutButtonAction(ActionEvent actionEvent) {
+    }
+
+    /**
+     * appointmentAddButtonAction method to add an appointment.
+     *
+     * @param actionEvent
+     */
+    public void appointmentAddButtonAction(ActionEvent actionEvent) {
+    }
+
+    /**
+     * appointmentModifyButtonAction method to modify a selected appointment.
+     *
+     * @param actionEvent
+     */
+    public void appointmentModifyButtonAction(ActionEvent actionEvent) {
+    }
+
+    /**
+     * appointmentDeleteButtonAction method to delete a selected appointment.
+     *
+     * @param actionEvent
+     */
+    public void appointmentDeleteButtonAction(ActionEvent actionEvent) {
     }
 }
