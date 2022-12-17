@@ -46,13 +46,13 @@ public class AddCustomerController implements Initializable {
     public TextField addCustomerPostalCodeTextField;
 
     /**
-     * FXML text field variable for the customer's country.
+     * FXML choice box variable for the customer's country.
      */
     @FXML
     public ChoiceBox addCustomerCountryChoiceBox;
 
     /**
-     * FXML text field variable for the customer's state or province.
+     * FXML choice box variable for the customer's state or province.
      */
     @FXML
     public ChoiceBox addCustomerStateOrProvinceChoiceBox;
