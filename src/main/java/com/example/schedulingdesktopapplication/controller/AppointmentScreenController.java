@@ -104,7 +104,7 @@ public class AppointmentScreenController implements Initializable {
     public Button appointmentReportsButton;
 
     /**
-     *  FXML add button variable to add appointment.
+     *  FXML add button variable to add an appointment.
      */
     @FXML
     public Button appointmentAddButton;
@@ -177,8 +177,7 @@ public class AppointmentScreenController implements Initializable {
     }
 
     /**
-     * appointmentsAddButtonAction method to go to the
-     * add appointment page and add an appointment.
+     * appointmentsAddButtonAction method to go to the add appointment page and add an appointment.
      *
      * @param actionEvent
      */
@@ -186,8 +185,7 @@ public class AppointmentScreenController implements Initializable {
     }
 
     /**
-     * allAppointmentsRadioButtonAction method to go to the
-     * modify appointment page and modify the appointment.
+     * allAppointmentsRadioButtonAction method to go to the modify appointment page and modify the appointment.
      *
      * @param actionEvent
      */
