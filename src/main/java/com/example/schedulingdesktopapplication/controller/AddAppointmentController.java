@@ -89,7 +89,7 @@ public class AddAppointmentController implements Initializable {
     public Button addAppointmentSaveButton;
 
     /**
-     * FXML button variable to cancel the appointment.
+     *  FXML cancel button variable to revert back to the main screen.
      */
     @FXML
     public Button addAppointmentCancelButton;

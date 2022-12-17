@@ -64,7 +64,7 @@ public class AddCustomerController implements Initializable {
     public Button addCustomerSaveButton;
 
     /**
-     * FXML button variable to cancel the customer.
+     *  FXML cancel button variable to revert back to the main screen.
      */
     @FXML
     public Button addCustomerCancelButton;
@@ -89,7 +89,7 @@ public class AddCustomerController implements Initializable {
     }
 
     /**
-     * addCustomerCancelAction method to cancel customer.
+     * addCustomerCancelAction method to revert back to the main screen.
      *
      * @param actionEvent
      */
