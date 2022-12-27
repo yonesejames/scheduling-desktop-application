@@ -1,10 +1,17 @@
 package com.example.schedulingdesktopapplication.controller;
 
+import com.example.schedulingdesktopapplication.Main;
 import com.example.schedulingdesktopapplication.model.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -208,7 +215,13 @@ public class CustomerScreenController implements Initializable {
      *
      * @param actionEvent
      */
-    public void customerAddButtonAction(ActionEvent actionEvent) {
+    public void customerAddButtonAction(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/AddCustomerView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle("Add Customer");
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
@@ -216,7 +229,13 @@ public class CustomerScreenController implements Initializable {
      *
      * @param actionEvent
      */
-    public void customerModifyButtonAction(ActionEvent actionEvent) {
+    public void customerModifyButtonAction(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/ModifyCustomerView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle("Modify Customer");
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
@@ -233,6 +252,7 @@ public class CustomerScreenController implements Initializable {
      * @param actionEvent
      */
     public void customerLogoutButtonAction(ActionEvent actionEvent) {
+        System.exit(0);
     }
 
     /**
@@ -240,6 +260,12 @@ public class CustomerScreenController implements Initializable {
      *
      * @param actionEvent
      */
-    public void customerBackButtonAction(ActionEvent actionEvent) {
+    public void customerBackButtonAction(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/MainScreenView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle("Scheduling Desktop Application");
+        stage.setScene(scene);
+        stage.show();
     }
 }
