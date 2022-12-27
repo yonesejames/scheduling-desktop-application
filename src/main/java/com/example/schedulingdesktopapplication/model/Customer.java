@@ -12,7 +12,7 @@ public class Customer {
      * Variables for the customer's id, name, address, postalCode, phone, createDate, createBy, lastUpdate,
      * lastUpdatedBy, divisionID, and divisionName.
      */
-    private int customerID;
+    private static int customerID = 0;
     private String customerName;
     private String address;
     private String postalCode;
@@ -42,7 +42,7 @@ public class Customer {
     public Customer(int customerID, String customerName, String address, String postalCode, String phone,
                     Timestamp createDate, String createBy, Timestamp lastUpdate, String lastUpdatedBy,
                     int divisionID, String divisionName) {
-        this.customerID = customerID;
+        Customer.customerID = customerID;
         this.customerName = customerName;
         this.address = address;
         this.postalCode = postalCode;
@@ -56,6 +56,12 @@ public class Customer {
     }
 
     /**
+     * Overloaded constructor that creates a new instance of the Customer object.
+     *
+     */
+    public Customer() {}
+
+    /**
      * Getter for the customerID of the customer.
      *
      * @return the customerID.
@@ -66,11 +72,10 @@ public class Customer {
 
     /**
      * Setter for the customerID of the customer.
-     *
-     * @param customerID to be set for the customer.
+     * @return an increment of the customerID
      */
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
+    public int setCustomerID() {
+        return customerID++;
     }
 
     /**
@@ -252,4 +257,6 @@ public class Customer {
     public void setDivisionName(String divisionName) {
         this.divisionName = divisionName;
     }
+
+
 }

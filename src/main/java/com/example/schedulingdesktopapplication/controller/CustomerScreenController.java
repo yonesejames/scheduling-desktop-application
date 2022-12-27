@@ -1,5 +1,6 @@
 package com.example.schedulingdesktopapplication.controller;
 
+import com.example.schedulingdesktopapplication.model.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -109,6 +110,8 @@ public class CustomerScreenController implements Initializable {
     @FXML
     public Label customerTimeZone;
 
+    private static Customer newCustomer = new Customer();
+
     /**
      * Initialize method for the CustomerScreenController to initialize the stage and items.
      *
@@ -117,7 +120,6 @@ public class CustomerScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     /**
