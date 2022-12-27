@@ -110,7 +110,14 @@ public class CustomerScreenController implements Initializable {
     @FXML
     public Label customerTimeZone;
 
+    /**
+     *  FXML back button variable to go to the main menu of the application.
+     */
+    @FXML
+    public Button customersBackButton;
+
     private static Customer newCustomer = new Customer();
+
 
     /**
      * Initialize method for the CustomerScreenController to initialize the stage and items.
@@ -226,5 +233,13 @@ public class CustomerScreenController implements Initializable {
      * @param actionEvent
      */
     public void customerLogoutButtonAction(ActionEvent actionEvent) {
+    }
+
+    /**
+     * customerBackButtonAction method to go to the main menu of the application.
+     *
+     * @param actionEvent
+     */
+    public void customerBackButtonAction(ActionEvent actionEvent) {
     }
 }

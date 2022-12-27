@@ -134,6 +134,12 @@ public class AppointmentScreenController implements Initializable {
     public Label appointmentTimeZone;
 
     /**
+     *  FXML back button variable to go to the main menu of the application.
+     */
+    @FXML
+    public Button appointmentsBackButton;
+
+    /**
      * Initialize method for the AppointmentScreenController to initialize the stage and items.
      *
      * @param url for the url path.
@@ -230,5 +236,13 @@ public class AppointmentScreenController implements Initializable {
      * @param actionEvent
      */
     public void appointmentDeleteButtonAction(ActionEvent actionEvent) {
+    }
+
+    /**
+     * appointmentBackButtonAction method to go to the main menu of the application.
+     *
+     * @param actionEvent
+     */
+    public void appointmentsBackButtonAction(ActionEvent actionEvent) {
     }
 }
