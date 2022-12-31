@@ -5,20 +5,20 @@
 
 <AnchorPane prefHeight="540.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.schedulingdesktopapplication.controller.LoginScreenController">
    <children>
-      <Label layoutX="211.0" layoutY="126.0" style="-fx-text-fill: black; -fx-font-weight: bold; -fx-font-size: 20" text="SCHEDULING DESKTOP APPLICATION" />
+      <Label fx:id="loginTitleLabel" layoutX="211.0" layoutY="126.0" style="-fx-text-fill: black; -fx-font-weight: bold; -fx-font-size: 20" text="SCHEDULING DESKTOP APPLICATION" />
       <AnchorPane layoutX="204.0" layoutY="168.0" prefHeight="263.0" prefWidth="368.0">
          <children>
             <TextField fx:id="loginUsernameTextField" layoutX="60.0" layoutY="69.0" onAction="#loginUsernameTextFieldAction" prefHeight="25.0" prefWidth="265.0" />
-            <Label layoutX="155.0" layoutY="43.0" text="Username" />
-            <Button layoutX="156.0" layoutY="214.0" mnemonicParsing="false" onAction="#loginButtonAction" text="LOGIN" />
+            <Label fx:id="loginUsernameLabel" layoutX="155.0" layoutY="43.0" text="Username" />
+            <Button fx:id="loginButton" layoutX="156.0" layoutY="214.0" mnemonicParsing="false" onAction="#loginButtonAction" text="LOGIN" />
             <PasswordField fx:id="loginPasswordTextField" layoutX="60.0" layoutY="155.0" onAction="#loginPasswordTextFieldAction" prefHeight="25.0" prefWidth="265.0" />
-            <Label layoutX="157.0" layoutY="128.0" text="Password" />
+            <Label fx:id="loginPasswordLabel" layoutX="157.0" layoutY="128.0" text="Password" />
          </children>
       </AnchorPane>
       <Button fx:id="loginExitButton" layoutX="672.0" layoutY="493.0" mnemonicParsing="false" onAction="#loginExitButtonAction" text="EXIT" />
-      <Label layoutX="42.0" layoutY="485.0" text="TimeZone" />
-      <TextField fx:id="loginTimeZone" layoutX="110.0" layoutY="481.0" onAction="#loginTimeZoneAction" />
-      <Label layoutX="42.0" layoutY="450.0" text="Language" />
+      <Label fx:id="loginTimeZoneLabel1" layoutX="42.0" layoutY="485.0" text="TimeZone" />
+      <Label fx:id="loginLanguageLabel" layoutX="42.0" layoutY="450.0" text="Language" />
       <ChoiceBox fx:id="loginLanguageChoiceBox" layoutX="110.0" layoutY="446.0" prefWidth="150.0" />
+      <Label fx:id="loginTimeZoneLabel2" layoutX="204.0" layoutY="485.0" text="TIMEZONE" />
    </children>
 </AnchorPane>

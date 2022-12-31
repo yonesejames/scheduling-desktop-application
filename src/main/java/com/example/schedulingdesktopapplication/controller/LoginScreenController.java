@@ -3,12 +3,13 @@ package com.example.schedulingdesktopapplication.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import com.example.schedulingdesktopapplication.DAO.JDBC;
+import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 /**
  * Controller class that views the login page in the application.
@@ -34,16 +35,53 @@ public class LoginScreenController implements Initializable {
     public Button loginExitButton;
 
     /**
-     *  FXML text field variable for the timezone.
-     */
-    @FXML
-    public TextField loginTimeZone;
-
-    /**
      * FXML choice box variable to choose a language.
      */
     @FXML
     public ChoiceBox loginLanguageChoiceBox;
+
+    /**
+     * FXML label variable for title.
+     */
+    @FXML
+    public Label loginTitleLabel;
+
+    /**
+     * FXML label variable for username.
+     */
+    @FXML
+    public Label loginUsernameLabel;
+
+    /**
+     * FXML label variable for password.
+     */
+    @FXML
+    public Label loginPasswordLabel;
+
+    /**
+     * FXML button to log into application.
+     */
+    @FXML
+    public Button loginButton;
+
+    /**
+     * FXML label variable for timezone.
+     */
+    @FXML
+    public Label loginTimeZoneLabel1;
+
+    /**
+     * FXML label variable for timezone.
+     */
+    @FXML
+    public Label loginTimeZoneLabel2;
+
+    /**
+     * FXML label variable for language.
+     */
+    @FXML
+    public Label loginLanguageLabel;
+
 
     /**
      * Initialize method for the LoginScreenController to initialize the stage and items.
@@ -53,7 +91,40 @@ public class LoginScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Locale france = new Locale("fr", "FR");
+        Locale english = new Locale("en", "EN");
 
+        Scanner keyboard = new Scanner(System.in);
+
+        System.out.println("Enter a language (en or fr) : ");
+        String languageCode = keyboard.nextLine();
+
+        if(languageCode.equals("fr"))
+        {
+            Locale.setDefault(france);
+        }
+        else if(languageCode.equals("en"))
+        {
+            Locale.setDefault(english);
+        }
+        else
+        {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("ERROR");
+            errorAlert.setContentText("LANGUAGE NOT SUPPORTED");
+            errorAlert.showAndWait();
+            System.exit(0);
+        }
+
+        ResourceBundle rb = ResourceBundle.getBundle("Natural", Locale.getDefault());
+        loginTitleLabel.setText(rb.getString("Title"));
+        loginUsernameLabel.setText(rb.getString("Username"));
+        loginPasswordLabel.setText(rb.getString("Password"));
+        loginButton.setText(rb.getString("Login"));
+        loginExitButton.setText(rb.getString("Exit"));
+        loginTimeZoneLabel1.setText(rb.getString("TimeZone"));
+        loginTimeZoneLabel2.setText((rb.getString("TimeZoneLabel")));
+        loginLanguageLabel.setText(rb.getString("Language"));
     }
 
     /**
@@ -61,7 +132,9 @@ public class LoginScreenController implements Initializable {
      *
      * @param actionEvent
      */
-    public void loginButtonAction(ActionEvent actionEvent) {
+    public void loginButtonAction(ActionEvent actionEvent) throws IOException {
+        String username = loginUsernameTextField.getText();
+        String password = loginPasswordTextField.getText();
     }
 
     /**
