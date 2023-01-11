@@ -135,6 +135,9 @@ public class LoginScreenController implements Initializable {
     public void loginButtonAction(ActionEvent actionEvent) throws IOException {
         String username = loginUsernameTextField.getText();
         String password = loginPasswordTextField.getText();
+
+        //  Search through database to ensure the username and password exist in users table:
+        // CODE HERE
     }
 
     /**
