@@ -42,6 +42,19 @@ public class User {
     }
 
     /**
+     * Overloaded Constructor that creates a new instance of the user object.
+     *
+     * @param userID for the ID of the user.
+     * @param userName for the name of the user.
+     * @param password for the password of the user.
+     */
+    public User(int userID, String userName, String password) {
+        this.userID = userID;
+        this.userName = userName;
+        this.password = password;
+    }
+
+    /**
      * Getter for the userID of the user.
      *
      * @return the userID.

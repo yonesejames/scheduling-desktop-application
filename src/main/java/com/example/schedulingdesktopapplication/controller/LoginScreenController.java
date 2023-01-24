@@ -117,14 +117,14 @@ public class LoginScreenController implements Initializable {
         }
 
         ResourceBundle rb = ResourceBundle.getBundle("Natural", Locale.getDefault());
-        loginTitleLabel.setText(rb.getString("Title"));
-        loginUsernameLabel.setText(rb.getString("Username"));
-        loginPasswordLabel.setText(rb.getString("Password"));
-        loginButton.setText(rb.getString("Login"));
-        loginExitButton.setText(rb.getString("Exit"));
-        loginTimeZoneLabel1.setText(rb.getString("TimeZone"));
-        loginTimeZoneLabel2.setText((rb.getString("TimeZoneLabel")));
-        loginLanguageLabel.setText(rb.getString("Language"));
+        loginTitleLabel.setText(rb.getString("title"));
+        loginUsernameLabel.setText(rb.getString("username"));
+        loginPasswordLabel.setText(rb.getString("password"));
+        loginButton.setText(rb.getString("login"));
+        loginExitButton.setText(rb.getString("exit"));
+        loginTimeZoneLabel1.setText(rb.getString("timezone"));
+        loginTimeZoneLabel2.setText((rb.getString("timezonelabel")));
+        loginLanguageLabel.setText(rb.getString("language"));
     }
 
     /**
