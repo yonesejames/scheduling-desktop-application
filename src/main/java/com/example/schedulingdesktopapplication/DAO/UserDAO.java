@@ -14,15 +14,15 @@ public class UserDAO {
         try {
             JDBC.openConnection();
             String sqlStatement = "SELECT * FROM users WHERE User_Name  = '" + userName + "'";
-            Query.makeQuery(sqlStatement);
+            PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
             User userResult;
-            ResultSet result=Query.getResult();
+            ResultSet result = preparedStatement.executeQuery();
 
             while(result.next()){
-                int userID=result.getInt("User_ID");
-                userName=result.getString("User_Name");
-                String password=result.getString("Password");
-                userResult= new User(userID, userName, password);
+                int userID = result.getInt("User_ID");
+                userName = result.getString("User_Name");
+                String password = result.getString("Password");
+                userResult = new User(userID, userName, password);
                 return userResult;
             }
         }
@@ -39,8 +39,8 @@ public class UserDAO {
             JDBC.openConnection();
             ObservableList<User> allUsers = FXCollections.observableArrayList();
             String sqlStatement = "SELECT * FROM users";
-            Query.makeQuery(sqlStatement);
-            ResultSet result=Query.getResult();
+            PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+            ResultSet result = preparedStatement.executeQuery();
 
             while(result.next()){
                 int userID=result.getInt("User_ID");
@@ -65,8 +65,8 @@ public class UserDAO {
         {
             JDBC.openConnection();
             String sqlStatement = "SELECT * FROM users WHERE User_Name = '" + userName + "' AND User_Password = '" + password +"'";
-            Query.makeQuery(sqlStatement);
-            ResultSet result=Query.getResult();
+            PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+            ResultSet result = preparedStatement.executeQuery();
 
             while(result.next()){
                 int userID=result.getInt("User_ID");
