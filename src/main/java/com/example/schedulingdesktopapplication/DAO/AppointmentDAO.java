@@ -71,7 +71,6 @@ public class AppointmentDAO {
         ResultSet result = preparedStatement.executeQuery();
 
         try {
-
             while(result.next()){
                 int appointmentID = result.getInt("Appointment_ID");
                 String appointmentTitle = result.getString("Title");
@@ -85,8 +84,8 @@ public class AppointmentDAO {
                 int contactID = result.getInt("Contact_ID");
                 Appointment appointment = new Appointment(appointmentID, appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, start, end, customerID, userID, contactID);
                 allAppointments.add(appointment);
-                return allAppointments;
             }
+            return allAppointments;
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -94,6 +93,69 @@ public class AppointmentDAO {
 
         JDBC.closeConnection();
         return allAppointments;
+    }
+
+    public static ObservableList<Appointment> getWeeklyAppointments() throws SQLException, Exception {
+        JDBC.openConnection();
+        ObservableList<Appointment> weeklyAppointments = FXCollections.observableArrayList();
+        String sqlStatement = "SELECT * FROM appointments WHERE Start BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 7 DAY)";
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        ResultSet result = preparedStatement.executeQuery();
+        try {
+
+            while(result.next()){
+                int appointmentID = result.getInt("Appointment_ID");
+                String appointmentTitle = result.getString("Title");
+                String appointmentDescription = result.getString("Description");
+                String appointmentLocation = result.getString("Location");
+                String appointmentType = result.getString("Type");
+                Timestamp start = result.getTimestamp("Start");
+                Timestamp end = result.getTimestamp("End");
+                int customerID = result.getInt("Customer_ID");
+                int userID = result.getInt("User_ID");
+                int contactID = result.getInt("Contact_ID");
+                Appointment appointment = new Appointment(appointmentID, appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, start, end, customerID, userID, contactID);
+                weeklyAppointments.add(appointment);
+            }
+            return weeklyAppointments;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        JDBC.closeConnection();
+        return weeklyAppointments;
+    }
+
+    public static ObservableList<Appointment> getMonthlyAppointments() throws SQLException, Exception {
+        JDBC.openConnection();
+        ObservableList<Appointment> monthlyAppointments = FXCollections.observableArrayList();
+        String sqlStatement = "SELECT * FROM appointments WHERE Start BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 30 DAY)";
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        ResultSet result = preparedStatement.executeQuery();
+        try {
+            while(result.next()){
+                int appointmentID = result.getInt("Appointment_ID");
+                String appointmentTitle = result.getString("Title");
+                String appointmentDescription = result.getString("Description");
+                String appointmentLocation = result.getString("Location");
+                String appointmentType = result.getString("Type");
+                Timestamp start = result.getTimestamp("Start");
+                Timestamp end = result.getTimestamp("End");
+                int customerID = result.getInt("Customer_ID");
+                int userID = result.getInt("User_ID");
+                int contactID = result.getInt("Contact_ID");
+                Appointment appointment = new Appointment(appointmentID, appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, start, end, customerID, userID, contactID);
+                monthlyAppointments.add(appointment);
+            }
+            return monthlyAppointments;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        JDBC.closeConnection();
+        return monthlyAppointments;
     }
 
     public static int insertAppointment(int userID, String userName, String password) throws SQLException, Exception{

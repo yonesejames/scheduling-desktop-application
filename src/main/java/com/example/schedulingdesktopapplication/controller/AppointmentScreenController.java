@@ -2,6 +2,7 @@ package com.example.schedulingdesktopapplication.controller;
 
 import com.example.schedulingdesktopapplication.Main;
 import com.example.schedulingdesktopapplication.model.Appointment;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,10 +15,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.WeekFields;
+import java.util.Calendar;
 import java.util.Date;
+import java.time.LocalDate;
+import java.util.Locale;
 import java.util.ResourceBundle;
-import static com.example.schedulingdesktopapplication.DAO.AppointmentDAO.getAllAppointments;
+
+import static com.example.schedulingdesktopapplication.DAO.AppointmentDAO.*;
 
 /**
  * Controller class that views appointments in the application.
@@ -157,6 +164,10 @@ public class AppointmentScreenController implements Initializable {
     @FXML
     public ToggleGroup weekMonthOrAll;
 
+    private ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+
+
+
     /**
      * Initialize method for the AppointmentScreenController to initialize the stage and items.
      *
@@ -166,8 +177,8 @@ public class AppointmentScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            ObservableList<Appointment> test = getAllAppointments();
-            appointmentTableView.setItems(test);
+            allAppointments = getAllAppointments();
+            appointmentTableView.setItems(allAppointments);
             appointmentTableColumnID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
             appointmentTableColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
             appointmentTableColumnType.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -193,7 +204,22 @@ public class AppointmentScreenController implements Initializable {
      *
      * @param actionEvent
      */
-    public void appointmentCurrentWeekRadioButtonAction(ActionEvent actionEvent) {
+    public void appointmentCurrentWeekRadioButtonAction(ActionEvent actionEvent) throws Exception {
+        ObservableList<Appointment> weeklyAppointments = getWeeklyAppointments();
+
+        appointmentTableView.setItems(weeklyAppointments);
+        appointmentTableColumnID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        appointmentTableColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        appointmentTableColumnType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        appointmentTableColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        appointmentTableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+        appointmentTableColumnStartDateAndTime.setCellValueFactory(new PropertyValueFactory<>("startDateTime"));
+        appointmentTableColumnEndDateAndTime.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
+        appointmentTableColumnContact.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        appointmentTableColumnCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        appointmentTableColumnUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
+
+        weekMonthOrAll.selectToggle(appointmentCurrentWeekRadioButton);
 
     }
 
@@ -202,7 +228,22 @@ public class AppointmentScreenController implements Initializable {
      *
      * @param actionEvent
      */
-    public void appointmentCurrentMonthRadioButtonAction(ActionEvent actionEvent) {
+    public void appointmentCurrentMonthRadioButtonAction(ActionEvent actionEvent) throws Exception {
+        ObservableList<Appointment> monthlyAppointments = getMonthlyAppointments();
+
+        appointmentTableView.setItems(monthlyAppointments);
+        appointmentTableColumnID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        appointmentTableColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        appointmentTableColumnType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        appointmentTableColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        appointmentTableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+        appointmentTableColumnStartDateAndTime.setCellValueFactory(new PropertyValueFactory<>("startDateTime"));
+        appointmentTableColumnEndDateAndTime.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
+        appointmentTableColumnContact.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        appointmentTableColumnCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        appointmentTableColumnUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
+
+        weekMonthOrAll.selectToggle(appointmentCurrentMonthRadioButton);
     }
 
     /**
@@ -211,6 +252,19 @@ public class AppointmentScreenController implements Initializable {
      * @param actionEvent
      */
     public void allAppointmentsRadioButtonAction(ActionEvent actionEvent) {
+        appointmentTableView.setItems(allAppointments);
+        appointmentTableColumnID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        appointmentTableColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        appointmentTableColumnType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        appointmentTableColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        appointmentTableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+        appointmentTableColumnStartDateAndTime.setCellValueFactory(new PropertyValueFactory<>("startDateTime"));
+        appointmentTableColumnEndDateAndTime.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
+        appointmentTableColumnContact.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        appointmentTableColumnCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        appointmentTableColumnUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
+
+        weekMonthOrAll.selectToggle(allAppointmentsRadioButton);
     }
 
     /**
