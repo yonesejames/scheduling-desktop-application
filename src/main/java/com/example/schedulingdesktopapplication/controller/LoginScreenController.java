@@ -16,6 +16,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import static com.example.schedulingdesktopapplication.DAO.UserDAO.validateUser;
+import java.time.ZoneId;
 
 /**
  * Controller class that views the login page in the application.
@@ -91,30 +92,32 @@ public class LoginScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Locale france = new Locale("fr", "FR");
-        Locale english = new Locale("en", "EN");
+//        Locale france = new Locale("fr", "FR");
+//        Locale english = new Locale("en", "EN");
+//
+//        Scanner keyboard = new Scanner(System.in);
+//
+//        System.out.println("Enter a language (en or fr) : ");
+//        String languageCode = keyboard.nextLine();
+//
+//        if(languageCode.equals("fr"))
+//        {
+//            Locale.setDefault(france);
+//        }
+//        else if(languageCode.equals("en"))
+//        {
+//            Locale.setDefault(english);
+//        }
+//        else
+//        {
+//            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+//            errorAlert.setTitle("ERROR");
+//            errorAlert.setContentText("LANGUAGE NOT SUPPORTED");
+//            errorAlert.showAndWait();
+//            System.exit(0);
+//        }
 
-        Scanner keyboard = new Scanner(System.in);
-
-        System.out.println("Enter a language (en or fr) : ");
-        String languageCode = keyboard.nextLine();
-
-        if(languageCode.equals("fr"))
-        {
-            Locale.setDefault(france);
-        }
-        else if(languageCode.equals("en"))
-        {
-            Locale.setDefault(english);
-        }
-        else
-        {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setTitle("ERROR");
-            errorAlert.setContentText("LANGUAGE NOT SUPPORTED");
-            errorAlert.showAndWait();
-            System.exit(0);
-        }
+        loginTimeZoneLabel2.setText(String.valueOf(ZoneId.systemDefault()));
 
         ResourceBundle rb = ResourceBundle.getBundle("Natural", Locale.getDefault());
         loginTitleLabel.setText(rb.getString("title"));

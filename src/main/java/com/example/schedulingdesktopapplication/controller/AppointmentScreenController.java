@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
 import static com.example.schedulingdesktopapplication.DAO.AppointmentDAO.getAllAppointments;
@@ -151,6 +152,12 @@ public class AppointmentScreenController implements Initializable {
     public Button appointmentsBackButton;
 
     /**
+     * FXML toggle variable for the appointment's radio buttons: week, month, or all.
+     */
+    @FXML
+    public ToggleGroup weekMonthOrAll;
+
+    /**
      * Initialize method for the AppointmentScreenController to initialize the stage and items.
      *
      * @param url for the url path.
@@ -172,6 +179,10 @@ public class AppointmentScreenController implements Initializable {
             appointmentTableColumnCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
             appointmentTableColumnUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
 
+            weekMonthOrAll.selectToggle(allAppointmentsRadioButton);
+
+            appointmentTimeZone.setText(String.valueOf(ZoneId.systemDefault()));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -183,6 +194,7 @@ public class AppointmentScreenController implements Initializable {
      * @param actionEvent
      */
     public void appointmentCurrentWeekRadioButtonAction(ActionEvent actionEvent) {
+
     }
 
     /**
