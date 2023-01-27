@@ -45,12 +45,43 @@ public class Appointment {
      * @param customerID for the customer ID of the appointment.
      * @param userID for the user ID of the appointment.
      * @param contactID for the contact ID of the appointment.
-     * @param contactName for the contact name of the appointment.
      */
     public Appointment(Integer appointmentID, String title, String description, String location, String type,
                        Timestamp startDateTime, Timestamp endDateTime, Timestamp createDate, String createBy,
                        Timestamp lastUpdate, String lastUpdatedBy, Integer customerID, Integer userID,
-                       Integer contactID, String contactName) {
+                       Integer contactID) {
+        this.appointmentID = appointmentID;
+        this.title = title;
+        this.description = description;
+        this.location = location;
+        this.type = type;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.createDate = createDate;
+        this.createBy = createBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdatedBy = lastUpdatedBy;
+        this.customerID = customerID;
+        this.userID = userID;
+        this.contactID = contactID;
+    }
+
+    /**
+     * Overloaded constructor that creates a new instance of the appointment object.
+     *
+     * @param appointmentID for the ID of the appointment.
+     * @param title for the title of the appointment.
+     * @param description for the description of the appointment.
+     * @param location for the location of the appointment.
+     * @param type for the type of the appointment.
+     * @param startDateTime for the start date time of the appointment.
+     * @param endDateTime for the end date time of the appointment.
+     * @param customerID for the customer ID of the appointment.
+     * @param userID for the user ID of the appointment.
+     * @param contactID for the contact ID of the appointment.
+     */
+    public Appointment(Integer appointmentID, String title, String description, String location, String type,
+                       Timestamp startDateTime, Timestamp endDateTime, Integer customerID, Integer userID, Integer contactID) {
         this.appointmentID = appointmentID;
         this.title = title;
         this.description = description;

@@ -1,15 +1,21 @@
 package com.example.schedulingdesktopapplication.controller;
 
+import com.example.schedulingdesktopapplication.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import com.example.schedulingdesktopapplication.DAO.JDBC;
+import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import static com.example.schedulingdesktopapplication.DAO.UserDAO.validateUser;
 
 /**
  * Controller class that views the login page in the application.
@@ -33,12 +39,6 @@ public class LoginScreenController implements Initializable {
      */
     @FXML
     public Button loginExitButton;
-
-    /**
-     * FXML choice box variable to choose a language.
-     */
-    @FXML
-    public ChoiceBox loginLanguageChoiceBox;
 
     /**
      * FXML label variable for title.
@@ -132,12 +132,35 @@ public class LoginScreenController implements Initializable {
      *
      * @param actionEvent
      */
-    public void loginButtonAction(ActionEvent actionEvent) throws IOException {
+    public void loginButtonAction(ActionEvent actionEvent) throws Exception {
         String username = loginUsernameTextField.getText();
         String password = loginPasswordTextField.getText();
 
         //  Search through database to ensure the username and password exist in users table:
-        // CODE HERE
+        try
+        {
+            if(validateUser(username, password))
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/MainScreenView.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.setTitle("Main");
+                stage.setScene(scene);
+                stage.show();
+            }
+            else
+            {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("ERROR");
+                errorAlert.setContentText("USER DOES NOT EXIST");
+                errorAlert.showAndWait();
+            }
+
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     /**

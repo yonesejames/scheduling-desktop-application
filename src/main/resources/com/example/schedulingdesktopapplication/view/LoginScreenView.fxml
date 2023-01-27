@@ -18,7 +18,6 @@
       <Button fx:id="loginExitButton" layoutX="672.0" layoutY="493.0" mnemonicParsing="false" onAction="#loginExitButtonAction" text="EXIT" />
       <Label fx:id="loginTimeZoneLabel1" layoutX="42.0" layoutY="485.0" text="TimeZone" />
       <Label fx:id="loginLanguageLabel" layoutX="42.0" layoutY="450.0" text="Language" />
-      <ChoiceBox fx:id="loginLanguageChoiceBox" layoutX="110.0" layoutY="446.0" prefWidth="150.0" />
       <Label fx:id="loginTimeZoneLabel2" layoutX="204.0" layoutY="485.0" text="TIMEZONE" />
    </children>
 </AnchorPane>

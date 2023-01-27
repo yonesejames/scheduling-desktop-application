@@ -1,6 +1,8 @@
 package com.example.schedulingdesktopapplication.controller;
 
 import com.example.schedulingdesktopapplication.Main;
+import com.example.schedulingdesktopapplication.model.Appointment;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,10 +10,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
+import static com.example.schedulingdesktopapplication.DAO.AppointmentDAO.getAllAppointments;
 
 /**
  * Controller class that views appointments in the application.
@@ -41,67 +46,67 @@ public class AppointmentScreenController implements Initializable {
      *  FXML table view variable for the appointments.
      */
     @FXML
-    public TableView appointmentTableView;
+    public TableView<Appointment> appointmentTableView;
 
     /**
      *  FXML table column variable for the appointment's IDs.
      */
     @FXML
-    public TableColumn appointmentTableColumnID;
+    public TableColumn<Appointment, Integer> appointmentTableColumnID;
 
     /**
      *  FXML table column variable for the appointment's titles.
      */
     @FXML
-    public TableColumn appointmentTableColumnTitle;
+    public TableColumn<Appointment, String> appointmentTableColumnTitle;
 
     /**
      *  FXML table column variable for the appointment's types.
      */
     @FXML
-    public TableColumn appointmentTableColumnType;
+    public TableColumn<Appointment, String> appointmentTableColumnType;
 
     /**
      *  FXML table column variable for the appointment's description.
      */
     @FXML
-    public TableColumn appointmentTableColumnDescription;
+    public TableColumn<Appointment, String> appointmentTableColumnDescription;
 
     /**
      *  FXML table column variable for the appointment's location.
      */
     @FXML
-    public TableColumn appointmentTableColumnLocation;
+    public TableColumn<Appointment, String> appointmentTableColumnLocation;
 
     /**
      *  FXML table column variable for the appointment's start date and time.
      */
     @FXML
-    public TableColumn appointmentTableColumnStartDateAndTime;
+    public TableColumn<Appointment, Date> appointmentTableColumnStartDateAndTime;
 
     /**
      *  FXML table column variable for the appointment's end date and time.
      */
     @FXML
-    public TableColumn appointmentTableColumnEndDateAndTime;
+    public TableColumn<Appointment, Date> appointmentTableColumnEndDateAndTime;
 
     /**
      *  FXML table column variable for the appointment's contact.
      */
     @FXML
-    public TableColumn appointmentTableColumnContact;
+    public TableColumn<Appointment, String> appointmentTableColumnContact;
 
     /**
      *  FXML table column variable for the appointment's customer IDs.
      */
     @FXML
-    public TableColumn appointmentTableColumnCustomerID;
+    public TableColumn<Appointment, Integer> appointmentTableColumnCustomerID;
 
     /**
      *  FXML table column variable for the appointment's user IDs.
      */
     @FXML
-    public TableColumn appointmentTableColumnUserID;
+    public TableColumn<Appointment, Integer> appointmentTableColumnUserID;
 
     /**
      *  FXML reports button variable to view reports.
@@ -153,7 +158,23 @@ public class AppointmentScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            ObservableList<Appointment> test = getAllAppointments();
+            appointmentTableView.setItems(test);
+            appointmentTableColumnID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+            appointmentTableColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+            appointmentTableColumnType.setCellValueFactory(new PropertyValueFactory<>("type"));
+            appointmentTableColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+            appointmentTableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+            appointmentTableColumnStartDateAndTime.setCellValueFactory(new PropertyValueFactory<>("startDateTime"));
+            appointmentTableColumnEndDateAndTime.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
+            appointmentTableColumnContact.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+            appointmentTableColumnCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+            appointmentTableColumnUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
