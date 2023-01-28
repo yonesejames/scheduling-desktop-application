@@ -12,7 +12,7 @@ public class Appointment {
      * Variables for the appointment's id, title, description, location, type, startDateTime, endDateTime, createDate,
      * createBy, lastUpdate, lastUpdatedBy, customerID, userID, contactID, and contactName.
      */
-    private Integer appointmentID;
+    private static Integer appointmentID;
     private String title;
     private String description;
     private String location;
@@ -111,10 +111,9 @@ public class Appointment {
     /**
      * Setter for the appointmentID of the appointment.
      *
-     * @param appointmentID to be set for the appointment.
      */
-    public void setAppointmentID(Integer appointmentID) {
-        this.appointmentID = appointmentID;
+    public static int setAppointmentID() {
+        return appointmentID++;
     }
 
     /**

@@ -276,30 +276,6 @@ public class AppointmentScreenController implements Initializable {
     }
 
     /**
-     * appointmentsAddButtonAction method to go to the add appointment page and add an appointment.
-     *
-     * @param actionEvent
-     */
-    public void appointmentsAddButtonAction(ActionEvent actionEvent) {
-    }
-
-    /**
-     * allAppointmentsRadioButtonAction method to go to the modify appointment page and modify the appointment.
-     *
-     * @param actionEvent
-     */
-    public void appointmentsModifyButtonAction(ActionEvent actionEvent) {
-    }
-
-    /**
-     * allAppointmentsRadioButtonAction method to delete an appointment.
-     *
-     * @param actionEvent
-     */
-    public void appointmentsDeleteButtonAction(ActionEvent actionEvent) {
-    }
-
-    /**
      * allAppointmentsRadioButtonAction method to exit the application.
      *
      * @param actionEvent

@@ -1,6 +1,8 @@
 package com.example.schedulingdesktopapplication.controller;
 
 import com.example.schedulingdesktopapplication.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +16,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 /**
@@ -100,6 +104,16 @@ public class AddAppointmentController implements Initializable {
     @FXML
     public Button addAppointmentCancelButton;
 
+    private final ObservableList<String> appointmentStartTimes = FXCollections.observableArrayList();
+
+    private final ObservableList<String> appointmentEndTimes = FXCollections.observableArrayList();
+
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     /**
      * Initialize method for the AddAppointmentController to initialize the stage and items.
      *
@@ -108,6 +122,14 @@ public class AddAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    public void addAppointmentStartTimes() {
+
+    }
+
+    public void addAppointmentEndTimes() {
 
     }
 
