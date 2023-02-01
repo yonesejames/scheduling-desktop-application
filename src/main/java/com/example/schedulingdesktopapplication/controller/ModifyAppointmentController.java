@@ -7,10 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
@@ -56,31 +53,31 @@ public class ModifyAppointmentController implements Initializable {
      * FXML choice box variable to select a start time for the appointment.
      */
     @FXML
-    public ChoiceBox modifyAppointmentStartTimeChoiceBox;
+    public ComboBox modifyAppointmentStartTimeChoiceBox;
 
     /**
      * FXML choice box variable to select a start time for the appointment.
      */
     @FXML
-    public ChoiceBox modifyAppointmentContactChoiceBox;
+    public ComboBox modifyAppointmentContactChoiceBox;
 
     /**
      * FXML choice box variable to select a user ID for the appointment.
      */
     @FXML
-    public ChoiceBox modifyAppointmentUserIDChoiceBox;
+    public ComboBox modifyAppointmentUserIDChoiceBox;
 
     /**
      * FXML choice box variable to select a customer ID for the appointment.
      */
     @FXML
-    public ChoiceBox modifyAppointmentCustomerIDChoiceBox;
+    public ComboBox modifyAppointmentCustomerIDChoiceBox;
 
     /**
      * FXML choice box variable to select an end time for the appointment.
      */
     @FXML
-    public ChoiceBox modifyAppointmentEndTimeChoiceBox;
+    public ComboBox modifyAppointmentEndTimeChoiceBox;
 
     /**
      * FXML date picker variable to select a start date

@@ -24,11 +24,11 @@
         <TextField fx:id="modifyAppointmentTypeTextField" layoutX="237.0" layoutY="204.0" onAction="#modifyAppointmentTypeTextFieldAction" prefHeight="25.0" prefWidth="185.0" />
         <TextField fx:id="modifyAppointmentDescriptionTextField" layoutX="237.0" layoutY="234.0" onAction="#modifyAppointmentDescriptionTextFieldAction" prefHeight="25.0" prefWidth="185.0" />
         <TextField fx:id="modifyAppointmentLocationTextField" layoutX="237.0" layoutY="264.0" onAction="#modifyAppointmentLocationTextFieldAction" prefHeight="25.0" prefWidth="185.0" />
-        <ChoiceBox fx:id="modifyAppointmentStartTimeChoiceBox" layoutX="237.0" layoutY="354.0" prefHeight="25.0" prefWidth="185.0" />
-        <ChoiceBox fx:id="modifyAppointmentContactChoiceBox" layoutX="237.0" layoutY="474.0" prefHeight="25.0" prefWidth="185.0" />
-        <ChoiceBox fx:id="modifyAppointmentUserIDChoiceBox" layoutX="237.0" layoutY="444.0" prefHeight="25.0" prefWidth="185.0" />
-        <ChoiceBox fx:id="modifyAppointmentCustomerIDChoiceBox" layoutX="237.0" layoutY="414.0" prefHeight="25.0" prefWidth="185.0" />
-        <ChoiceBox fx:id="modifyAppointmentEndTimeChoiceBox" layoutX="237.0" layoutY="384.0" prefHeight="25.0" prefWidth="185.0" />
+        <ComboBox fx:id="modifyAppointmentStartTimeChoiceBox" layoutX="237.0" layoutY="354.0" prefHeight="25.0" prefWidth="185.0" />
+        <ComboBox fx:id="modifyAppointmentContactChoiceBox" layoutX="237.0" layoutY="474.0" prefHeight="25.0" prefWidth="185.0" />
+        <ComboBox fx:id="modifyAppointmentUserIDChoiceBox" layoutX="237.0" layoutY="444.0" prefHeight="25.0" prefWidth="185.0" />
+        <ComboBox fx:id="modifyAppointmentCustomerIDChoiceBox" layoutX="237.0" layoutY="414.0" prefHeight="25.0" prefWidth="185.0" />
+        <ComboBox fx:id="modifyAppointmentEndTimeChoiceBox" layoutX="237.0" layoutY="384.0" prefHeight="25.0" prefWidth="185.0" />
         <DatePicker fx:id="modifyAppointmentStartDateDatePicker" layoutX="237.0" layoutY="294.0" onAction="#modifyAppointmentStartDateDatePickerAction" prefHeight="25.0" prefWidth="185.0" />
         <DatePicker fx:id="modifyAppointmentEndDateDatePicker" layoutX="237.0" layoutY="324.0" onAction="#modifyAppointmentEndDateDatePickerAction" prefHeight="25.0" prefWidth="185.0" />
         <Button fx:id="modifyAppointmentSaveButton" layoutX="460.0" layoutY="563.0" mnemonicParsing="false" onAction="#modifyAppointmentSaveButtonAction" text="Save" />
