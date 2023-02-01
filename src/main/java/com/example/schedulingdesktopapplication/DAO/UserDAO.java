@@ -34,7 +34,6 @@ public class UserDAO {
         try {
             while(result.next()){
                 int userID = result.getInt("User_ID");
-                userName = result.getString("User_Name");
                 String password = result.getString("Password");
                 userResult = new User(userID, userName, password);
                 return userResult;
@@ -64,14 +63,14 @@ public class UserDAO {
 
         try {
             while(result.next()){
-                int userID=result.getInt("User_ID");
+                int userID = result.getInt("User_ID");
                 String userName=result.getString("User_Name");
                 String password=result.getString("Password");
                 User userResult= new User(userID, userName, password);
                 allUsers.add(userResult);
                 JDBC.closeConnection();
-                return allUsers;
             }
+            return allUsers;
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -100,9 +99,9 @@ public class UserDAO {
         try
         {
             while(result.next()){
-                int userID=result.getInt("User_ID");
-                userName=result.getString("User_Name");
-                password=result.getString("Password");
+                int userID = result.getInt("User_ID");
+                userName = result.getString("User_Name");
+                password = result.getString("Password");
                 User userResult= new User(userID, userName, password);
                 return Boolean.TRUE;
             }
@@ -144,24 +143,24 @@ public class UserDAO {
     }
 
     /**
-     * Method that updates the user in the user database by userID, userName, and password.
+     * Method that updates the user in the user database by userName, and password.
      *
-     * @param userID
      * @param userName
      * @param password
+     * @param userID
      * @return the number of rows affected by this change.
      * @throws SQLException
      * @throws Exception
      */
-    public static int updateUser(int userID, String userName, String password) throws SQLException, Exception{
+    public static int updateUser(String userName, String password, int userID) throws SQLException, Exception{
         JDBC.openConnection();
         String sqlStatement = "UPDATE USERS SET User_Name = ? AND SET Password = ? WHERE User_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
 
         try {
-            preparedStatement.setInt(1, userID);
-            preparedStatement.setString(2, userName);
-            preparedStatement.setString(3, password);
+            preparedStatement.setString(1, userName);
+            preparedStatement.setString(2, password);
+            preparedStatement.setInt(3, userID);
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected;
         }
