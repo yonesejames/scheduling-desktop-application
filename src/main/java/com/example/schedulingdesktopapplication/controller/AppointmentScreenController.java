@@ -23,7 +23,6 @@ import java.util.Date;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 import static com.example.schedulingdesktopapplication.DAO.AppointmentDAO.*;
 
 /**

@@ -80,7 +80,8 @@ public class AppointmentDAO {
                 int customerID = result.getInt("Customer_ID");
                 int userID = result.getInt("User_ID");
                 int contactID = result.getInt("Contact_ID");
-                Appointment appointment = new Appointment(appointmentID, appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, start, end, customerID, userID, contactID);
+                Appointment appointment = new Appointment(appointmentID, appointmentTitle, appointmentDescription,
+                        appointmentLocation, appointmentType, start, end, customerID, userID, contactID);
                 allAppointments.add(appointment);
             }
             return allAppointments;

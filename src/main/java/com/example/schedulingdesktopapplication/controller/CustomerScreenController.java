@@ -1,7 +1,10 @@
 package com.example.schedulingdesktopapplication.controller;
 
 import com.example.schedulingdesktopapplication.Main;
+import com.example.schedulingdesktopapplication.model.Appointment;
 import com.example.schedulingdesktopapplication.model.Customer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +12,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import static com.example.schedulingdesktopapplication.DAO.CustomerDAO.*;
+import static com.example.schedulingdesktopapplication.DAO.FirstLevelDivisionDAO.*;
 
 /**
  * Controller class that views customers in the application.
@@ -24,43 +30,43 @@ public class CustomerScreenController implements Initializable {
      *  FXML table view variable for the customers.
      */
     @FXML
-    public TableView customerTableView;
+    public TableView<Customer> customerTableView;
 
     /**
      *  FXML table column variable for the customer's IDs.
      */
     @FXML
-    public TableColumn customerTableColumnID;
+    public TableColumn<Customer, Integer> customerTableColumnID;
 
     /**
      *  FXML table column variable for the customer's names.
      */
     @FXML
-    public TableColumn customerTableColumnName;
+    public TableColumn<Customer, String> customerTableColumnName;
 
     /**
      *  FXML table column variable for the customer's addresses.
      */
     @FXML
-    public TableColumn customerTableColumnAddress;
+    public TableColumn<Customer, String> customerTableColumnAddress;
 
     /**
      *  FXML table column variable for the customer's phone numbers.
      */
     @FXML
-    public TableColumn customerTableColumnPhoneNumber;
+    public TableColumn<Customer, String> customerTableColumnPhoneNumber;
 
     /**
      *  FXML table column variable for the customer's state and province.
      */
     @FXML
-    public TableColumn customerTableColumnStateAndProvince;
+    public TableColumn<Customer, String> customerTableColumnStateAndProvince;
 
     /**
      *  FXML table column variable for the customer's postal code.
      */
     @FXML
-    public TableColumn customerTableColumnPostalCode;
+    public TableColumn<Customer, String> customerTableColumnPostalCode;
 
     /**
      * FXML radio button field variable to view current week of customers.
@@ -124,6 +130,8 @@ public class CustomerScreenController implements Initializable {
 
     private static Customer newCustomer = new Customer();
 
+    private ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+
 
     /**
      * Initialize method for the CustomerScreenController to initialize the stage and items.
@@ -133,6 +141,18 @@ public class CustomerScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            allCustomers = getAllCustomers();
+            customerTableView.setItems(allCustomers);
+            customerTableColumnID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+            customerTableColumnName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+            customerTableColumnAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+            customerTableColumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phone"));
+            customerTableColumnStateAndProvince.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
+            customerTableColumnPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        } catch (Exception e) {
+            e.printStackTrace(); }
+
     }
 
     /**

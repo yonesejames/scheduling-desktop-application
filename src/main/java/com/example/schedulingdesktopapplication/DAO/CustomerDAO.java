@@ -48,8 +48,48 @@ public class CustomerDAO {
         return null;
     }
 
+//    /**
+//     * Getter for division in the customers database by divisionID.
+//     *
+//     * @param divisionID
+//     * @return division.
+//     * @throws SQLException
+//     * @throws Exception
+//     */
+//    public static Customer getDivision(int divisionID) throws SQLException, Exception{
+//        JDBC.openConnection();
+//        String sqlStatement = "SELECT Division FROM customers WHERE Customer_ID  = '" + customerID + "'";
+//        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+//        Customer customerResult;
+//        ResultSet result = preparedStatement.executeQuery();
+//
+//        try {
+//            while(result.next()){
+//                String customerName = result.getString("Customer_Name");
+//                String address = result.getString("Address");
+//                String postalCode = result.getString("Postal_code");
+//                String phone = result.getString("Phone");
+//                Timestamp createDate = result.getTimestamp("Create_Date");
+//                String createdBy = result.getString("Created_By");
+//                Timestamp lastUpdate = result.getTimestamp("Last_Update");
+//                String lastUpdatedBy = result.getString("Last_Update_BY");
+//                int divisionID = result.getInt("Division_ID");
+//                customerResult = new Customer(customerID, customerName, address, postalCode, phone, createDate,
+//                        createdBy, lastUpdate, lastUpdatedBy,divisionID);
+//                return customerResult;
+//            }
+//        }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        JDBC.closeConnection();
+//        return null;
+//    }
+
+
     /**
-     * Getter for all customers in the customer database.
+     * Getter for all customers in the customers database.
      *
      * @return ObservableList of all customers.
      * @throws SQLException
@@ -69,13 +109,14 @@ public class CustomerDAO {
                 String address = result.getString("Address");
                 String postalCode = result.getString("Postal_code");
                 String phone = result.getString("Phone");
-                Timestamp createDate = result.getTimestamp("Create_Date");
-                String createdBy = result.getString("Created_By");
-                Timestamp lastUpdate = result.getTimestamp("Last_Update");
-                String lastUpdatedBy = result.getString("Last_Update_BY");
+//                Timestamp createDate = result.getTimestamp("Create_Date");
+//                String createdBy = result.getString("Created_By");
+//                Timestamp lastUpdate = result.getTimestamp("Last_Update");
+//                String lastUpdatedBy = result.getString("Last_Update_BY");
                 int divisionID = result.getInt("Division_ID");
-                Customer customerResult = new Customer(customerID, customerName, address, postalCode, phone, createDate,
-                        createdBy, lastUpdate, lastUpdatedBy,divisionID);
+//                Customer customerResult = new Customer(customerID, customerName, address, postalCode, phone, createDate,
+//                        createdBy, lastUpdate, lastUpdatedBy,divisionID);
+                Customer customerResult = new Customer(customerID, customerName, address, postalCode, phone, divisionID);
                 allCustomers.add(customerResult);
                 JDBC.closeConnection();
             }
@@ -188,7 +229,7 @@ public class CustomerDAO {
     }
 
     /**
-     * Method that deletes a customer in the customer database by customerID.
+     * Method that deletes a customer in the customers database by customerID.
      *
      * @param customerID
      * @return the number of rows affected by this change.

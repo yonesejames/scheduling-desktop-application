@@ -85,6 +85,25 @@ public class Customer {
     }
 
     /**
+     * Overloaded Constructor that creates a new instance of the customer object.
+     *
+     * @param customerID for the ID of the customer.
+     * @param customerName for the name of the customer.
+     * @param address for the address of the customer.
+     * @param postalCode for the postal code of the customer.
+     * @param phone for the phone of the customer.
+     * @param divisionID for the division ID of the customer.
+     */
+    public Customer(int customerID, String customerName, String address, String postalCode, String phone, int divisionID) {
+        Customer.customerID = customerID;
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.divisionID = divisionID;
+    }
+
+    /**
      * Overloaded constructor that creates a new instance of the Customer object.
      *
      */

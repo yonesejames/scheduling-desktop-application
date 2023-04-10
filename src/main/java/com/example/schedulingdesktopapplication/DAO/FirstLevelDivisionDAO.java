@@ -1,5 +1,6 @@
 package com.example.schedulingdesktopapplication.DAO;
 
+import com.example.schedulingdesktopapplication.model.Customer;
 import com.example.schedulingdesktopapplication.model.FirstLevelDivision;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -35,6 +36,36 @@ public class FirstLevelDivisionDAO {
                 countryResult = new FirstLevelDivision(divisionID, division, createDate, createdBy, lastUpdate,
                         lastUpdatedBy, countryID);
                 return countryResult;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        JDBC.closeConnection();
+        return null;
+    }
+
+    /**
+     * Getter for division in the first_level_divisions database by divisionID.
+     *
+     * @param divisionID
+     * @return division.
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static String getDivision(int divisionID) throws SQLException, Exception{
+        JDBC.openConnection();
+        String sqlStatement = "SELECT Division FROM first_level_divisions WHERE Division_ID  = '" + divisionID + "'";
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        String divisionResult;
+        ResultSet result = preparedStatement.executeQuery();
+
+        try {
+            while(result.next()){
+                String division = result.getString("Division");
+                divisionResult = division;
+                return divisionResult;
             }
         }
         catch (SQLException e) {
