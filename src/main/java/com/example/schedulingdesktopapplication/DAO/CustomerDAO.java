@@ -118,15 +118,16 @@ public class CustomerDAO {
 //                        createdBy, lastUpdate, lastUpdatedBy,divisionID);
                 Customer customerResult = new Customer(customerID, customerName, address, postalCode, phone, divisionID);
                 allCustomers.add(customerResult);
-                JDBC.closeConnection();
+
             }
+            JDBC.closeConnection();
             return allCustomers;
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
 
-        JDBC.closeConnection();
+//        JDBC.closeConnection();
         return null;
     }
 
