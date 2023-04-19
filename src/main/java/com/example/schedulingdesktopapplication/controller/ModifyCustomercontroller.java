@@ -1,12 +1,13 @@
 package com.example.schedulingdesktopapplication.controller;
-
 import com.example.schedulingdesktopapplication.Main;
+import com.example.schedulingdesktopapplication.model.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -14,6 +15,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static com.example.schedulingdesktopapplication.DAO.CustomerDAO.updateCustomer;
 
 /**
  * Controller class that edits the customers in the application.
@@ -75,6 +78,8 @@ public class ModifyCustomercontroller implements Initializable {
     @FXML
     public Button modifyCustomerCancelButton;
 
+    Customer selectedCustomer;
+
     /**
      * Initialize method for the ModifyCustomercontroller to initialize the stage and items.
      *
@@ -83,7 +88,14 @@ public class ModifyCustomercontroller implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        selectedCustomer = CustomerScreenController.getSelectedCustomer();
+        modifyCustomerIDTextField.setText(String.valueOf(selectedCustomer.getCustomerID()));
+        modifyCustomerNameTextField.setText(String.valueOf(selectedCustomer.getCustomerName()));
+        modifyCustomerAddressTextField.setText(String.valueOf(selectedCustomer.getAddress()));
+        modifyCustomerPhoneNumberTextField.setText(String.valueOf(selectedCustomer.getPhone()));
+//        get choicebox option for country
+//        get choicebox option for state/province
+        modifyCustomerPostalCodeTextField.setText(String.valueOf(selectedCustomer.getPostalCode()));
     }
 
     /**
@@ -92,6 +104,31 @@ public class ModifyCustomercontroller implements Initializable {
      * @param actionEvent
      */
     public void modifyCustomerSaveButtonAction(ActionEvent actionEvent) {
+        try {
+            int customerID = selectedCustomer.getCustomerID();
+            String customerName = selectedCustomer.getCustomerName();
+            String customerAddress = selectedCustomer.getAddress();
+            String customerPhone = selectedCustomer.getPhone();
+//        get choicebox option for country
+//        get choicebox option for state/province
+            String customerPostalCode = selectedCustomer.getPostalCode();
+
+//            updateCustomer(customerName, customerAddress, customerPostalCode, customerPhone, );
+
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/CustomerScreenView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setTitle("Customers");
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException e)
+        {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("WARNING");
+            errorAlert.setContentText("MUST HAVE INPUT FOR ALL VALUES");
+            errorAlert.showAndWait();
+        }
     }
 
     /**

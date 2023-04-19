@@ -1,7 +1,5 @@
 package com.example.schedulingdesktopapplication.controller;
-
 import com.example.schedulingdesktopapplication.Main;
-import com.example.schedulingdesktopapplication.model.Appointment;
 import com.example.schedulingdesktopapplication.model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import static com.example.schedulingdesktopapplication.DAO.CustomerDAO.*;
 import static com.example.schedulingdesktopapplication.DAO.FirstLevelDivisionDAO.*;
@@ -132,6 +131,8 @@ public class CustomerScreenController implements Initializable {
 
     private ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
+    private static Customer selectedCustomer;
+
 
     /**
      * Initialize method for the CustomerScreenController to initialize the stage and items.
@@ -186,7 +187,42 @@ public class CustomerScreenController implements Initializable {
      *
      * @param actionEvent
      */
-    public void customersDeleteButtonAction(ActionEvent actionEvent) {
+    public void customersDeleteButtonAction(ActionEvent actionEvent) throws Exception {
+        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
+        if (selectedCustomer == null)
+        {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("ERROR");
+            errorAlert.setContentText("NO CUSTOMER WAS SELECTED");
+            errorAlert.showAndWait();
+        }
+        else
+        {
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("CONFIRMATION");
+            confirmationAlert.setContentText("PLEASE CONFIRM IF YOU WOULD LIKE TO DELETE THIS CUSTOMER");
+            Optional<ButtonType> confirmationButton = confirmationAlert.showAndWait();
+
+            if (confirmationButton.isPresent() && confirmationButton.get() == ButtonType.YES)
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/CustomerScreenView.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.setTitle("Customer");
+                stage.setScene(scene);
+                stage.show();
+                deleteCustomer(selectedCustomer.getCustomerID());
+            }
+            else
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/CustomerScreenView.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.setTitle("Customer");
+                stage.setScene(scene);
+                stage.show();
+            }
+        }
     }
 
     /**
@@ -249,12 +285,33 @@ public class CustomerScreenController implements Initializable {
      * @param actionEvent
      */
     public void customerModifyButtonAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/ModifyCustomerView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Modify Customer");
-        stage.setScene(scene);
-        stage.show();
+        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
+        if (selectedCustomer == null)
+        {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("ERROR");
+            errorAlert.setContentText("NO CUSTOMER WAS SELECTED");
+            errorAlert.showAndWait();
+        }
+        else
+        {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/ModifyCustomerView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setTitle("Modify Customer");
+            stage.setScene(scene);
+            stage.show();
+        }
+
+    }
+
+    /**
+     * getSelectedCustomer method to return the selectedCustomer.
+     *
+     * @return the selectedCustomer.
+     */
+    public static Customer getSelectedCustomer() {
+        return selectedCustomer;
     }
 
     /**
@@ -262,7 +319,42 @@ public class CustomerScreenController implements Initializable {
      *
      * @param actionEvent
      */
-    public void customerDeleteButtonAction(ActionEvent actionEvent) {
+    public void customerDeleteButtonAction(ActionEvent actionEvent) throws Exception {
+        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
+        if (selectedCustomer == null)
+        {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("ERROR");
+            errorAlert.setContentText("NO CUSTOMER WAS SELECTED");
+            errorAlert.showAndWait();
+        }
+        else
+        {
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("CONFIRMATION");
+            confirmationAlert.setContentText("PLEASE CONFIRM IF YOU WOULD LIKE TO DELETE THIS CUSTOMER");
+            Optional<ButtonType> confirmationButton = confirmationAlert.showAndWait();
+
+            if (confirmationButton.isPresent() && confirmationButton.get() == ButtonType.YES)
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/CustomerScreenView.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.setTitle("Customers");
+                stage.setScene(scene);
+                stage.show();
+                deleteCustomer(selectedCustomer.getCustomerID());
+            }
+            else
+            {
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/MainScreenView.fxml"));
+                Scene scene = new Scene(fxmlLoader.load());
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                stage.setTitle("Inventory Management System");
+                stage.setScene(scene);
+                stage.show();
+            }
+        }
     }
 
     /**
