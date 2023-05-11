@@ -120,14 +120,14 @@ public class CustomerDAO {
                 allCustomers.add(customerResult);
 
             }
-            JDBC.closeConnection();
+//            JDBC.closeConnection();
             return allCustomers;
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
 
-//        JDBC.closeConnection();
+        JDBC.closeConnection();
         return null;
     }
 

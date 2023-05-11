@@ -1,6 +1,7 @@
 package com.example.schedulingdesktopapplication.controller;
 
 import com.example.schedulingdesktopapplication.Main;
+import com.example.schedulingdesktopapplication.model.Country;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,12 +9,21 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.example.schedulingdesktopapplication.controller.ComboBoxController.*;
+
+import static com.example.schedulingdesktopapplication.DAO.JDBC.connection;
 
 /**
  * Controller class that adds customers in the application.
@@ -55,13 +65,13 @@ public class AddCustomerController implements Initializable {
      * FXML choice box variable for the customer's country.
      */
     @FXML
-    public ChoiceBox addCustomerCountryChoiceBox;
+    public ComboBox<String> addCustomerCountryComboBox;
 
     /**
      * FXML choice box variable for the customer's state or province.
      */
     @FXML
-    public ChoiceBox addCustomerStateOrProvinceChoiceBox;
+    public ComboBox<String> addCustomerStateOrProvinceComboBox;
 
     /**
      * FXML button variable to save the customer.
@@ -76,6 +86,78 @@ public class AddCustomerController implements Initializable {
     public Button addCustomerCancelButton;
 
     /**
+     * Method to access database.
+     *
+     * @param sql
+     * @return resultSet.
+     */
+    public ResultSet accessDB(String sql) {
+
+        ResultSet resultSet = null;
+
+        try {
+
+            Statement statement;
+
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString(1));
+            }
+//            resultSet.beforeFirst();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return resultSet;
+    }
+
+    /**
+     * Method that initializes the countries for the country's ComboBox.
+     */
+    public void initializeCountry() {
+        ResultSet resultSet = accessDB("SELECT country FROM countries");
+        try {
+
+            while (resultSet.next()) {
+                addCustomerCountryComboBox.getItems().add(resultSet.getString(1));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ComboBoxController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Method that initializes the cities for the city's ComboBox.
+     */
+    public void initializeStateOrProvince() {
+
+        String country = addCustomerCountryComboBox.getValue();
+
+        String sql = "SELECT division "
+                + "FROM first_level_divisions, countries "
+                + "WHERE first_level_divisions.Country_ID = countries.Country_ID "
+                + "AND country = \"" + country + "\"";
+
+        ResultSet resultSet = accessDB(sql);
+        addCustomerStateOrProvinceComboBox.getItems().clear();
+
+        try {
+            while (resultSet.next()) {
+
+                addCustomerStateOrProvinceComboBox.getItems().add(resultSet.getString(1));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ComboBoxController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+
+    /**
      * Initialize method for the AddCustomerController to initialize the stage and items.
      *
      * @param url for the url path.
@@ -83,7 +165,8 @@ public class AddCustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        initializeCountry();
+        initializeStateOrProvince();
     }
 
     /**

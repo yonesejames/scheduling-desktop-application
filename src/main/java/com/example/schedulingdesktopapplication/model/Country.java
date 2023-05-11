@@ -39,6 +39,17 @@ public class Country {
     }
 
     /**
+     * Additional constructor that creates a new instance of the country object.
+     *
+     * @param countryID for the ID of the country.
+     * @param countryName for the name of the country.
+     */
+    public Country(int countryID, String countryName) {
+        this.countryID = countryID;
+        this.countryName = countryName;
+    }
+
+    /**
      * Getter for the countryID of the country.
      *
      * @return the countryID.

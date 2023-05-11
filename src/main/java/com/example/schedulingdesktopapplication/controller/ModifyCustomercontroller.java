@@ -7,10 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
@@ -58,13 +55,13 @@ public class ModifyCustomercontroller implements Initializable {
      * FXML choice box variable for the customer's country.
      */
     @FXML
-    public ChoiceBox modifyCustomerCountryChoiceBox;
+    public ComboBox modifyCustomerCountryComboBox;
 
     /**
      * FXML choice box variable for the customer's state and province.
      */
     @FXML
-    public ChoiceBox modifyCustomerStateAndProvinceChoiceBox;
+    public ComboBox modifyCustomerStateAndProvinceComboBox;
 
     /**
      *  FXML save button variable to save the customer.
@@ -93,8 +90,8 @@ public class ModifyCustomercontroller implements Initializable {
         modifyCustomerNameTextField.setText(String.valueOf(selectedCustomer.getCustomerName()));
         modifyCustomerAddressTextField.setText(String.valueOf(selectedCustomer.getAddress()));
         modifyCustomerPhoneNumberTextField.setText(String.valueOf(selectedCustomer.getPhone()));
-//        get choicebox option for country
-//        get choicebox option for state/province
+//        get combobox option for country
+//        get combobox option for state/province
         modifyCustomerPostalCodeTextField.setText(String.valueOf(selectedCustomer.getPostalCode()));
     }
 
@@ -109,8 +106,8 @@ public class ModifyCustomercontroller implements Initializable {
             String customerName = selectedCustomer.getCustomerName();
             String customerAddress = selectedCustomer.getAddress();
             String customerPhone = selectedCustomer.getPhone();
-//        get choicebox option for country
-//        get choicebox option for state/province
+//        get combobox option for country
+//        get combobox option for state/province
             String customerPostalCode = selectedCustomer.getPostalCode();
 
 //            updateCustomer(customerName, customerAddress, customerPostalCode, customerPhone, );
