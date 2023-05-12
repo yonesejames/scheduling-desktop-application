@@ -149,7 +149,7 @@ public class CustomerScreenController implements Initializable {
             customerTableColumnName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
             customerTableColumnAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
             customerTableColumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phone"));
-            customerTableColumnStateAndProvince.setCellValueFactory(new PropertyValueFactory<>("divisionID"));
+            customerTableColumnStateAndProvince.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
             customerTableColumnPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         } catch (Exception e) {
             e.printStackTrace(); }

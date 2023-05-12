@@ -64,7 +64,8 @@ public class AppointmentDAO {
     public static ObservableList<Appointment> getAllAppointments() throws SQLException, Exception{
         JDBC.openConnection();
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
-        String sqlStatement = "SELECT * FROM appointments";
+        String sqlStatement = "SELECT * FROM appointments as a " +
+                "LEFT OUTER JOIN contacts as c ON a.Contact_ID = c.Contact_ID;";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
         ResultSet result = preparedStatement.executeQuery();
 
@@ -80,8 +81,9 @@ public class AppointmentDAO {
                 int customerID = result.getInt("Customer_ID");
                 int userID = result.getInt("User_ID");
                 int contactID = result.getInt("Contact_ID");
+                String contactName = result.getString("Contact_Name");
                 Appointment appointment = new Appointment(appointmentID, appointmentTitle, appointmentDescription,
-                        appointmentLocation, appointmentType, start, end, customerID, userID, contactID);
+                        appointmentLocation, appointmentType, start, end, customerID, userID, contactID,contactName);
                 allAppointments.add(appointment);
             }
             return allAppointments;

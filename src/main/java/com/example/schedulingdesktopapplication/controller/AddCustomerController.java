@@ -1,5 +1,6 @@
 package com.example.schedulingdesktopapplication.controller;
 
+import com.example.schedulingdesktopapplication.DAO.CountryDAO;
 import com.example.schedulingdesktopapplication.Main;
 import com.example.schedulingdesktopapplication.model.Country;
 import javafx.event.ActionEvent;
@@ -20,8 +21,6 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.example.schedulingdesktopapplication.controller.ComboBoxController.*;
 
 import static com.example.schedulingdesktopapplication.DAO.JDBC.connection;
 
@@ -65,7 +64,7 @@ public class AddCustomerController implements Initializable {
      * FXML choice box variable for the customer's country.
      */
     @FXML
-    public ComboBox<String> addCustomerCountryComboBox;
+    public ComboBox<Country> addCustomerCountryComboBox;
 
     /**
      * FXML choice box variable for the customer's state or province.
@@ -117,16 +116,16 @@ public class AddCustomerController implements Initializable {
      * Method that initializes the countries for the country's ComboBox.
      */
     public void initializeCountry() {
-        ResultSet resultSet = accessDB("SELECT country FROM countries");
-        try {
-
-            while (resultSet.next()) {
-                addCustomerCountryComboBox.getItems().add(resultSet.getString(1));
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ComboBoxController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        ResultSet resultSet = accessDB("SELECT country FROM countries");
+//        try {
+//
+//            while (resultSet.next()) {
+//                addCustomerCountryComboBox.getItems().add(resultSet.getString(1));
+//
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ComboBoxController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     /**
@@ -134,25 +133,25 @@ public class AddCustomerController implements Initializable {
      */
     public void initializeStateOrProvince() {
 
-        String country = addCustomerCountryComboBox.getValue();
-
-        String sql = "SELECT division "
-                + "FROM first_level_divisions, countries "
-                + "WHERE first_level_divisions.Country_ID = countries.Country_ID "
-                + "AND country = \"" + country + "\"";
-
-        ResultSet resultSet = accessDB(sql);
-        addCustomerStateOrProvinceComboBox.getItems().clear();
-
-        try {
-            while (resultSet.next()) {
-
-                addCustomerStateOrProvinceComboBox.getItems().add(resultSet.getString(1));
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ComboBoxController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        String country = addCustomerCountryComboBox.getValue();
+//
+//        String sql = "SELECT division "
+//                + "FROM first_level_divisions, countries "
+//                + "WHERE first_level_divisions.Country_ID = countries.Country_ID "
+//                + "AND country = \"" + country + "\"";
+//
+//        ResultSet resultSet = accessDB(sql);
+//        addCustomerStateOrProvinceComboBox.getItems().clear();
+//
+//        try {
+//            while (resultSet.next()) {
+//
+//                addCustomerStateOrProvinceComboBox.getItems().add(resultSet.getString(1));
+//
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ComboBoxController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
     }
 
@@ -165,8 +164,15 @@ public class AddCustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        initializeCountry();
-        initializeStateOrProvince();
+//        initializeCountry();
+        try {
+            addCustomerCountryComboBox.setItems(CountryDAO.getAllCountries());
+            addCustomerCountryComboBox.getSelectionModel().selectFirst();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     /**

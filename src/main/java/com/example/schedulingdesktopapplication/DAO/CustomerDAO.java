@@ -98,7 +98,10 @@ public class CustomerDAO {
     public static ObservableList<Customer> getAllCustomers() throws SQLException, Exception{
         JDBC.openConnection();
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
-        String sqlStatement = "SELECT * FROM customers";
+//        String sqlStatement = "SELECT * FROM customers";
+        String sqlStatement = "SELECT cx.Customer_ID, cx.Customer_Name, cx.Address, cx.Postal_Code, cx.Phone, cx.Division_ID, " +
+                "f.Division, f.COUNTRY_ID, co.Country FROM customers as cx INNER JOIN first_level_divisions " +
+                "as f on cx.Division_ID = f.Division_ID INNER JOIN countries as co ON f.COUNTRY_ID = co.Country_ID";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
         ResultSet result = preparedStatement.executeQuery();
 
@@ -109,14 +112,16 @@ public class CustomerDAO {
                 String address = result.getString("Address");
                 String postalCode = result.getString("Postal_code");
                 String phone = result.getString("Phone");
+                String  division = result.getString("Division");
 //                Timestamp createDate = result.getTimestamp("Create_Date");
 //                String createdBy = result.getString("Created_By");
 //                Timestamp lastUpdate = result.getTimestamp("Last_Update");
 //                String lastUpdatedBy = result.getString("Last_Update_BY");
                 int divisionID = result.getInt("Division_ID");
+                String country = result.getString("Country");
 //                Customer customerResult = new Customer(customerID, customerName, address, postalCode, phone, createDate,
 //                        createdBy, lastUpdate, lastUpdatedBy,divisionID);
-                Customer customerResult = new Customer(customerID, customerName, address, postalCode, phone, divisionID);
+                Customer customerResult = new Customer(customerID, customerName, address, postalCode, phone, division, divisionID, country);
                 allCustomers.add(customerResult);
 
             }
@@ -153,22 +158,20 @@ public class CustomerDAO {
                                      Timestamp createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy,
                                      int divisionID) throws SQLException, Exception{
         JDBC.openConnection();
-        String sqlStatement = "INSERT INTO customers (Customer_ID, Customer_Name, Address, Postal_Code, Phone," +
+        String sqlStatement = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone," +
                 "Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES(?, ?, ?, ?, now(), ?, now(), ?, ?)";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
 
         try {
-            preparedStatement.setInt(1, customerID);
-            preparedStatement.setString(2, customerName);
-            preparedStatement.setString(3, address);
-            preparedStatement.setString(4, postalCode);
-            preparedStatement.setString(5, phone);
-            preparedStatement.setTimestamp(6, createDate);
-            preparedStatement.setString(7, createdBy);
-            preparedStatement.setTimestamp(8, lastUpdate);
-            preparedStatement.setString(9, lastUpdatedBy);
-            preparedStatement.setInt(10, divisionID);
+            preparedStatement.setString(1, customerName);
+            preparedStatement.setString(2, address);
+            preparedStatement.setString(3, postalCode);
+            preparedStatement.setString(4, phone);
+            preparedStatement.setString(5, createdBy);
+//            NA for lastUpdatedBy
+            preparedStatement.setString(6, lastUpdatedBy);
+            preparedStatement.setInt(7, divisionID);
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected;
         }

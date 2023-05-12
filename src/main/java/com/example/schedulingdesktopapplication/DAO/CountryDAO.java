@@ -59,24 +59,17 @@ public class CountryDAO {
 
         try {
             while(result.next()){
-                int countryID = result.getInt("Customer_ID");
-                String country = result.getString("Customer_Name");
-                Timestamp createDate = result.getTimestamp("Create_Date");
-                String createdBy = result.getString("Created_By");
-                Timestamp lastUpdate = result.getTimestamp("Last_Update");
-                String lastUpdatedBy = result.getString("Last_Update_BY");
-                Country customerResult = new Country(countryID, country, createDate, createdBy, lastUpdate, lastUpdatedBy);
+                int countryID = result.getInt("Country_ID");
+                String country = result.getString("Country");
+                Country customerResult = new Country(countryID, country);
                 allCountries.add(customerResult);
-                JDBC.closeConnection();
             }
-            return allCountries;
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
 
-        JDBC.closeConnection();
-        return null;
+        return allCountries;
     }
 
     /**

@@ -185,7 +185,7 @@ public class AppointmentScreenController implements Initializable {
             appointmentTableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
             appointmentTableColumnStartDateAndTime.setCellValueFactory(new PropertyValueFactory<>("startDateTime"));
             appointmentTableColumnEndDateAndTime.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
-            appointmentTableColumnContact.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+            appointmentTableColumnContact.setCellValueFactory(new PropertyValueFactory<>("contactName"));
             appointmentTableColumnCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
             appointmentTableColumnUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
 

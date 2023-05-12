@@ -12,7 +12,7 @@ public class Customer {
      * Variables for the customer's id, name, address, postalCode, phone, createDate, createBy, lastUpdate,
      * lastUpdatedBy, divisionID, and divisionName.
      */
-    private static int customerID = 0;
+    private int customerID;
     private String customerName;
     private String address;
     private String postalCode;
@@ -23,6 +23,7 @@ public class Customer {
     private String lastUpdatedBy;
     private int divisionID;
     private String divisionName;
+    private String country;
 
     /**
      * Constructor that creates a new instance of the customer object.
@@ -42,7 +43,7 @@ public class Customer {
     public Customer(int customerID, String customerName, String address, String postalCode, String phone,
                     Timestamp createDate, String createBy, Timestamp lastUpdate, String lastUpdatedBy,
                     int divisionID, String divisionName) {
-        Customer.customerID = customerID;
+        this.customerID = customerID;
         this.customerName = customerName;
         this.address = address;
         this.postalCode = postalCode;
@@ -72,7 +73,7 @@ public class Customer {
     public Customer(int customerID, String customerName, String address, String postalCode, String phone,
                     Timestamp createDate, String createBy, Timestamp lastUpdate, String lastUpdatedBy,
                     int divisionID) {
-        Customer.customerID = customerID;
+        this.customerID = customerID;
         this.customerName = customerName;
         this.address = address;
         this.postalCode = postalCode;
@@ -95,12 +96,35 @@ public class Customer {
      * @param divisionID for the division ID of the customer.
      */
     public Customer(int customerID, String customerName, String address, String postalCode, String phone, int divisionID) {
-        Customer.customerID = customerID;
+        this.customerID = customerID;
         this.customerName = customerName;
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
         this.divisionID = divisionID;
+    }
+
+    /**
+     * Overloaded Constructor that creates a new instance of the customer object.
+     *
+     * @param customerID for the ID of the customer.
+     * @param customerName for the name of the customer.
+     * @param address for the address of the customer.
+     * @param postalCode for the postal code of the customer.
+     * @param phone for the phone of the customer.
+     * @param divisionName for the division name of the customer.
+     * @param divisionID for the division ID of the customer.
+     * @param country for the country of the customer.
+     */
+    public Customer(int customerID, String customerName, String address, String postalCode, String phone, String divisionName, int divisionID, String country) {
+        this.customerID = customerID;
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.divisionName = divisionName;
+        this.divisionID = divisionID;
+        this.country = country;
     }
 
     /**
