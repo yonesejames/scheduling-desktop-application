@@ -114,7 +114,7 @@ public class CustomerDAO {
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
 
         String createdBy = LoginScreenController.username;
-        String lastUpdatedBy = String.valueOf(Logger.getUser());
+        String lastUpdatedBy = String.valueOf(LoginScreenController.username);
 
         try {
             preparedStatement.setString(1, customerName);
@@ -152,24 +152,20 @@ public class CustomerDAO {
     public static int updateCustomer(String customerName, String address, String postalCode, String phone,
                                      int divisionID, int customerID) throws SQLException, Exception{
         JDBC.openConnection();
-        String sqlStatement = "UPDATE customers SET Customer_Name = ? AND SET Address = ? AND SET Postal_Code = ? " +
-                "AND SET Phone = ? AND SET Last_Update = now() " +
-                "AND SET Last_Updated_By = ? AND SET Division_ID = ? WHERE Customer_ID = ?";
+        String sqlStatement = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, " +
+                "Phone = ?, Last_Update = now(), Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
-        ResultSet result = preparedStatement.executeQuery();
 
-        String lastUpdatedBy = String.valueOf(Logger.getUser().getUserName());
+        String lastUpdatedBy = String.valueOf(LoginScreenController.username);
 
         try {
-            while(result.next()) {
-                preparedStatement.setString(1, customerName);
-                preparedStatement.setString(2, address);
-                preparedStatement.setString(3, postalCode);
-                preparedStatement.setString(4, phone);
-                preparedStatement.setString(5, lastUpdatedBy);
-                preparedStatement.setInt(6, divisionID);
-                preparedStatement.setInt(7, customerID);
-            }
+            preparedStatement.setString(1, customerName);
+            preparedStatement.setString(2, address);
+            preparedStatement.setString(3, postalCode);
+            preparedStatement.setString(4, phone);
+            preparedStatement.setString(5, lastUpdatedBy);
+            preparedStatement.setInt(6, divisionID);
+            preparedStatement.setInt(7, customerID);
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected;
         }
@@ -177,7 +173,6 @@ public class CustomerDAO {
             e.printStackTrace();
         }
 
-        JDBC.closeConnection();
         return -1;
     }
 
@@ -203,7 +198,6 @@ public class CustomerDAO {
             e.printStackTrace();
         }
 
-        JDBC.closeConnection();
         return -1;
     }
 }

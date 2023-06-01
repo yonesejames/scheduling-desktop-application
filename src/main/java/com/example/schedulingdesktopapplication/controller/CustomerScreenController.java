@@ -157,83 +157,6 @@ public class CustomerScreenController implements Initializable {
     }
 
     /**
-     * customersReportsButtonAction method to go to the reports page and view reports.
-     *
-     * @param actionEvent
-     */
-    public void customersReportsButtonAction(ActionEvent actionEvent) {
-    }
-
-    /**
-     * customersAddButtonAction method go to the
-     * add customer page and add a customer.
-     *
-     * @param actionEvent
-     */
-    public void customersAddButtonAction(ActionEvent actionEvent) {
-    }
-
-    /**
-     * customersModifyButtonAction method to go to the
-     * modify customer page and modify the customer.
-     *
-     * @param actionEvent
-     */
-    public void customersModifyButtonAction(ActionEvent actionEvent) {
-    }
-
-    /**
-     * customersDeleteButtonAction method to delete an customer.
-     *
-     * @param actionEvent
-     */
-    public void customersDeleteButtonAction(ActionEvent actionEvent) throws Exception {
-        selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
-        if (selectedCustomer == null)
-        {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setTitle("ERROR");
-            errorAlert.setContentText("NO CUSTOMER WAS SELECTED");
-            errorAlert.showAndWait();
-        }
-        else
-        {
-            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmationAlert.setTitle("CONFIRMATION");
-            confirmationAlert.setContentText("PLEASE CONFIRM IF YOU WOULD LIKE TO DELETE THIS CUSTOMER");
-            Optional<ButtonType> confirmationButton = confirmationAlert.showAndWait();
-
-            if (confirmationButton.isPresent() && confirmationButton.get() == ButtonType.YES)
-            {
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/CustomerScreenView.fxml"));
-                Scene scene = new Scene(fxmlLoader.load());
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.setTitle("Customer");
-                stage.setScene(scene);
-                stage.show();
-                deleteCustomer(selectedCustomer.getCustomerID());
-            }
-            else
-            {
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/CustomerScreenView.fxml"));
-                Scene scene = new Scene(fxmlLoader.load());
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.setTitle("Customer");
-                stage.setScene(scene);
-                stage.show();
-            }
-        }
-    }
-
-    /**
-     * customersLogoutButtonAction method to logout of the application.
-     *
-     * @param actionEvent
-     */
-    public void customersLogoutButtonAction(ActionEvent actionEvent) {
-    }
-
-    /**
      * customerCurrentWeekRadioButtonAction method to view current week of customers.
      *
      * @param actionEvent
@@ -335,24 +258,26 @@ public class CustomerScreenController implements Initializable {
             confirmationAlert.setContentText("PLEASE CONFIRM IF YOU WOULD LIKE TO DELETE THIS CUSTOMER");
             Optional<ButtonType> confirmationButton = confirmationAlert.showAndWait();
 
-            if (confirmationButton.isPresent() && confirmationButton.get() == ButtonType.YES)
+            if (confirmationButton.isPresent() && confirmationButton.get() == ButtonType.OK)
             {
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/CustomerScreenView.fxml"));
-                Scene scene = new Scene(fxmlLoader.load());
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.setTitle("Customers");
-                stage.setScene(scene);
-                stage.show();
                 deleteCustomer(selectedCustomer.getCustomerID());
+                allCustomers = getAllCustomers();
+                customerTableView.setItems(allCustomers);
+                customerTableColumnID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+                customerTableColumnName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+                customerTableColumnAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+                customerTableColumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phone"));
+                customerTableColumnStateAndProvince.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
+                customerTableColumnPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+
             }
             else
             {
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/MainScreenView.fxml"));
-                Scene scene = new Scene(fxmlLoader.load());
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.setTitle("Inventory Management System");
-                stage.setScene(scene);
-                stage.show();
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("ERROR");
+                errorAlert.setContentText("CUSTOMER WAS NOT DELETED");
+                errorAlert.showAndWait();
+
             }
         }
     }

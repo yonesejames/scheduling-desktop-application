@@ -115,7 +115,6 @@ public class AddCustomerController implements Initializable {
      * @param actionEvent
      */
     public void addCustomerSaveAction(ActionEvent actionEvent) throws Exception {
-//        int customerID = Integer.parseInt(addCustomerIDLabel.getText());
         String customerName = addCustomerNameTextField.getText();
         String customerAddress = addCustomerAddressTextField.getText();
         String customerPhone = addCustomerPhoneNumberTextField.getText();
@@ -143,12 +142,12 @@ public class AddCustomerController implements Initializable {
             confirmationAlert.setContentText("CUSTOMER HAS BEEN ADDED");
             confirmationAlert.showAndWait();
 
-//            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/CustomerScreenView.fxml"));
-//            Scene scene = new Scene(fxmlLoader.load());
-//            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-//            stage.setTitle("Customers");
-//            stage.setScene(scene);
-//            stage.show();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/CustomerScreenView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setTitle("Customers");
+            stage.setScene(scene);
+            stage.show();
         } else {
             Alert warningAlert = new Alert(Alert.AlertType.WARNING);
             warningAlert.setTitle("WARNING");

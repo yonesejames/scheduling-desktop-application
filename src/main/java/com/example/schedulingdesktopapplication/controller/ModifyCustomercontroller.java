@@ -1,5 +1,6 @@
 package com.example.schedulingdesktopapplication.controller;
 import com.example.schedulingdesktopapplication.DAO.CountryDAO;
+import com.example.schedulingdesktopapplication.DAO.CustomerDAO;
 import com.example.schedulingdesktopapplication.DAO.FirstLevelDivisionDAO;
 import com.example.schedulingdesktopapplication.Main;
 import com.example.schedulingdesktopapplication.model.Customer;
@@ -81,6 +82,7 @@ public class ModifyCustomercontroller implements Initializable {
 
     public void modifyCustomerCountryAction() throws Exception {
         modifyCustomerStateAndProvinceComboBox.setItems(FirstLevelDivisionDAO.getDivision(String.valueOf(modifyCustomerCountryComboBox.getValue())));
+        modifyCustomerStateAndProvinceComboBox.getSelectionModel().select(selectedCustomer.getDivisionName());
     }
 
     /**
@@ -98,7 +100,7 @@ public class ModifyCustomercontroller implements Initializable {
         modifyCustomerPhoneNumberTextField.setText(String.valueOf(selectedCustomer.getPhone()));
         try {
             modifyCustomerCountryComboBox.setItems(CountryDAO.getAllCountries());
-            modifyCustomerCountryComboBox.getSelectionModel().selectFirst();
+            modifyCustomerCountryComboBox.getSelectionModel().select(selectedCustomer.getCountry());
             modifyCustomerCountryAction();
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,17 +113,34 @@ public class ModifyCustomercontroller implements Initializable {
      *
      * @param actionEvent
      */
-    public void modifyCustomerSaveButtonAction(ActionEvent actionEvent) {
-        try {
-            int customerID = selectedCustomer.getCustomerID();
-            String customerName = selectedCustomer.getCustomerName();
-            String customerAddress = selectedCustomer.getAddress();
-            String customerPhone = selectedCustomer.getPhone();
-//        get combobox option for country
-//        get combobox option for state/province
-            String customerPostalCode = selectedCustomer.getPostalCode();
+    public void modifyCustomerSaveButtonAction(ActionEvent actionEvent) throws Exception {
+        int customerID = Integer.parseInt(modifyCustomerIDLabel.getText());
+        String customerName = modifyCustomerNameTextField.getText();
+        String customerAddress = modifyCustomerAddressTextField.getText();
+        String customerPhone = modifyCustomerPhoneNumberTextField.getText();
+        String customerCountry = String.valueOf(modifyCustomerCountryComboBox.getValue());
+        String customerDivisionName = String.valueOf(modifyCustomerStateAndProvinceComboBox.getValue());
+        int customerDivisionID = FirstLevelDivisionDAO.getDivisionID(customerDivisionName);
+        String customerPostalCode = modifyCustomerPostalCodeTextField.getText();
 
-//            updateCustomer(customerName, customerAddress, customerPostalCode, customerPhone, );
+        if (customerName.isBlank() || customerAddress.isBlank() || customerPhone.isBlank() || customerCountry.isBlank() || customerDivisionName.isBlank() ||
+                customerPostalCode.isBlank()) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setTitle("ERROR");
+            errorAlert.setContentText("PLEASE ENTER VALUE FOR EACH FIELD");
+            errorAlert.showAndWait();
+            return;
+        }
+
+        int customerAdded = CustomerDAO.updateCustomer(customerName, customerAddress, customerPostalCode, customerPhone,
+                customerDivisionID, customerID);
+
+
+        if (customerAdded != -1) {
+            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmationAlert.setTitle("CONFIRM");
+            confirmationAlert.setContentText("CUSTOMER HAS BEEN ADDED");
+            confirmationAlert.showAndWait();
 
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/CustomerScreenView.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -129,14 +148,15 @@ public class ModifyCustomercontroller implements Initializable {
             stage.setTitle("Customers");
             stage.setScene(scene);
             stage.show();
+        } else {
+            Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+            warningAlert.setTitle("WARNING");
+            warningAlert.setContentText("CUSTOMER HAS NOT BEEN ADDED");
+            warningAlert.showAndWait();
+            return;
         }
-        catch (IOException e)
-        {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setTitle("WARNING");
-            errorAlert.setContentText("MUST HAVE INPUT FOR ALL VALUES");
-            errorAlert.showAndWait();
-        }
+
+
     }
 
     /**
