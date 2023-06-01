@@ -1,5 +1,4 @@
 package com.example.schedulingdesktopapplication.DAO;
-
 import com.example.schedulingdesktopapplication.model.Contact;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,37 +8,6 @@ import java.sql.SQLException;
 
 public class ContactDAO {
     /**
-     * Getter for contact in the contact database by contactID.
-     *
-     * @param contactID
-     * @return contact.
-     * @throws SQLException
-     * @throws Exception
-     */
-    public static Contact getContact(int contactID) throws SQLException, Exception{
-        JDBC.openConnection();
-        String sqlStatement = "SELECT * FROM contacts WHERE Contact_ID  = '" + contactID + "'";
-        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
-        Contact contactResult;
-        ResultSet result = preparedStatement.executeQuery();
-
-        try {
-            while(result.next()){
-                String contactName = result.getString("Contact_Name");
-                String email = result.getString("Email");
-                contactResult = new Contact(contactID, contactName, email);
-                return contactResult;
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        JDBC.closeConnection();
-        return null;
-    }
-
-    /**
      * Getter for all contacts in the contact database.
      *
      * @return ObservableList of all contacts.
@@ -47,7 +15,6 @@ public class ContactDAO {
      * @throws Exception
      */
     public static ObservableList<Contact> getAllContacts() throws SQLException, Exception{
-        JDBC.openConnection();
         ObservableList<Contact> allContacts = FXCollections.observableArrayList();
         String sqlStatement = "SELECT * FROM contacts";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
@@ -67,8 +34,33 @@ public class ContactDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
+    }
 
-        JDBC.closeConnection();
+    /**
+     * Getter for contact's names in the contact database.
+     *
+     * @return ObservableList of all contacts.
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static ObservableList<Contact> getContactNames() throws SQLException, Exception{
+        ObservableList<Contact> contactNames = FXCollections.observableArrayList();
+        String sqlStatement = "SELECT Contact_Name FROM contacts";
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        ResultSet result = preparedStatement.executeQuery();
+
+        try {
+            while(result.next()){
+                String contactName = result.getString("Contact_Name");
+                Contact contactResult = new Contact(contactName);
+                contactNames.add(contactResult);
+            }
+            return contactNames;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -157,4 +149,36 @@ public class ContactDAO {
         JDBC.closeConnection();
         return -1;
     }
+
+//    /**
+//     * Getter for contact in the contact database by contactID.
+//     *
+//     * @param contactID
+//     * @return contact.
+//     * @throws SQLException
+//     * @throws Exception
+//     */
+//    public static Contact getContact(int contactID) throws SQLException, Exception{
+//        JDBC.openConnection();
+//        String sqlStatement = "SELECT * FROM contacts WHERE Contact_ID  = '" + contactID + "'";
+//        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+//        Contact contactResult;
+//        ResultSet result = preparedStatement.executeQuery();
+//
+//        try {
+//            while(result.next()){
+//                String contactName = result.getString("Contact_Name");
+//                String email = result.getString("Email");
+//                contactResult = new Contact(contactID, contactName, email);
+//                return contactResult;
+//            }
+//        }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        JDBC.closeConnection();
+//        return null;
+//    }
+
 }

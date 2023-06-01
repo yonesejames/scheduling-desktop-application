@@ -1,5 +1,4 @@
 package com.example.schedulingdesktopapplication.DAO;
-
 import com.example.schedulingdesktopapplication.model.Appointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,46 +13,6 @@ import java.sql.Timestamp;
  * @author Yonese James
  */
 public class AppointmentDAO {
-
-    /**
-     * Getter for appointment in the appointment database by appointmentID.
-     *
-     * @param appointmentID
-     * @return appointment.
-     * @throws SQLException
-     * @throws Exception
-     */
-    public static Appointment getAppointment(int appointmentID) throws SQLException, Exception{
-        try {
-            JDBC.openConnection();
-            String sqlStatement = "SELECT * FROM appointments WHERE Appointment_ID  = '" + appointmentID + "'";
-            PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
-            Appointment appointmentResult;
-            ResultSet result = preparedStatement.executeQuery();
-
-            while(result.next()){
-                String appointmentTitle = result.getString("Title");
-                String appointmentDescription = result.getString("Description");
-                String appointmentLocation = result.getString("Location");
-                String appointmentType = result.getString("Type");
-                Timestamp start = result.getTimestamp("Start");
-                Timestamp end = result.getTimestamp("End");
-                int customerID = result.getInt("Customer_ID");
-                int userID = result.getInt("User_ID");
-                int contactID = result.getInt("Contact_ID");
-                appointmentResult = new Appointment(appointmentID, appointmentTitle, appointmentDescription,
-                        appointmentLocation, appointmentType, start, end, customerID, userID, contactID);
-                return appointmentResult;
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        JDBC.closeConnection();
-        return null;
-    }
-
     /**
      * Getter for all appointments in the appointment database.
      *
@@ -62,10 +21,9 @@ public class AppointmentDAO {
      * @throws Exception
      */
     public static ObservableList<Appointment> getAllAppointments() throws SQLException, Exception{
-        JDBC.openConnection();
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
-        String sqlStatement = "SELECT * FROM appointments as a " +
-                "LEFT OUTER JOIN contacts as c ON a.Contact_ID = c.Contact_ID;";
+        String sqlStatement = "SELECT * FROM appointments as appointment LEFT OUTER JOIN contacts as contact " +
+                "ON appointment.Contact_ID = contact.Contact_ID;";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
         ResultSet result = preparedStatement.executeQuery();
 
@@ -91,9 +49,7 @@ public class AppointmentDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
-        return allAppointments;
+        return null;
     }
 
     /**
@@ -104,7 +60,6 @@ public class AppointmentDAO {
      * @throws Exception
      */
     public static ObservableList<Appointment> getWeeklyAppointments() throws SQLException, Exception {
-        JDBC.openConnection();
         ObservableList<Appointment> weeklyAppointments = FXCollections.observableArrayList();
         String sqlStatement = "SELECT * FROM appointments WHERE Start BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 7 DAY)";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
@@ -130,9 +85,7 @@ public class AppointmentDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
-        return weeklyAppointments;
+        return null;
     }
 
     /**
@@ -143,7 +96,6 @@ public class AppointmentDAO {
      * @throws Exception
      */
     public static ObservableList<Appointment> getMonthlyAppointments() throws SQLException, Exception {
-        JDBC.openConnection();
         ObservableList<Appointment> monthlyAppointments = FXCollections.observableArrayList();
         String sqlStatement = "SELECT * FROM appointments WHERE Start BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 30 DAY)";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
@@ -170,9 +122,7 @@ public class AppointmentDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
-        return monthlyAppointments;
+        return null;
     }
 
     /**
@@ -201,7 +151,6 @@ public class AppointmentDAO {
                                         String type, Timestamp startDateTime, Timestamp endDateTime, Timestamp createDate,
                                         String createdBy, Timestamp lastUpdate, String lastUpdatedBy, int customerID,
                                         int userID, int contactID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "INSERT INTO appointments (Appointment_ID, Title, Description, Location, Type, Start, End, " +
                 "Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) " +
                 "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -222,14 +171,13 @@ public class AppointmentDAO {
             preparedStatement.setInt(12, customerID);
             preparedStatement.setInt(13, userID);
             preparedStatement.setInt(14, contactID);
+
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected;
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return -1;
     }
 
@@ -315,4 +263,41 @@ public class AppointmentDAO {
         JDBC.closeConnection();
         return -1;
     }
+
+//    /**
+//     * Getter for appointment in the appointment database by appointmentID.
+//     *
+//     * @param appointmentID
+//     * @return appointment.
+//     * @throws SQLException
+//     * @throws Exception
+//     */
+//    public static Appointment getAppointment(int appointmentID) throws SQLException, Exception{
+//        try {
+//            String sqlStatement = "SELECT * FROM appointments WHERE Appointment_ID  = '" + appointmentID + "'";
+//            PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+//            Appointment appointmentResult;
+//            ResultSet result = preparedStatement.executeQuery();
+//
+//            while(result.next()){
+//                String appointmentTitle = result.getString("Title");
+//                String appointmentDescription = result.getString("Description");
+//                String appointmentLocation = result.getString("Location");
+//                String appointmentType = result.getString("Type");
+//                Timestamp start = result.getTimestamp("Start");
+//                Timestamp end = result.getTimestamp("End");
+//                int customerID = result.getInt("Customer_ID");
+//                int userID = result.getInt("User_ID");
+//                int contactID = result.getInt("Contact_ID");
+//                appointmentResult = new Appointment(appointmentID, appointmentTitle, appointmentDescription,
+//                        appointmentLocation, appointmentType, start, end, customerID, userID, contactID);
+//                return appointmentResult;
+//            }
+//        }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+
 }

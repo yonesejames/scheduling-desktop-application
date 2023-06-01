@@ -1,5 +1,4 @@
 package com.example.schedulingdesktopapplication.model;
-
 import java.sql.Timestamp;
 
 /**
@@ -12,7 +11,7 @@ public class Appointment {
      * Variables for the appointment's id, title, description, location, type, startDateTime, endDateTime, createDate,
      * createBy, lastUpdate, lastUpdatedBy, customerID, userID, contactID, and contactName.
      */
-    private static Integer appointmentID;
+    private int appointmentID;
     private String title;
     private String description;
     private String location;
@@ -140,14 +139,6 @@ public class Appointment {
      */
     public Integer getAppointmentID() {
         return appointmentID;
-    }
-
-    /**
-     * Setter for the appointmentID of the appointment.
-     *
-     */
-    public static int setAppointmentID() {
-        return appointmentID++;
     }
 
     /**
@@ -401,4 +392,5 @@ public class Appointment {
     public void setContactName(String contactName) {
         this.contactName = contactName;
     }
+
 }

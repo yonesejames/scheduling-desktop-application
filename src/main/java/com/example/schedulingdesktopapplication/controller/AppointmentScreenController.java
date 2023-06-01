@@ -1,7 +1,6 @@
 package com.example.schedulingdesktopapplication.controller;
 import com.example.schedulingdesktopapplication.Main;
 import com.example.schedulingdesktopapplication.model.Appointment;
-import com.example.schedulingdesktopapplication.model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,13 +14,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.temporal.WeekFields;
-import java.util.Calendar;
 import java.util.Date;
-import java.time.LocalDate;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import static com.example.schedulingdesktopapplication.DAO.AppointmentDAO.*;
 

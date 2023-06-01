@@ -27,6 +27,15 @@ public class Contact {
     }
 
     /**
+     * Overloaded constructor that creates a new instance of the contact object.
+     *
+     * @param contactName for the name of the contact.
+     */
+    public Contact(String contactName) {
+        this.contactName = contactName;
+    }
+
+    /**
      * Getter for the contactID of the contact.
      *
      * @return the contactID.
@@ -78,5 +87,15 @@ public class Contact {
      */
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
+    }
+
+    /**
+     * Method that turns contactName into a string and not an object.
+     *
+     * @return the contactName.
+     */
+    @Override
+    public String toString() {
+        return contactName;
     }
 }

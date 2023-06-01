@@ -8,10 +8,10 @@
       <Label fx:id="loginTitleLabel" layoutX="211.0" layoutY="126.0" style="-fx-text-fill: black; -fx-font-weight: bold; -fx-font-size: 20" text="SCHEDULING DESKTOP APPLICATION" />
       <AnchorPane layoutX="204.0" layoutY="168.0" prefHeight="263.0" prefWidth="368.0">
          <children>
-            <TextField fx:id="loginUsernameTextField" layoutX="60.0" layoutY="69.0" onAction="#loginUsernameTextFieldAction" prefHeight="25.0" prefWidth="265.0" />
+            <TextField fx:id="loginUsernameTextField" layoutX="60.0" layoutY="69.0" onAction="#loginUsernameAction" prefHeight="25.0" prefWidth="265.0" />
             <Label fx:id="loginUsernameLabel" layoutX="155.0" layoutY="43.0" text="Username" />
             <Button fx:id="loginButton" layoutX="156.0" layoutY="214.0" mnemonicParsing="false" onAction="#loginButtonAction" text="LOGIN" />
-            <PasswordField fx:id="loginPasswordTextField" layoutX="60.0" layoutY="155.0" onAction="#loginPasswordTextFieldAction" prefHeight="25.0" prefWidth="265.0" />
+            <PasswordField fx:id="loginPasswordTextField" layoutX="60.0" layoutY="155.0" onAction="#loginPasswordAction" prefHeight="25.0" prefWidth="265.0" />
             <Label fx:id="loginPasswordLabel" layoutX="157.0" layoutY="128.0" text="Password" />
          </children>
       </AnchorPane>

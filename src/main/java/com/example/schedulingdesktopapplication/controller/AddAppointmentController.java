@@ -1,5 +1,5 @@
 package com.example.schedulingdesktopapplication.controller;
-
+import com.example.schedulingdesktopapplication.DAO.ContactDAO;
 import com.example.schedulingdesktopapplication.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -27,7 +26,7 @@ public class AddAppointmentController implements Initializable {
      * FXML text field variable for the appointment's ID.
      */
     @FXML
-    public TextField addAppointmentIDTextField;
+    public Label addAppointmentIDLabel;
 
     /**
      * FXML text field variable for the appointment's title.
@@ -54,34 +53,34 @@ public class AddAppointmentController implements Initializable {
     public TextField addAppointmentLocationTextField;
 
     /**
-     * FXML choice box variable for the appointment's start time.
+     * FXML combo box variable for the appointment's start time.
      */
     @FXML
-    public ComboBox addAppointmentStartTimeChoiceBox;
+    public ComboBox addAppointmentStartTimeComboBox;
 
     /**
-     * FXML choice box variable for the appointment's contact.
+     * FXML combo box variable for the appointment's contact.
      */
     @FXML
-    public ComboBox addAppointmentContactChoiceBox;
+    public ComboBox addAppointmentContactComboBox;
 
     /**
-     * FXML choice box variable for the appointment's user ID.
+     * FXML combo box variable for the appointment's user ID.
      */
     @FXML
-    public ComboBox addAppointmentUserIDChoiceBox;
+    public Label addAppointmentUserIDLabel;
 
     /**
-     * FXML choice box variable for the appointment's customer ID.
+     * FXML combo box variable for the appointment's customer ID.
      */
     @FXML
-    public ComboBox addAppointmentCustomerIDChoiceBox;
+    public Label addAppointmentCustomerIDLabel;
 
     /**
-     * FXML choice box variable for the appointment's end time.
+     * FXML combo box variable for the appointment's end time.
      */
     @FXML
-    public ComboBox addAppointmentEndTimeChoiceBox;
+    public ComboBox addAppointmentEndTimeComboBox;
 
     /**
      * FXML date picker variable for the appointment's start date.
@@ -119,10 +118,16 @@ public class AddAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        try {
+//            addAppointmentStartDateDatePicker.setDayCellFactory(datePicker -> new DateCell());
+            addAppointmentContactComboBox.setItems(ContactDAO.getContactNames());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void addAppointmentStartTimes() {
+
 
     }
 
