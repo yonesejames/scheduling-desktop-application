@@ -128,6 +128,25 @@ public class Customer {
     }
 
     /**
+     * Overloaded Constructor that creates a new instance of the customer object.
+     *
+     * @param customerName for the name of the customer.
+     * @param address for the address of the customer.
+     * @param postalCode for the postal code of the customer.
+     * @param phone for the phone of the customer.
+     * @param divisionName for the division name of the customer.
+     * @param country for the country of the customer.
+     */
+    public Customer(String customerName, String address, String postalCode, String phone, String divisionName, String country) {
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.divisionName = divisionName;
+        this.country = country;
+    }
+
+    /**
      * Overloaded constructor that creates a new instance of the Customer object.
      *
      */
@@ -330,5 +349,16 @@ public class Customer {
         this.divisionName = divisionName;
     }
 
+    /**
+     * Getter for the country of the customer.
+     *
+     * @return the country.
+     */
+    public String getCountry() { return country; }
+
+    @Override
+    public String toString() {
+        return customerName;
+    }
 
 }

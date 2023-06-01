@@ -43,6 +43,18 @@ public class FirstLevelDivision {
     }
 
     /**
+     * Overloaded constructor that creates a new instance of the first level division object.
+     *
+     * @param divisionName for the name of the first level division.
+
+     */
+    public FirstLevelDivision(String divisionName) {
+
+        this.divisionName = divisionName;
+
+    }
+
+    /**
      * Getter for the divisionID of the first level division.
      *
      * @return the divisionID.
@@ -166,5 +178,10 @@ public class FirstLevelDivision {
      */
     public void setCountryID(int countryID) {
         this.countryID = countryID;
+    }
+
+    @Override
+    public String toString() {
+        return divisionName;
     }
 }

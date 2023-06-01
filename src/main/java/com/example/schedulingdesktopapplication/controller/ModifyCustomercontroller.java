@@ -1,4 +1,6 @@
 package com.example.schedulingdesktopapplication.controller;
+import com.example.schedulingdesktopapplication.DAO.CountryDAO;
+import com.example.schedulingdesktopapplication.DAO.FirstLevelDivisionDAO;
 import com.example.schedulingdesktopapplication.Main;
 import com.example.schedulingdesktopapplication.model.Customer;
 import javafx.event.ActionEvent;
@@ -25,7 +27,7 @@ public class ModifyCustomercontroller implements Initializable {
      * FXML text field variable for the customer's ID.
      */
     @FXML
-    public TextField modifyCustomerIDTextField;
+    public Label modifyCustomerIDLabel;
 
     /**
      * FXML text field variable for the customer's name.
@@ -77,6 +79,10 @@ public class ModifyCustomercontroller implements Initializable {
 
     Customer selectedCustomer;
 
+    public void modifyCustomerCountryAction() throws Exception {
+        modifyCustomerStateAndProvinceComboBox.setItems(FirstLevelDivisionDAO.getDivision(String.valueOf(modifyCustomerCountryComboBox.getValue())));
+    }
+
     /**
      * Initialize method for the ModifyCustomercontroller to initialize the stage and items.
      *
@@ -86,12 +92,17 @@ public class ModifyCustomercontroller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         selectedCustomer = CustomerScreenController.getSelectedCustomer();
-        modifyCustomerIDTextField.setText(String.valueOf(selectedCustomer.getCustomerID()));
+        modifyCustomerIDLabel.setText(String.valueOf(selectedCustomer.getCustomerID()));
         modifyCustomerNameTextField.setText(String.valueOf(selectedCustomer.getCustomerName()));
         modifyCustomerAddressTextField.setText(String.valueOf(selectedCustomer.getAddress()));
         modifyCustomerPhoneNumberTextField.setText(String.valueOf(selectedCustomer.getPhone()));
-//        get combobox option for country
-//        get combobox option for state/province
+        try {
+            modifyCustomerCountryComboBox.setItems(CountryDAO.getAllCountries());
+            modifyCustomerCountryComboBox.getSelectionModel().selectFirst();
+            modifyCustomerCountryAction();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         modifyCustomerPostalCodeTextField.setText(String.valueOf(selectedCustomer.getPostalCode()));
     }
 

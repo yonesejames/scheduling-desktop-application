@@ -1,5 +1,5 @@
 package com.example.schedulingdesktopapplication.model;
-
+import java.util.Locale;
 import java.sql.Timestamp;
 
 /**
@@ -11,8 +11,8 @@ public class User {
     /**
      * Variables for the user's id, name, password, createDate, createBy, lastUpdate, and lastUpdatedBy,
      */
-    public int userID;
-    public String userName;
+    private int userID;
+    private String userName;
     public String password;
     private Timestamp createDate;
     private String createBy;
@@ -52,6 +52,17 @@ public class User {
         this.userID = userID;
         this.userName = userName;
         this.password = password;
+    }
+
+    /**
+     * Overloaded Constructor that creates a new instance of the user object.
+     *
+     * @param userID for the ID of the user.
+     * @param userName for the name of the user.
+     */
+    public User(int userID, String userName) {
+        this.userID = userID;
+        this.userName = userName;
     }
 
     /**

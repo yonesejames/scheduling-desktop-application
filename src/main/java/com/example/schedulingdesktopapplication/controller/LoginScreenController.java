@@ -83,6 +83,9 @@ public class LoginScreenController implements Initializable {
     @FXML
     public Label loginLanguageLabel;
 
+    static public String username;
+    static public String password;
+
 
     /**
      * Initialize method for the LoginScreenController to initialize the stage and items.
@@ -136,8 +139,8 @@ public class LoginScreenController implements Initializable {
      * @param actionEvent
      */
     public void loginButtonAction(ActionEvent actionEvent) throws Exception {
-        String username = loginUsernameTextField.getText();
-        String password = loginPasswordTextField.getText();
+        username = loginUsernameTextField.getText();
+        password = loginPasswordTextField.getText();
 
         //  Search through database to ensure the username and password exist in users table:
         try

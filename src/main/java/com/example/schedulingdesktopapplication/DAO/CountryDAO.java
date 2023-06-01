@@ -52,7 +52,7 @@ public class CountryDAO {
      */
     public static ObservableList<Country> getAllCountries () throws SQLException, Exception{
         JDBC.openConnection();
-        ObservableList<Country> allCountries = FXCollections.observableArrayList();
+        ObservableList<Country> countries = FXCollections.observableArrayList();
         String sqlStatement = "SELECT * FROM countries";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
         ResultSet result = preparedStatement.executeQuery();
@@ -61,15 +61,15 @@ public class CountryDAO {
             while(result.next()){
                 int countryID = result.getInt("Country_ID");
                 String country = result.getString("Country");
-                Country customerResult = new Country(countryID, country);
-                allCountries.add(customerResult);
+                Country countryResult = new Country(countryID, country);
+                countries.add(countryResult);
             }
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return allCountries;
+        return countries;
     }
 
     /**

@@ -47,33 +47,60 @@ public class FirstLevelDivisionDAO {
     }
 
     /**
-     * Getter for division in the first_level_divisions database by divisionID.
+     * Getter for all first level divisions in the first_level_divisions database.
      *
-     * @param divisionID
-     * @return division.
+     * @param country
+     * @return divisions.
      * @throws SQLException
      * @throws Exception
      */
-    public static String getDivision(int divisionID) throws SQLException, Exception{
+    public static ObservableList<FirstLevelDivision> getDivision(String country) throws SQLException, Exception{
         JDBC.openConnection();
-        String sqlStatement = "SELECT Division FROM first_level_divisions WHERE Division_ID  = '" + divisionID + "'";
+        ObservableList<FirstLevelDivision> divisions = FXCollections.observableArrayList();
+        String sqlStatement =  "SELECT country.Country, country.Country_ID,  division.Division_ID, division.Division" +
+                " FROM countries as country RIGHT OUTER JOIN " +
+                "first_level_divisions AS division ON country.Country_ID = division.Country_ID WHERE country.Country = '" +country + "'";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
-        String divisionResult;
         ResultSet result = preparedStatement.executeQuery();
 
         try {
             while(result.next()){
                 String division = result.getString("Division");
-                divisionResult = division;
-                return divisionResult;
+                FirstLevelDivision firstLevelDivisionResult = new FirstLevelDivision(division);
+                divisions.add(firstLevelDivisionResult);
             }
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
+        return divisions;
+    }
 
-        JDBC.closeConnection();
-        return null;
+    /**
+     * Getter for all first level divisions in the first_level_divisions database.
+     *
+     * @param divisionName
+     * @return division.
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static int getDivisionID(String divisionName) throws SQLException, Exception {
+        JDBC.openConnection();
+        String sqlStatement = "SELECT Division, Division_ID FROM first_level_divisions WHERE Division = '"
+                + divisionName + "'";
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        ResultSet result = preparedStatement.executeQuery();
+
+        int divisionID = 0;
+
+        try {
+            while (result.next()) {
+                divisionID = result.getInt("Division_ID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return divisionID;
     }
 
     /**
