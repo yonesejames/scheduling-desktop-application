@@ -23,9 +23,9 @@
                         <TableColumn fx:id="appointmentTableColumnUserID" prefWidth="64.0" text="User ID" />
                     </columns>
                 </TableView>
-                <fx:define>
-                    <ToggleGroup fx:id="weekMonthOrAll" />
-                </fx:define>
+<!--                <fx:define>-->
+<!--                    <ToggleGroup fx:id="weekMonthOrAll" />-->
+<!--                </fx:define>-->
                 <RadioButton fx:id="appointmentCurrentWeekRadioButton" layoutX="253.0" layoutY="14.0" mnemonicParsing="false" onAction="#appointmentCurrentWeekRadioButtonAction" text="Current Week">
                <toggleGroup>
                   <ToggleGroup fx:id="weekMonthOrAll" />

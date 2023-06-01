@@ -156,36 +156,19 @@ public class CustomerScreenController implements Initializable {
 
     }
 
-    /**
-     * customerCurrentWeekRadioButtonAction method to view current week of customers.
-     *
-     * @param actionEvent
-     */
-    public void customerCurrentWeekRadioButtonAction(ActionEvent actionEvent) {
-    }
-
-    /**
-     * customerCurrentMonthRadioButtonAction method to view current month of customers.
-     *
-     * @param actionEvent
-     */
-    public void customerCurrentMonthRadioButtonAction(ActionEvent actionEvent) {
-    }
-
-    /**
-     * customerAllAppointmentsRadioButtonAction method to view all customers.
-     *
-     * @param actionEvent
-     */
-    public void customerAllAppointmentsRadioButtonAction(ActionEvent actionEvent) {
-    }
 
     /**
      * customerReportsButtonAction method to go to the reports page and view reports.
      *
      * @param actionEvent
      */
-    public void customerReportsButtonAction(ActionEvent actionEvent) {
+    public void customerReportsButtonAction(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/ReportScreenView.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle("Reports");
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**

@@ -19,9 +19,6 @@
                         <TableColumn fx:id="customerTableColumnPostalCode" prefWidth="115.0" text="Postal Code" />
                     </columns>
                 </TableView>
-                <RadioButton fx:id="customerCurrentWeekRadioButton" layoutX="253.0" layoutY="14.0" mnemonicParsing="false" onAction="#customerCurrentWeekRadioButtonAction" text="Current Week" />
-                <RadioButton fx:id="customerCurrentMonthRadioButton" layoutX="376.0" layoutY="15.0" mnemonicParsing="false" onAction="#customerCurrentMonthRadioButtonAction" text="Current Month" />
-                <RadioButton fx:id="customerAllAppointmentsRadioButton" layoutX="498.0" layoutY="15.0" mnemonicParsing="false" onAction="#customerAllAppointmentsRadioButtonAction" text="All Appointments" />
             </children>
         </AnchorPane>
         <Button fx:id="customerReportsButton" layoutX="7.0" layoutY="500.0" mnemonicParsing="false" onAction="#customerReportsButtonAction" prefHeight="25.0" prefWidth="88.0" text="Reports" />
