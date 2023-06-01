@@ -1,5 +1,4 @@
 package com.example.schedulingdesktopapplication.controller;
-
 import com.example.schedulingdesktopapplication.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +13,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 import static com.example.schedulingdesktopapplication.DAO.UserDAO.validateUser;
 import java.time.ZoneId;
 
@@ -83,7 +81,14 @@ public class LoginScreenController implements Initializable {
     @FXML
     public Label loginLanguageLabel;
 
+    /**
+     * Username to log into the Scheduling Desktop Application.
+     */
     static public String username;
+
+    /**
+     * Password to log into the Scheduling Desktop Application.
+     */
     static public String password;
 
 
@@ -95,31 +100,6 @@ public class LoginScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        Locale france = new Locale("fr", "FR");
-//        Locale english = new Locale("en", "EN");
-//
-//        Scanner keyboard = new Scanner(System.in);
-//
-//        System.out.println("Enter a language (en or fr) : ");
-//        String languageCode = keyboard.nextLine();
-//
-//        if(languageCode.equals("fr"))
-//        {
-//            Locale.setDefault(france);
-//        }
-//        else if(languageCode.equals("en"))
-//        {
-//            Locale.setDefault(english);
-//        }
-//        else
-//        {
-//            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-//            errorAlert.setTitle("ERROR");
-//            errorAlert.setContentText("LANGUAGE NOT SUPPORTED");
-//            errorAlert.showAndWait();
-//            System.exit(0);
-//        }
-
         loginTimeZoneLabel2.setText(String.valueOf(ZoneId.systemDefault()));
 
         ResourceBundle rb = ResourceBundle.getBundle("Natural", Locale.getDefault());
@@ -134,6 +114,52 @@ public class LoginScreenController implements Initializable {
     }
 
     /**
+     * showScreen method that allows another screen to be shown.
+     *
+     * @throws Exception
+     * @param actionEvent
+     * @param viewPath
+     * @param title
+     */
+    public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /**
+     * alertMessage method that shows an alert message and text.
+     *
+     * @param alertType
+     * @param alertText
+     */
+    public void alertMessage(String alertType, String alertText) {
+        switch (alertType) {
+            case "Error":
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("ERROR");
+                errorAlert.setContentText(alertText);
+                errorAlert.showAndWait();
+                break;
+            case "Warning":
+                Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+                warningAlert.setTitle("WARNING");
+                warningAlert.setContentText(alertText);
+                warningAlert.showAndWait();
+                break;
+            case "Confirmation":
+                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmationAlert.setTitle("CONFIRMATION");
+                confirmationAlert.setContentText(alertText);
+                confirmationAlert.showAndWait();
+                break;
+        }
+    }
+
+    /**
      * loginButtonAction method to log into the application.
      *
      * @param actionEvent
@@ -142,26 +168,16 @@ public class LoginScreenController implements Initializable {
         username = loginUsernameTextField.getText();
         password = loginPasswordTextField.getText();
 
-        //  Search through database to ensure the username and password exist in users table:
         try
         {
             if(validateUser(username, password))
             {
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/MainScreenView.fxml"));
-                Scene scene = new Scene(fxmlLoader.load());
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                stage.setTitle("Main");
-                stage.setScene(scene);
-                stage.show();
+                showScreen(actionEvent, "view/MainScreenView.fxml", "Main");
             }
             else
             {
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setTitle("ERROR");
-                errorAlert.setContentText("USER DOES NOT EXIST");
-                errorAlert.showAndWait();
+                alertMessage("Error", "USER DOES NOT EXIST");
             }
-
         }
         catch (SQLException e)
         {
@@ -174,30 +190,23 @@ public class LoginScreenController implements Initializable {
      *
      * @param actionEvent
      */
-    public void loginExitButtonAction(ActionEvent actionEvent) {
-    }
+    public void loginExitButtonAction(ActionEvent actionEvent) { System.exit(0); }
 
     /**
-     * loginUsernameTextFieldAction method for the username field.
+     * loginUsernameAction method for the username field.
      *
      * @param actionEvent
      */
-    public void loginUsernameTextFieldAction(ActionEvent actionEvent) {
+    public void loginUsernameAction(ActionEvent actionEvent) {
     }
 
     /**
-     * loginPasswordTextFieldAction method for the password field.
+     * loginPasswordAction method for the password field.
      *
      * @param actionEvent
      */
-    public void loginPasswordTextFieldAction(ActionEvent actionEvent) {
+    public void loginPasswordAction(ActionEvent actionEvent) {
     }
 
-    /**
-     * loginTimeZoneAction method for the timezone.
-     *
-     * @param actionEvent
-     */
-    public void loginTimeZoneAction(ActionEvent actionEvent) {
-    }
+
 }

@@ -197,16 +197,6 @@ public class CustomerScreenController implements Initializable {
     }
 
     /**
-     * customerAddButtonAction method to go to the add customer page and add a customer.
-     *
-     * @throws Exception
-     * @param actionEvent
-     */
-    public void customerAddButtonAction(ActionEvent actionEvent) throws IOException {
-        showScreen(actionEvent, "view/AddCustomerView.fxml", "Add Customer");
-    }
-
-    /**
      * customerModifyButtonAction method to go to the modify customer page and modify the customer.
      *
      * @throws Exception
@@ -222,6 +212,16 @@ public class CustomerScreenController implements Initializable {
         {
             showScreen(actionEvent, "view/ModifyCustomerView.fxml", "Modify Customer");
         }
+    }
+
+    /**
+     * customerAddButtonAction method to go to the add customer page and add a customer.
+     *
+     * @throws Exception
+     * @param actionEvent
+     */
+    public void customerAddButtonAction(ActionEvent actionEvent) throws IOException {
+        showScreen(actionEvent, "view/AddCustomerView.fxml", "Add Customer");
     }
 
     /**

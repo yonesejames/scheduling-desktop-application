@@ -1,7 +1,7 @@
 package com.example.schedulingdesktopapplication.controller;
-
 import com.example.schedulingdesktopapplication.Main;
 import com.example.schedulingdesktopapplication.model.Appointment;
+import com.example.schedulingdesktopapplication.model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -163,9 +163,15 @@ public class AppointmentScreenController implements Initializable {
     @FXML
     public ToggleGroup weekMonthOrAll;
 
+    /**
+     *  List of all appointments.
+     */
     private ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
-
+    /**
+     *  Appointment that has been selected when user clicks on appointment.
+     */
+    private static Appointment selectedAppointment;
 
     /**
      * Initialize method for the AppointmentScreenController to initialize the stage and items.
@@ -201,6 +207,7 @@ public class AppointmentScreenController implements Initializable {
     /**
      * appointmentCurrentWeekRadioButtonAction method to view current week of appointments.
      *
+     * @throws Exception
      * @param actionEvent
      */
     public void appointmentCurrentWeekRadioButtonAction(ActionEvent actionEvent) throws Exception {
@@ -225,6 +232,7 @@ public class AppointmentScreenController implements Initializable {
     /**
      * appointmentCurrentMonthRadioButtonAction method to view current month of appointments.
      *
+     * @throws Exception
      * @param actionEvent
      */
     public void appointmentCurrentMonthRadioButtonAction(ActionEvent actionEvent) throws Exception {
@@ -248,6 +256,7 @@ public class AppointmentScreenController implements Initializable {
     /**
      * allAppointmentsRadioButtonAction method to view all appointments.
      *
+     * @throws Exception
      * @param actionEvent
      */
     public void allAppointmentsRadioButtonAction(ActionEvent actionEvent) {
@@ -267,34 +276,59 @@ public class AppointmentScreenController implements Initializable {
     }
 
     /**
-     * appointmentReportsButtonAction method to go to the reports page and view reports.
+     * showScreen method that allows another screen to be shown.
      *
+     * @throws Exception
      * @param actionEvent
+     * @param viewPath
+     * @param title
      */
-    public void appointmentReportsButtonAction(ActionEvent actionEvent) {
-    }
-
-    /**
-     * allAppointmentsRadioButtonAction method to exit the application.
-     *
-     * @param actionEvent
-     */
-    public void appointmentsLogoutButtonAction(ActionEvent actionEvent) {
-        System.exit(0);
-    }
-
-    /**
-     * appointmentAddButtonAction method to add an appointment.
-     *
-     * @param actionEvent
-     */
-    public void appointmentAddButtonAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/AddAppointmentView.fxml"));
+    public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Add Appointment");
+        stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
+    }
+
+    /**
+     * alertMessage method that shows an alert message and text.
+     *
+     * @param alertType
+     * @param alertText
+     */
+    public void alertMessage(String alertType, String alertText) {
+        switch (alertType) {
+            case "Error":
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("ERROR");
+                errorAlert.setContentText(alertText);
+                errorAlert.showAndWait();
+                break;
+            case "Warning":
+                Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+                warningAlert.setTitle("WARNING");
+                warningAlert.setContentText(alertText);
+                warningAlert.showAndWait();
+                break;
+            case "Confirmation":
+                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmationAlert.setTitle("CONFIRMATION");
+                confirmationAlert.setContentText(alertText);
+                confirmationAlert.showAndWait();
+                break;
+        }
+    }
+
+    /**
+     * appointmentReportsButtonAction method to go to the reports page and view reports.
+     *
+     * @throws Exception
+     * @param actionEvent
+     */
+    public void appointmentReportsButtonAction(ActionEvent actionEvent) throws IOException {
+        showScreen(actionEvent, "view/ReportScreenView.fxml", "Reports");
     }
 
     /**
@@ -303,12 +337,24 @@ public class AppointmentScreenController implements Initializable {
      * @param actionEvent
      */
     public void appointmentModifyButtonAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/ModifyAppointmentView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Modify Appointment");
-        stage.setScene(scene);
-        stage.show();
+        selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
+        if (selectedAppointment == null)
+        {
+            alertMessage("Error", "NO APPOINTMENT WAS SELECTED");
+        }
+        else
+        {
+            showScreen(actionEvent, "view/ModifyAppointmentView.fxml", "Modify Appointment");
+        }
+    }
+
+    /**
+     * appointmentAddButtonAction method to add an appointment.
+     *
+     * @param actionEvent
+     */
+    public void appointmentAddButtonAction(ActionEvent actionEvent) throws IOException {
+        showScreen(actionEvent, "view/AddAppointmentView.fxml", "Add Appointment");
     }
 
     /**
@@ -325,11 +371,15 @@ public class AppointmentScreenController implements Initializable {
      * @param actionEvent
      */
     public void appointmentsBackButtonAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/MainScreenView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Scheduling Desktop Application");
-        stage.setScene(scene);
-        stage.show();
+        showScreen(actionEvent, "view/MainScreenView.fxml", "Scheduling Desktop Application");
+    }
+
+    /**
+     * allAppointmentsRadioButtonAction method to exit the application.
+     *
+     * @param actionEvent
+     */
+    public void appointmentsLogoutButtonAction(ActionEvent actionEvent) {
+        System.exit(0);
     }
 }

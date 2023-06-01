@@ -151,4 +151,28 @@ public class AddAppointmentController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void addAppointmentTitleAction(ActionEvent actionEvent) {
+    }
+
+    public void addAppointmentTypeAction(ActionEvent actionEvent) {
+    }
+
+    public void addAppointmentDescriptionAction(ActionEvent actionEvent) {
+    }
+
+    public void addAppointmentLocationAction(ActionEvent actionEvent) {
+    }
+
+    public void addAppointmentStartTime(ActionEvent actionEvent) {
+    }
+
+    public void addAppointmentEndTimeAction(ActionEvent actionEvent) {
+    }
+
+    public void addAppointmentStartDateAction(ActionEvent actionEvent) {
+    }
+
+    public void addAppointmentEndDateAction(ActionEvent actionEvent) {
+    }
 }
