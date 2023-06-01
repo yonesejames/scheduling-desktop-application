@@ -1,5 +1,4 @@
 package com.example.schedulingdesktopapplication.model;
-
 import java.sql.Timestamp;
 
 /**
@@ -93,25 +92,6 @@ public class Customer {
      * @param address for the address of the customer.
      * @param postalCode for the postal code of the customer.
      * @param phone for the phone of the customer.
-     * @param divisionID for the division ID of the customer.
-     */
-    public Customer(int customerID, String customerName, String address, String postalCode, String phone, int divisionID) {
-        this.customerID = customerID;
-        this.customerName = customerName;
-        this.address = address;
-        this.postalCode = postalCode;
-        this.phone = phone;
-        this.divisionID = divisionID;
-    }
-
-    /**
-     * Overloaded Constructor that creates a new instance of the customer object.
-     *
-     * @param customerID for the ID of the customer.
-     * @param customerName for the name of the customer.
-     * @param address for the address of the customer.
-     * @param postalCode for the postal code of the customer.
-     * @param phone for the phone of the customer.
      * @param divisionName for the division name of the customer.
      * @param divisionID for the division ID of the customer.
      * @param country for the country of the customer.
@@ -125,6 +105,25 @@ public class Customer {
         this.divisionName = divisionName;
         this.divisionID = divisionID;
         this.country = country;
+    }
+
+    /**
+     * Overloaded Constructor that creates a new instance of the customer object.
+     *
+     * @param customerID for the ID of the customer.
+     * @param customerName for the name of the customer.
+     * @param address for the address of the customer.
+     * @param postalCode for the postal code of the customer.
+     * @param phone for the phone of the customer.
+     * @param divisionID for the division ID of the customer.
+     */
+    public Customer(int customerID, String customerName, String address, String postalCode, String phone, int divisionID) {
+        this.customerID = customerID;
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.divisionID = divisionID;
     }
 
     /**
@@ -356,6 +355,11 @@ public class Customer {
      */
     public String getCountry() { return country; }
 
+    /**
+     * Method that turns customerName into a string and not an object.
+     *
+     * @return the customerName.
+     */
     @Override
     public String toString() {
         return customerName;

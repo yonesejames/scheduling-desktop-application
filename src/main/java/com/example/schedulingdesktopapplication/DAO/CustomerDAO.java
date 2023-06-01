@@ -1,8 +1,6 @@
 package com.example.schedulingdesktopapplication.DAO;
-
 import com.example.schedulingdesktopapplication.controller.LoginScreenController;
 import com.example.schedulingdesktopapplication.model.Customer;
-import com.example.schedulingdesktopapplication.model.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
@@ -12,54 +10,13 @@ import java.sql.Timestamp;
 
 public class CustomerDAO {
     /**
-     * Getter for customer in the customer database by customerID.
-     *
-     * @param customerID
-     * @return customer.
-     * @throws SQLException
-     * @throws Exception
-     */
-    public static Customer getCustomer(int customerID) throws SQLException, Exception{
-        JDBC.openConnection();
-        String sqlStatement = "SELECT * FROM customers WHERE Customer_ID  = '" + customerID + "'";
-        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
-        Customer customerResult;
-        ResultSet result = preparedStatement.executeQuery();
-
-        try {
-            while(result.next()){
-                String customerName = result.getString("Customer_Name");
-                String address = result.getString("Address");
-                String postalCode = result.getString("Postal_code");
-                String phone = result.getString("Phone");
-                Timestamp createDate = result.getTimestamp("Create_Date");
-                String createdBy = result.getString("Created_By");
-                Timestamp lastUpdate = result.getTimestamp("Last_Update");
-                String lastUpdatedBy = result.getString("Last_Update_BY");
-                int divisionID = result.getInt("Division_ID");
-                customerResult = new Customer(customerID, customerName, address, postalCode, phone, createDate,
-                        createdBy, lastUpdate, lastUpdatedBy,divisionID);
-                return customerResult;
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        JDBC.closeConnection();
-        return null;
-    }
-
-
-    /**
-     * Getter for all customers in the customers database.
+     * Getter for all customers in the customer's database.
      *
      * @return ObservableList of all customers.
      * @throws SQLException
      * @throws Exception
      */
     public static ObservableList<Customer> getAllCustomers() throws SQLException, Exception{
-        JDBC.openConnection();
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
         String sqlStatement = "SELECT customer.Customer_ID, customer.Customer_Name, customer.Address, customer.Postal_Code, customer.Phone, customer.Division_ID, " +
                 "division.Division, division.COUNTRY_ID, country.Country FROM customers as customer INNER JOIN first_level_divisions " +
@@ -80,7 +37,6 @@ public class CustomerDAO {
 
                 Customer customerResult = new Customer(customerID, customerName, address, postalCode, phone, division, divisionID, country);
                 allCustomers.add(customerResult);
-
             }
             return allCustomers;
         }
@@ -88,7 +44,6 @@ public class CustomerDAO {
             e.printStackTrace();
         }
 
-        JDBC.closeConnection();
         return null;
     }
 
@@ -107,7 +62,6 @@ public class CustomerDAO {
      */
     public static int insertCustomer(String customerName, String address, String postalCode, String phone,
                                      int divisionID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "INSERT INTO customers (Customer_Name, Address, Postal_Code, Phone," +
                 "Create_Date, Created_By, Last_Update, Last_Updated_By, Division_ID) " +
                 "VALUES(?, ?, ?, ?, now(), ?, now(), ?, ?)";
@@ -151,7 +105,6 @@ public class CustomerDAO {
      */
     public static int updateCustomer(String customerName, String address, String postalCode, String phone,
                                      int divisionID, int customerID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, " +
                 "Phone = ?, Last_Update = now(), Last_Updated_By = ?, Division_ID = ? WHERE Customer_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
@@ -185,7 +138,6 @@ public class CustomerDAO {
      * @throws Exception
      */
     public static int deleteCustomer(int customerID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "DELETE FROM customers WHERE Customer_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
 
@@ -200,4 +152,44 @@ public class CustomerDAO {
 
         return -1;
     }
+
+//    /**
+//     * Getter for customer in the customer's database by customerID.
+//     *
+//     * @param customerID
+//     * @return customer.
+//     * @throws SQLException
+//     * @throws Exception
+//     */
+//    public static Customer getCustomer(int customerID) throws SQLException, Exception{
+//        JDBC.openConnection();
+//        String sqlStatement = "SELECT * FROM customers WHERE Customer_ID  = '" + customerID + "'";
+//        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+//        Customer customerResult;
+//        ResultSet result = preparedStatement.executeQuery();
+//
+//        try {
+//            while(result.next()){
+//                String customerName = result.getString("Customer_Name");
+//                String address = result.getString("Address");
+//                String postalCode = result.getString("Postal_code");
+//                String phone = result.getString("Phone");
+//                Timestamp createDate = result.getTimestamp("Create_Date");
+//                String createdBy = result.getString("Created_By");
+//                Timestamp lastUpdate = result.getTimestamp("Last_Update");
+//                String lastUpdatedBy = result.getString("Last_Update_BY");
+//                int divisionID = result.getInt("Division_ID");
+//                customerResult = new Customer(customerID, customerName, address, postalCode, phone, createDate,
+//                        createdBy, lastUpdate, lastUpdatedBy,divisionID);
+//                return customerResult;
+//            }
+//        }
+//        catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//        JDBC.closeConnection();
+//        return null;
+//    }
+
 }

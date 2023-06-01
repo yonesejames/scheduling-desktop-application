@@ -17,7 +17,6 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import static com.example.schedulingdesktopapplication.DAO.CustomerDAO.*;
-import static com.example.schedulingdesktopapplication.DAO.FirstLevelDivisionDAO.*;
 
 /**
  * Controller class that views customers in the application.
@@ -59,31 +58,13 @@ public class CustomerScreenController implements Initializable {
      *  FXML table column variable for the customer's state and province.
      */
     @FXML
-    public TableColumn<Customer, String> customerTableColumnStateAndProvince;
+    public TableColumn<Customer, String> customerTableColumnDivision;
 
     /**
      *  FXML table column variable for the customer's postal code.
      */
     @FXML
     public TableColumn<Customer, String> customerTableColumnPostalCode;
-
-    /**
-     * FXML radio button field variable to view current week of customers.
-     */
-    @FXML
-    public RadioButton customerCurrentWeekRadioButton;
-
-    /**
-     * FXML radio button field variable to view current month of customers.
-     */
-    @FXML
-    public RadioButton customerCurrentMonthRadioButton;
-
-    /**
-     * FXML radio button field variable to view all the customers.
-     */
-    @FXML
-    public RadioButton customerAllAppointmentsRadioButton;
 
     /**
      *  FXML reports button variable to view reports.
@@ -127,10 +108,14 @@ public class CustomerScreenController implements Initializable {
     @FXML
     public Button customersBackButton;
 
-    private static Customer newCustomer = new Customer();
-
+    /**
+     *  List of all customers.
+     */
     private ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
+    /**
+     *  Customer that has been selected when user clicks on customer.
+     */
     private static Customer selectedCustomer;
 
 
@@ -149,66 +134,94 @@ public class CustomerScreenController implements Initializable {
             customerTableColumnName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
             customerTableColumnAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
             customerTableColumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phone"));
-            customerTableColumnStateAndProvince.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
+            customerTableColumnDivision.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
             customerTableColumnPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         } catch (Exception e) {
             e.printStackTrace(); }
-
     }
 
+    /**
+     * showScreen method that allows another screen to be shown.
+     *
+     * @throws Exception
+     * @param actionEvent
+     * @param viewPath
+     * @param title
+     */
+    public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /**
+     * alertMessage method that shows an alert message and text.
+     *
+     * @param alertType
+     * @param alertText
+     */
+    public void alertMessage(String alertType, String alertText) {
+        switch (alertType) {
+            case "Error":
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("ERROR");
+                errorAlert.setContentText(alertText);
+                errorAlert.showAndWait();
+                break;
+            case "Warning":
+                Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+                warningAlert.setTitle("WARNING");
+                warningAlert.setContentText(alertText);
+                warningAlert.showAndWait();
+                break;
+            case "Confirmation":
+                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmationAlert.setTitle("CONFIRMATION");
+                confirmationAlert.setContentText(alertText);
+                confirmationAlert.showAndWait();
+                break;
+        }
+    }
 
     /**
      * customerReportsButtonAction method to go to the reports page and view reports.
      *
+     * @throws Exception
      * @param actionEvent
      */
     public void customerReportsButtonAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/ReportScreenView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Reports");
-        stage.setScene(scene);
-        stage.show();
+        showScreen(actionEvent, "view/ReportScreenView.fxml", "Reports");
     }
 
     /**
      * customerAddButtonAction method to go to the add customer page and add a customer.
      *
+     * @throws Exception
      * @param actionEvent
      */
     public void customerAddButtonAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/AddCustomerView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Add Customer");
-        stage.setScene(scene);
-        stage.show();
+        showScreen(actionEvent, "view/AddCustomerView.fxml", "Add Customer");
     }
 
     /**
      * customerModifyButtonAction method to go to the modify customer page and modify the customer.
      *
+     * @throws Exception
      * @param actionEvent
      */
     public void customerModifyButtonAction(ActionEvent actionEvent) throws IOException {
         selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
         if (selectedCustomer == null)
         {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setTitle("ERROR");
-            errorAlert.setContentText("NO CUSTOMER WAS SELECTED");
-            errorAlert.showAndWait();
+            alertMessage("Error", "NO CUSTOMER WAS SELECTED");
         }
         else
         {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/ModifyCustomerView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setTitle("Modify Customer");
-            stage.setScene(scene);
-            stage.show();
+            showScreen(actionEvent, "view/ModifyCustomerView.fxml", "Modify Customer");
         }
-
     }
 
     /**
@@ -223,19 +236,18 @@ public class CustomerScreenController implements Initializable {
     /**
      * customerDeleteButtonAction method to delete a selected customer.
      *
+     * @throws Exception
      * @param actionEvent
      */
     public void customerDeleteButtonAction(ActionEvent actionEvent) throws Exception {
         selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
         if (selectedCustomer == null)
         {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setTitle("ERROR");
-            errorAlert.setContentText("NO CUSTOMER WAS SELECTED");
-            errorAlert.showAndWait();
+            alertMessage("Error", "NO CUSTOMER WAS SELECTED");
         }
         else
         {
+            alertMessage("Confirmation", "PLEASE CONFIRM IF YOU WOULD LIKE TO DELETE THIS CUSTOMER");
             Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
             confirmationAlert.setTitle("CONFIRMATION");
             confirmationAlert.setContentText("PLEASE CONFIRM IF YOU WOULD LIKE TO DELETE THIS CUSTOMER");
@@ -250,19 +262,24 @@ public class CustomerScreenController implements Initializable {
                 customerTableColumnName.setCellValueFactory(new PropertyValueFactory<>("customerName"));
                 customerTableColumnAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
                 customerTableColumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phone"));
-                customerTableColumnStateAndProvince.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
+                customerTableColumnDivision.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
                 customerTableColumnPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
-
             }
             else
             {
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setTitle("ERROR");
-                errorAlert.setContentText("CUSTOMER WAS NOT DELETED");
-                errorAlert.showAndWait();
-
+                alertMessage("Error", "CUSTOMER WAS NOT DELETED");
             }
         }
+    }
+
+    /**
+     * customerBackButtonAction method to go to the main menu of the application.
+     *
+     * @throws Exception
+     * @param actionEvent
+     */
+    public void customerBackButtonAction(ActionEvent actionEvent) throws IOException {
+        showScreen(actionEvent, "view/MainScreenView.fxml", "Scheduling Desktop Application");
     }
 
     /**
@@ -272,19 +289,5 @@ public class CustomerScreenController implements Initializable {
      */
     public void customerLogoutButtonAction(ActionEvent actionEvent) {
         System.exit(0);
-    }
-
-    /**
-     * customerBackButtonAction method to go to the main menu of the application.
-     *
-     * @param actionEvent
-     */
-    public void customerBackButtonAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/MainScreenView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Scheduling Desktop Application");
-        stage.setScene(scene);
-        stage.show();
     }
 }

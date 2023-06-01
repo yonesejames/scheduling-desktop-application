@@ -16,14 +16,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static com.example.schedulingdesktopapplication.DAO.CustomerDAO.updateCustomer;
-
 /**
  * Controller class that edits the customers in the application.
  *
  * @author Yonese James
  */
-public class ModifyCustomercontroller implements Initializable {
+public class ModifyCustomerController implements Initializable {
     /**
      * FXML text field variable for the customer's ID.
      */
@@ -64,7 +62,7 @@ public class ModifyCustomercontroller implements Initializable {
      * FXML choice box variable for the customer's state and province.
      */
     @FXML
-    public ComboBox modifyCustomerStateAndProvinceComboBox;
+    public ComboBox modifyCustomerDivisionComboBox;
 
     /**
      *  FXML save button variable to save the customer.
@@ -78,11 +76,14 @@ public class ModifyCustomercontroller implements Initializable {
     @FXML
     public Button modifyCustomerCancelButton;
 
+    /**
+     *  Customer that has been selected when user clicks on customer.
+     */
     Customer selectedCustomer;
 
     public void modifyCustomerCountryAction() throws Exception {
-        modifyCustomerStateAndProvinceComboBox.setItems(FirstLevelDivisionDAO.getDivision(String.valueOf(modifyCustomerCountryComboBox.getValue())));
-        modifyCustomerStateAndProvinceComboBox.getSelectionModel().select(selectedCustomer.getDivisionName());
+        modifyCustomerDivisionComboBox.setItems(FirstLevelDivisionDAO.getDivision(String.valueOf(modifyCustomerCountryComboBox.getValue())));
+        modifyCustomerDivisionComboBox.getSelectionModel().select(selectedCustomer.getDivisionName());
     }
 
     /**
@@ -109,8 +110,55 @@ public class ModifyCustomercontroller implements Initializable {
     }
 
     /**
+     * showScreen method that allows another screen to be shown.
+     *
+     * @throws Exception
+     * @param actionEvent
+     * @param viewPath
+     * @param title
+     */
+    public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /**
+     * alertMessage method that shows an alert message and text.
+     *
+     * @param alertType
+     * @param alertText
+     */
+    public void alertMessage(String alertType, String alertText) {
+        switch (alertType) {
+            case "Error":
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("ERROR");
+                errorAlert.setContentText(alertText);
+                errorAlert.showAndWait();
+                break;
+            case "Warning":
+                Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+                warningAlert.setTitle("WARNING");
+                warningAlert.setContentText(alertText);
+                warningAlert.showAndWait();
+                break;
+            case "Confirmation":
+                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmationAlert.setTitle("CONFIRMATION");
+                confirmationAlert.setContentText(alertText);
+                confirmationAlert.showAndWait();
+                break;
+        }
+    }
+
+    /**
      * modifyCustomerSaveButtonAction method to save the modified customer.
      *
+     * @throws Exception
      * @param actionEvent
      */
     public void modifyCustomerSaveButtonAction(ActionEvent actionEvent) throws Exception {
@@ -119,97 +167,88 @@ public class ModifyCustomercontroller implements Initializable {
         String customerAddress = modifyCustomerAddressTextField.getText();
         String customerPhone = modifyCustomerPhoneNumberTextField.getText();
         String customerCountry = String.valueOf(modifyCustomerCountryComboBox.getValue());
-        String customerDivisionName = String.valueOf(modifyCustomerStateAndProvinceComboBox.getValue());
+        String customerDivisionName = String.valueOf(modifyCustomerDivisionComboBox.getValue());
         int customerDivisionID = FirstLevelDivisionDAO.getDivisionID(customerDivisionName);
         String customerPostalCode = modifyCustomerPostalCodeTextField.getText();
 
-        if (customerName.isBlank() || customerAddress.isBlank() || customerPhone.isBlank() || customerCountry.isBlank() || customerDivisionName.isBlank() ||
-                customerPostalCode.isBlank()) {
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setTitle("ERROR");
-            errorAlert.setContentText("PLEASE ENTER VALUE FOR EACH FIELD");
-            errorAlert.showAndWait();
-            return;
+        if (customerName.isBlank()) {
+            alertMessage("Error", "PLEASE ENTER NAME");
+        }
+        else if (customerAddress.isBlank()) {
+            alertMessage("Error", "PLEASE ENTER ADDRESS");
+        }
+        else if (customerPhone.isBlank()) {
+            alertMessage("Error", "PLEASE ENTER PHONE NUMBER");
+        }
+        else if (customerCountry.isBlank()) {
+            alertMessage("Error", "PLEASE SELECT COUNTRY");
+        }
+        else if (customerDivisionName.isBlank()) {
+            alertMessage("Error", "PLEASE SELECT STATE OR PROVINCE");
+        }
+        else if (customerPostalCode.isBlank()) {
+            alertMessage("Error", "PLEASE ENTER POSTAL CODE");
         }
 
         int customerAdded = CustomerDAO.updateCustomer(customerName, customerAddress, customerPostalCode, customerPhone,
                 customerDivisionID, customerID);
 
-
         if (customerAdded != -1) {
-            Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmationAlert.setTitle("CONFIRM");
-            confirmationAlert.setContentText("CUSTOMER HAS BEEN ADDED");
-            confirmationAlert.showAndWait();
-
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/CustomerScreenView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setTitle("Customers");
-            stage.setScene(scene);
-            stage.show();
+            alertMessage("Confirmation", "CUSTOMER HAS BEEN UPDATED");
+            showScreen(actionEvent, "view/CustomerScreenView.fxml", "Customers");
         } else {
-            Alert warningAlert = new Alert(Alert.AlertType.WARNING);
-            warningAlert.setTitle("WARNING");
-            warningAlert.setContentText("CUSTOMER HAS NOT BEEN ADDED");
-            warningAlert.showAndWait();
-            return;
+            alertMessage("Error", "CUSTOMER HAS NOT BEEN ADDED");
         }
-
-
     }
 
     /**
      * modifyCustomerCancelButtonAction method revert back to the customer screen.
      *
+     * @throws Exception
      * @param actionEvent
      */
     public void modifyCustomerCancelButtonAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/CustomerScreenView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Customers");
-        stage.setScene(scene);
-        stage.show();
+        showScreen(actionEvent, "view/CustomerScreenView.fxml", "Customers");
     }
 
     /**
-     * modifyCustomerIDTextFieldAction method for the customer's ID.
+     * modifyCustomerNameAction method for the customer's name.
      *
      * @param actionEvent
      */
-    public void modifyCustomerIDTextFieldAction(ActionEvent actionEvent) {
+    public void modifyCustomerNameAction(ActionEvent actionEvent) {
     }
 
     /**
-     * modifyCustomerNameTextFieldAction method for the customer's name.
+     * modifyCustomerAddressAction method for the customer's address.
      *
      * @param actionEvent
      */
-    public void modifyCustomerNameTextFieldAction(ActionEvent actionEvent) {
+    public void modifyCustomerAddressAction(ActionEvent actionEvent) {
     }
 
     /**
-     * modifyCustomerAddressTextFieldAction method for the customer's address.
+     * modifyCustomerPhoneAction method for the customer's phone number.
      *
      * @param actionEvent
      */
-    public void modifyCustomerAddressTextFieldAction(ActionEvent actionEvent) {
+    public void modifyCustomerPhoneAction(ActionEvent actionEvent) {
     }
 
     /**
-     * modifyCustomerPhoneNumberTextFieldAction method for the customer's phone number.
+     * modifyCustomerDivisionAction method for the customer's division.
      *
      * @param actionEvent
      */
-    public void modifyCustomerPhoneNumberTextFieldAction(ActionEvent actionEvent) {
+    public void modifyCustomerDivisionAction(ActionEvent actionEvent) {
     }
 
     /**
-     * modifyCustomerPostalCodeTextFieldAction method for the customer's postal code.
+     * modifyCustomerPostalCodeAction method for the customer's postal code.
      *
      * @param actionEvent
      */
-    public void modifyCustomerPostalCodeTextFieldAction(ActionEvent actionEvent) {
+    public void modifyCustomerPostalCodeAction(ActionEvent actionEvent) {
     }
+
 }

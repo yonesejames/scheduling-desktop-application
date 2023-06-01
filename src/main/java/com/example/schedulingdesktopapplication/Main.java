@@ -1,5 +1,4 @@
 package com.example.schedulingdesktopapplication;
-
 import com.example.schedulingdesktopapplication.DAO.JDBC;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
