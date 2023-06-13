@@ -255,7 +255,9 @@ public class CustomerScreenController implements Initializable {
 
             if (confirmationButton.isPresent() && confirmationButton.get() == ButtonType.OK)
             {
+                deleteCustomerAppointments(selectedCustomer.getCustomerID());
                 deleteCustomer(selectedCustomer.getCustomerID());
+
                 allCustomers = getAllCustomers();
                 customerTableView.setItems(allCustomers);
                 customerTableColumnID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
@@ -267,7 +269,7 @@ public class CustomerScreenController implements Initializable {
             }
             else
             {
-                alertMessage("Error", "CUSTOMER WAS NOT DELETED");
+                alertMessage("Error", "CUSTOMER AND THEIR APPOINTMENTS WERE NOT DELETED");
             }
         }
     }

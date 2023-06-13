@@ -1,5 +1,7 @@
 package com.example.schedulingdesktopapplication.controller;
+import com.example.schedulingdesktopapplication.DAO.AppointmentDAO;
 import com.example.schedulingdesktopapplication.DAO.ContactDAO;
+import com.example.schedulingdesktopapplication.DAO.CustomerDAO;
 import com.example.schedulingdesktopapplication.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -76,11 +78,10 @@ public class AddAppointmentController implements Initializable {
     public Label addAppointmentUserIDLabel;
 
     /**
-     * FXML combo box variable for the appointment's customer ID.
+     * FXML combo box variable for the appointment's customer IDs.
      */
     @FXML
-    public Label addAppointmentCustomerIDLabel;
-
+    public ComboBox<Integer> addAppointmentCustomerIDComboBox;
     /**
      * FXML combo box variable for the appointment's end time.
      */
@@ -141,6 +142,7 @@ public class AddAppointmentController implements Initializable {
                 addAppointmentStartTimeComboBox.getItems().add(LocalTime.of(i, 0));
                 addAppointmentEndTimeComboBox.getItems().add(LocalTime.of(i, 0));
             }
+            addAppointmentCustomerIDComboBox.setItems(CustomerDAO.getCustomerIDs());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -200,18 +202,26 @@ public class AddAppointmentController implements Initializable {
     public void addAppointmentSaveAction(ActionEvent actionEvent) throws Exception {
         String appointmentTitle = addAppointmentTitleTextField.getText();
         String appointmentType = addAppointmentTypeTextField.getText();
+        String appointmentDescription = addAppointmentDescriptionTextField.getText();
         String appointmentLocation = addAppointmentLocationTextField.getText();
         LocalDate appointmentStartDate = addAppointmentStartDateDatePicker.getValue();
         LocalDate appointmentEndDate = addAppointmentEndDateDatePicker.getValue();
         LocalTime appointmentStartTime = addAppointmentStartTimeComboBox.getValue();
         LocalTime appointmentEndTime = addAppointmentEndTimeComboBox.getValue();
+        Integer appointmentCustomerID = addAppointmentCustomerIDComboBox.getValue();
         String appointmentContact = String.valueOf(addAppointmentContactComboBox.getValue());
         Integer appointmentContactID = getContactID(appointmentContact);
         Integer userID = getUserID(String.valueOf(LoginScreenController.username));
 
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
         LocalDateTime appointmentStartDateTime = null;
         LocalDateTime appointmentEndDateTime = null;
-        appointmentStartDateTime = LocalDateTime.of(appointmentStartDate, appointmentStartTime);
+        appointmentStartDateTime = LocalDateTime.of(LocalDate.parse(String.valueOf(appointmentStartDate), dateFormatter),
+                LocalTime.parse(String.valueOf(appointmentStartTime),
+                timeFormatter));
+        System.out.println(appointmentStartDateTime);
         appointmentEndDateTime = LocalDateTime.of(appointmentEndDate, appointmentEndTime);
 
         ZonedDateTime appointmentZoneStartDateTime = ZonedDateTime.of(appointmentStartDateTime, getZoneId());
@@ -220,6 +230,16 @@ public class AddAppointmentController implements Initializable {
                 ZoneId.of("America/New_York"));
         ZonedDateTime endBusinessHoursEST = ZonedDateTime.of(appointmentEndDate,LocalTime.of(22, 0),
                 ZoneId.of("America/New_York"));
+
+        ZonedDateTime appointmentUTCStartDateTime = appointmentZoneStartDateTime.withZoneSameInstant(ZoneOffset.UTC);
+        String stringUTCStart = String.valueOf(appointmentUTCStartDateTime);
+        ZonedDateTime startZDT = ZonedDateTime.parse(stringUTCStart, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+        String start = String.valueOf(startZDT);
+
+        ZonedDateTime appointmentUTCEndDateTime = appointmentZoneEndDateTime.withZoneSameInstant(ZoneOffset.UTC);
+        String stringUTCEnd = String.valueOf(appointmentUTCEndDateTime);
+        ZonedDateTime  endZDT = ZonedDateTime.parse(stringUTCEnd, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+        String end = String.valueOf(endZDT);
 
         if (appointmentTitle.isBlank()) {
             alertMessage("Error", "PLEASE ENTER TITLE");
@@ -245,8 +265,22 @@ public class AddAppointmentController implements Initializable {
         else if (appointmentZoneEndDateTime.isAfter(endBusinessHoursEST)) {
             alertMessage("Error", "PLEASE ENTER TIME BETWEEN 8 AM - 10 PM EST.");
         }
+        else if (appointmentCustomerID == null) {
+            alertMessage("Error", "PLEASE ENTER Customer ID");
+        }
 
+        String createdBy = String.valueOf(LoginScreenController.username);
 
+        int appointmentAdded = AppointmentDAO.insertAppointment(appointmentTitle, appointmentDescription, appointmentLocation,
+                appointmentType, start, end, createdBy, createdBy, appointmentContactID,
+                userID, appointmentCustomerID);
+
+        if (appointmentAdded != -1) {
+            alertMessage("Confirmation", "APPOINTMENT HAS BEEN ADDED");
+            showScreen(actionEvent, "view/AppointmentScreenView.fxml", "Appointments");
+        } else {
+            alertMessage("Error", "APPOINTMENT HAS NOT BEEN ADDED");
+        }
     }
 
     /**

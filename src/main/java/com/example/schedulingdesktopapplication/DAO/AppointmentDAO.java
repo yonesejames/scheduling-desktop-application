@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 
 /**
  * DAO class to access the appointment database.
@@ -129,16 +130,13 @@ public class AppointmentDAO {
      * Method that inserts an appointment by appointmentID, title, description, location, type, startDateTime,
      * endDateTime, createDate, createdBy, lastUpdate, lastUpdatedBy, customerID, userID, and contactID.
      *
-     * @param appointmentID
      * @param title
      * @param description
      * @param location
      * @param type
      * @param startDateTime
      * @param endDateTime
-     * @param createDate
      * @param createdBy
-     * @param lastUpdate
      * @param lastUpdatedBy
      * @param customerID
      * @param userID
@@ -147,30 +145,27 @@ public class AppointmentDAO {
      * @throws SQLException
      * @throws Exception
      */
-    public static int insertAppointment(int appointmentID, String title, String description, String location,
-                                        String type, Timestamp startDateTime, Timestamp endDateTime, Timestamp createDate,
-                                        String createdBy, Timestamp lastUpdate, String lastUpdatedBy, int customerID,
+    public static int insertAppointment(String title, String description, String location,
+                                        String type, String startDateTime, String endDateTime,
+                                        String createdBy, String lastUpdatedBy, int customerID,
                                         int userID, int contactID) throws SQLException, Exception{
-        String sqlStatement = "INSERT INTO appointments (Appointment_ID, Title, Description, Location, Type, Start, End, " +
+        String sqlStatement = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, " +
                 "Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES(?, ?, ?, ?, ?, ?, now(), ?, now(), ?, ?, ?, ?)";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
 
         try {
-            preparedStatement.setInt(1, appointmentID);
-            preparedStatement.setString(2, title);
-            preparedStatement.setString(3, description);
-            preparedStatement.setString(4, location);
-            preparedStatement.setString(5, type);
-            preparedStatement.setTimestamp(6, startDateTime);
-            preparedStatement.setTimestamp(7, endDateTime);
-            preparedStatement.setTimestamp(8, createDate);
-            preparedStatement.setString(9, createdBy);
-            preparedStatement.setTimestamp(10, lastUpdate);
-            preparedStatement.setString(11, lastUpdatedBy);
-            preparedStatement.setInt(12, customerID);
-            preparedStatement.setInt(13, userID);
-            preparedStatement.setInt(14, contactID);
+            preparedStatement.setString(1, title);
+            preparedStatement.setString(2, description);
+            preparedStatement.setString(3, location);
+            preparedStatement.setString(4, type);
+            preparedStatement.setString(5, startDateTime);
+            preparedStatement.setString(6, endDateTime);
+            preparedStatement.setString(7, createdBy);
+            preparedStatement.setString(8, lastUpdatedBy);
+            preparedStatement.setInt(9, customerID);
+            preparedStatement.setInt(10, userID);
+            preparedStatement.setInt(11, contactID);
 
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected;

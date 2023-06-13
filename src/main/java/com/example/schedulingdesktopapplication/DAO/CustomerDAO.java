@@ -46,6 +46,32 @@ public class CustomerDAO {
     }
 
     /**
+     * Getter for all customer IDs in the customer's database.
+     *
+     * @return ObservableList of all customer IDs.
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static ObservableList<Integer> getCustomerIDs() throws SQLException, Exception{
+        ObservableList<Integer> allCustomers = FXCollections.observableArrayList();
+        String sqlStatement = "SELECT DISTINCT Customer_ID FROM customers";
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        ResultSet result = preparedStatement.executeQuery();
+
+        try {
+            while(result.next()){
+                int customerID = result.getInt("Customer_ID");
+                allCustomers.add(customerID);
+            }
+            return allCustomers;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * Method that inserts a customer by customerID, customerName, address, postalCode, phone, createDate, createdBy,
      * lastUpdate, lastUpdatedBy, and divisionID.
      *
@@ -137,6 +163,30 @@ public class CustomerDAO {
      */
     public static int deleteCustomer(int customerID) throws SQLException, Exception{
         String sqlStatement = "DELETE FROM customers WHERE Customer_ID = ?";
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+
+        try {
+            preparedStatement.setInt(1, customerID);
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    /**
+     * Method that deletes all appointments related to the customer in the appointments database by customerID.
+     *
+     * @param customerID
+     * @return the number of rows affected by this change.
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static int deleteCustomerAppointments(int customerID) throws SQLException, Exception{
+        String sqlStatement = "DELETE FROM appointments WHERE Customer_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
 
         try {

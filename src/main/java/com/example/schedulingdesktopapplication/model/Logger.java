@@ -13,8 +13,8 @@ import java.util.Locale;
  */
 public class Logger {
     private static User user;
-    private static Locale locale;
-    private static ZoneId zoneId;
+    private static Locale locale = Locale.getDefault();
+    private static ZoneId zoneId = ZoneId.systemDefault();
 
     public static int isUserLoggedIn(String username, String password) throws SQLException {
         JDBC.openConnection();

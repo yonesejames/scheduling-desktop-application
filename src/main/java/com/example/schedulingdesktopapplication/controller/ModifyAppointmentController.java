@@ -1,6 +1,10 @@
 package com.example.schedulingdesktopapplication.controller;
-
+import com.example.schedulingdesktopapplication.DAO.ContactDAO;
+import com.example.schedulingdesktopapplication.DAO.CountryDAO;
+import com.example.schedulingdesktopapplication.DAO.CustomerDAO;
 import com.example.schedulingdesktopapplication.Main;
+import com.example.schedulingdesktopapplication.model.Appointment;
+import com.example.schedulingdesktopapplication.model.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +15,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 /**
@@ -23,7 +29,7 @@ public class ModifyAppointmentController implements Initializable {
      *  FXML text field variable for the appointment's ID.
      */
     @FXML
-    public TextField modifyAppointmentIDTextField;
+    public Label modifyAppointmentIDLabel;
 
     /**
      *  FXML text field variable for the appointment's title.
@@ -50,34 +56,34 @@ public class ModifyAppointmentController implements Initializable {
     public TextField modifyAppointmentLocationTextField;
 
     /**
-     * FXML choice box variable to select a start time for the appointment.
+     * FXML combo box variable to select a start time for the appointment.
      */
     @FXML
-    public ComboBox modifyAppointmentStartTimeChoiceBox;
+    public ComboBox<LocalTime> modifyAppointmentStartTimeComboBox;
 
     /**
-     * FXML choice box variable to select a start time for the appointment.
+     * FXML combo box variable to select a start time for the appointment.
      */
     @FXML
-    public ComboBox modifyAppointmentContactChoiceBox;
+    public ComboBox modifyAppointmentContactComboBox;
 
     /**
-     * FXML choice box variable to select a user ID for the appointment.
+     * FXML label variable to select a user ID for the appointment.
      */
     @FXML
-    public ComboBox modifyAppointmentUserIDChoiceBox;
+    public Label modifyAppointmentUserIDLabel;
 
     /**
-     * FXML choice box variable to select a customer ID for the appointment.
+     * FXML combo box variable to select a customer ID for the appointment.
      */
     @FXML
-    public ComboBox modifyAppointmentCustomerIDChoiceBox;
+    public ComboBox modifyAppointmentCustomerIDComboBox;
 
     /**
-     * FXML choice box variable to select an end time for the appointment.
+     * FXML combo box variable to select an end time for the appointment.
      */
     @FXML
-    public ComboBox modifyAppointmentEndTimeChoiceBox;
+    public ComboBox<LocalTime> modifyAppointmentEndTimeComboBox;
 
     /**
      * FXML date picker variable to select a start date
@@ -104,6 +110,11 @@ public class ModifyAppointmentController implements Initializable {
     public Button modifyAppointmentCancelButton;
 
     /**
+     *  Appointment that has been selected when user clicks on appointment.
+     */
+    Appointment selectedAppointment;
+
+    /**
      * Initialize method for the ModifyAppointmentController to initialize the stage and items.
      *
      * @param url for the url path.
@@ -111,6 +122,44 @@ public class ModifyAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        selectedAppointment = AppointmentScreenController.getSelectedAppointment();
+        modifyAppointmentTitleTextField.setText(selectedAppointment.getTitle());
+        modifyAppointmentIDLabel.setText(String.valueOf(selectedAppointment.getAppointmentID()));
+        modifyAppointmentTypeTextField.setText(selectedAppointment.getType());
+        modifyAppointmentDescriptionTextField.setText(selectedAppointment.getDescription());
+        modifyAppointmentLocationTextField.setText(selectedAppointment.getLocation());
+        modifyAppointmentUserIDLabel.setText(String.valueOf(selectedAppointment.getUserID()));
+        System.out.println(selectedAppointment.getUserID());
+        try {
+            modifyAppointmentContactComboBox.setItems(ContactDAO.getContactNames());
+            modifyAppointmentStartDateDatePicker.setDayCellFactory((picker -> new DateCell() {
+                public void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    LocalDate today = LocalDate.now();
+
+                    setDisable(empty || date.compareTo(today) < 0 );
+                }
+            }));
+            modifyAppointmentEndDateDatePicker.setDayCellFactory((picker -> new DateCell() {
+                public void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    LocalDate today = LocalDate.now();
+
+                    setDisable(empty || date.compareTo(today) < 0 );
+                }
+            }));
+            for(int i = 0; i < 24; i++) {
+                modifyAppointmentStartTimeComboBox.getItems().add(LocalTime.of(i, 0));
+                modifyAppointmentEndTimeComboBox.getItems().add(LocalTime.of(i, 0));
+            }
+            modifyAppointmentCustomerIDComboBox.setItems(CustomerDAO.getCustomerIDs());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        modifyAppointmentContactComboBox.getSelectionModel().select(selectedAppointment.getContactID());
+        modifyAppointmentCustomerIDComboBox.getSelectionModel().select(selectedAppointment.getCustomerID());
 
     }
 
@@ -134,6 +183,52 @@ public class ModifyAppointmentController implements Initializable {
         stage.setTitle("Appointments");
         stage.setScene(scene);
         stage.show();
+    }
+
+    /**
+     * showScreen method that allows another screen to be shown.
+     *
+     * @throws Exception
+     * @param actionEvent
+     * @param viewPath
+     * @param title
+     */
+    public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /**
+     * alertMessage method that shows an alert message and text.
+     *
+     * @param alertType
+     * @param alertText
+     */
+    public void alertMessage(String alertType, String alertText) {
+        switch (alertType) {
+            case "Error":
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("ERROR");
+                errorAlert.setContentText(alertText);
+                errorAlert.showAndWait();
+                break;
+            case "Warning":
+                Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+                warningAlert.setTitle("WARNING");
+                warningAlert.setContentText(alertText);
+                warningAlert.showAndWait();
+                break;
+            case "Confirmation":
+                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmationAlert.setTitle("CONFIRMATION");
+                confirmationAlert.setContentText(alertText);
+                confirmationAlert.showAndWait();
+                break;
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.example.schedulingdesktopapplication.controller;
 import com.example.schedulingdesktopapplication.Main;
 import com.example.schedulingdesktopapplication.model.Appointment;
+import com.example.schedulingdesktopapplication.model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -349,6 +350,15 @@ public class AppointmentScreenController implements Initializable {
      */
     public void appointmentAddButtonAction(ActionEvent actionEvent) throws IOException {
         showScreen(actionEvent, "view/AddAppointmentView.fxml", "Add Appointment");
+    }
+
+    /**
+     * getSelectedAppointment method to return the selectedAppointment.
+     *
+     * @return the selectedCustomer.
+     */
+    public static Appointment getSelectedAppointment() {
+        return selectedAppointment;
     }
 
     /**
