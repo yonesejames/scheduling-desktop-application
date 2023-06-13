@@ -95,6 +95,32 @@ public class ContactDAO {
     }
 
     /**
+     * Getter for contact ID in the contact database.
+     *
+     * @return Integer of the contact.
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static Integer getContactID(String contactName) throws SQLException, Exception{
+        String sqlStatement = "SELECT Contact_ID, Contact_Name FROM contacts WHERE Contact_Name = ?";
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        preparedStatement.setString(1, contactName);
+        ResultSet result = preparedStatement.executeQuery();
+
+        try {
+            Integer contactID = null;
+            while (result.next()) {
+                contactID = result.getInt("Contact_ID");
+            }
+            return contactID;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * Method that updates a contact by contactName and email.
      *
      * @param contactName
@@ -104,7 +130,7 @@ public class ContactDAO {
      * @throws SQLException
      * @throws Exception
      */
-    public static int updateCustomer(String contactName, String email, int contactID) throws SQLException, Exception{
+    public static int updateContact(String contactName, String email, int contactID) throws SQLException, Exception{
         JDBC.openConnection();
         String sqlStatement = "UPDATE customers SET Contact_Name = ? AND SET Email = ? WHERE Contact_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
@@ -132,7 +158,7 @@ public class ContactDAO {
      * @throws SQLException
      * @throws Exception
      */
-    public static int deleteUser(int contactID) throws SQLException, Exception{
+    public static int deleteContact(int contactID) throws SQLException, Exception{
         JDBC.openConnection();
         String sqlStatement = "DELETE FROM contact WHERE Contact_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);

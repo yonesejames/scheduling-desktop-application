@@ -1,7 +1,5 @@
 package com.example.schedulingdesktopapplication.model;
-
 import com.example.schedulingdesktopapplication.DAO.JDBC;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

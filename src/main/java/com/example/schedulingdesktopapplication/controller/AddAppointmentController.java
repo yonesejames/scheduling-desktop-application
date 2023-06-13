@@ -13,8 +13,13 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+
+import static com.example.schedulingdesktopapplication.DAO.ContactDAO.getContactID;
+import static com.example.schedulingdesktopapplication.DAO.UserDAO.getUserID;
+import static com.example.schedulingdesktopapplication.model.Logger.getZoneId;
 
 /**
  * Controller class that adds appointments in the application.
@@ -56,7 +61,7 @@ public class AddAppointmentController implements Initializable {
      * FXML combo box variable for the appointment's start time.
      */
     @FXML
-    public ComboBox addAppointmentStartTimeComboBox;
+    public ComboBox<LocalTime> addAppointmentStartTimeComboBox;
 
     /**
      * FXML combo box variable for the appointment's contact.
@@ -80,13 +85,19 @@ public class AddAppointmentController implements Initializable {
      * FXML combo box variable for the appointment's end time.
      */
     @FXML
-    public ComboBox addAppointmentEndTimeComboBox;
+    public ComboBox<LocalTime> addAppointmentEndTimeComboBox;
 
     /**
      * FXML date picker variable for the appointment's start date.
      */
     @FXML
     public DatePicker addAppointmentStartDateDatePicker;
+
+    /**
+     * FXML date picker variable for the appointment's end date.
+     */
+    @FXML
+    public DatePicker addAppointmentEndDateDatePicker;
 
     /**
      * FXML button variable to save the appointment.
@@ -100,16 +111,6 @@ public class AddAppointmentController implements Initializable {
     @FXML
     public Button addAppointmentCancelButton;
 
-    private final ObservableList<String> appointmentStartTimes = FXCollections.observableArrayList();
-
-    private final ObservableList<String> appointmentEndTimes = FXCollections.observableArrayList();
-
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
-    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
-
-    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
     /**
      * Initialize method for the AddAppointmentController to initialize the stage and items.
      *
@@ -119,20 +120,76 @@ public class AddAppointmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-//            addAppointmentStartDateDatePicker.setDayCellFactory(datePicker -> new DateCell());
             addAppointmentContactComboBox.setItems(ContactDAO.getContactNames());
+            addAppointmentStartDateDatePicker.setDayCellFactory((picker -> new DateCell() {
+                public void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    LocalDate today = LocalDate.now();
+
+                    setDisable(empty || date.compareTo(today) < 0 );
+                }
+            }));
+            addAppointmentEndDateDatePicker.setDayCellFactory((picker -> new DateCell() {
+                public void updateItem(LocalDate date, boolean empty) {
+                    super.updateItem(date, empty);
+                    LocalDate today = LocalDate.now();
+
+                    setDisable(empty || date.compareTo(today) < 0 );
+                }
+            }));
+            for(int i = 0; i < 24; i++) {
+                addAppointmentStartTimeComboBox.getItems().add(LocalTime.of(i, 0));
+                addAppointmentEndTimeComboBox.getItems().add(LocalTime.of(i, 0));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void addAppointmentStartTimes() {
-
-
+    /**
+     * showScreen method that allows another screen to be shown.
+     *
+     * @throws Exception
+     * @param actionEvent
+     * @param viewPath
+     * @param title
+     */
+    public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.show();
     }
 
-    public void addAppointmentEndTimes() {
-
+    /**
+     * alertMessage method that shows an alert message and text.
+     *
+     * @param alertType
+     * @param alertText
+     */
+    public void alertMessage(String alertType, String alertText) {
+        switch (alertType) {
+            case "Error":
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("ERROR");
+                errorAlert.setContentText(alertText);
+                errorAlert.showAndWait();
+                break;
+            case "Warning":
+                Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+                warningAlert.setTitle("WARNING");
+                warningAlert.setContentText(alertText);
+                warningAlert.showAndWait();
+                break;
+            case "Confirmation":
+                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmationAlert.setTitle("CONFIRMATION");
+                confirmationAlert.setContentText(alertText);
+                confirmationAlert.showAndWait();
+                break;
+        }
     }
 
     /**
@@ -140,7 +197,56 @@ public class AddAppointmentController implements Initializable {
      *
      * @param actionEvent
      */
-    public void addAppointmentSaveAction(ActionEvent actionEvent) {
+    public void addAppointmentSaveAction(ActionEvent actionEvent) throws Exception {
+        String appointmentTitle = addAppointmentTitleTextField.getText();
+        String appointmentType = addAppointmentTypeTextField.getText();
+        String appointmentLocation = addAppointmentLocationTextField.getText();
+        LocalDate appointmentStartDate = addAppointmentStartDateDatePicker.getValue();
+        LocalDate appointmentEndDate = addAppointmentEndDateDatePicker.getValue();
+        LocalTime appointmentStartTime = addAppointmentStartTimeComboBox.getValue();
+        LocalTime appointmentEndTime = addAppointmentEndTimeComboBox.getValue();
+        String appointmentContact = String.valueOf(addAppointmentContactComboBox.getValue());
+        Integer appointmentContactID = getContactID(appointmentContact);
+        Integer userID = getUserID(String.valueOf(LoginScreenController.username));
+
+        LocalDateTime appointmentStartDateTime = null;
+        LocalDateTime appointmentEndDateTime = null;
+        appointmentStartDateTime = LocalDateTime.of(appointmentStartDate, appointmentStartTime);
+        appointmentEndDateTime = LocalDateTime.of(appointmentEndDate, appointmentEndTime);
+
+        ZonedDateTime appointmentZoneStartDateTime = ZonedDateTime.of(appointmentStartDateTime, getZoneId());
+        ZonedDateTime appointmentZoneEndDateTime = ZonedDateTime.of(appointmentEndDateTime, getZoneId());
+        ZonedDateTime startBusinessHoursEST = ZonedDateTime.of(appointmentStartDate, LocalTime.of(8,0),
+                ZoneId.of("America/New_York"));
+        ZonedDateTime endBusinessHoursEST = ZonedDateTime.of(appointmentEndDate,LocalTime.of(22, 0),
+                ZoneId.of("America/New_York"));
+
+        if (appointmentTitle.isBlank()) {
+            alertMessage("Error", "PLEASE ENTER TITLE");
+        }
+        else if (appointmentType.isBlank()) {
+            alertMessage("Error", "PLEASE ENTER TYPE");
+        }
+        else if (appointmentLocation.isBlank()) {
+            alertMessage("Error", "PLEASE ENTER LOCATION");
+        }
+        else if (appointmentEndDate.isBefore(appointmentStartDate)) {
+            alertMessage("Error", "END DATE CANNOT BE BEFORE START DATE");
+        }
+        else if (appointmentEndTime.isBefore(appointmentStartTime)) {
+            alertMessage("Error", "END TIME CANNOT BE BEFORE START TIME");
+        }
+        else if (appointmentContact.isBlank()) {
+            alertMessage("Error", "PLEASE ENTER CONTACT");
+        }
+        else if (appointmentZoneStartDateTime.isBefore(startBusinessHoursEST)) {
+            alertMessage("Error", "PLEASE ENTER TIME BETWEEN 8 AM - 10 PM EST.");
+        }
+        else if (appointmentZoneEndDateTime.isAfter(endBusinessHoursEST)) {
+            alertMessage("Error", "PLEASE ENTER TIME BETWEEN 8 AM - 10 PM EST.");
+        }
+
+
     }
 
     /**

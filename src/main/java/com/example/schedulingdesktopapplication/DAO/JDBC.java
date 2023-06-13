@@ -1,5 +1,4 @@
 package com.example.schedulingdesktopapplication.DAO;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 

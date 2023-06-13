@@ -19,14 +19,13 @@ public class UserDAO {
     /**
      * Getter for user in the user database by userName.
      *
-     * @param userName
+     * @param username
      * @return user.
      * @throws SQLException
      * @throws Exception
      */
-    public static User getUser(String userName) throws SQLException, Exception{
-        JDBC.openConnection();
-        String sqlStatement = "SELECT * FROM users WHERE User_Name  = '" + userName + "'";
+    public static User getUser(String username) throws SQLException, Exception{
+        String sqlStatement = "SELECT * FROM users WHERE User_Name  = '" + username + "'";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
         User userResult;
         ResultSet result = preparedStatement.executeQuery();
@@ -35,15 +34,40 @@ public class UserDAO {
             while(result.next()){
                 int userID = result.getInt("User_ID");
                 String password = result.getString("Password");
-                userResult = new User(userID, userName, password);
+                userResult = new User(userID, username, password);
                 return userResult;
             }
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
+    }
 
-        JDBC.closeConnection();
+    /**
+     * Getter for userID in the user database by userName.
+     *
+     * @param username
+     * @return user.
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static Integer getUserID(String username) throws SQLException, Exception{
+        String sqlStatement = "SELECT User_ID FROM users WHERE User_Name = ?";
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        preparedStatement.setString(1, username);
+        ResultSet result = preparedStatement.executeQuery();
+
+        try {
+            Integer userID = null;
+            while (result.next()) {
+                userID = result.getInt("User_ID");
+            }
+            return userID;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -55,7 +79,6 @@ public class UserDAO {
      * @throws Exception
      */
     public static ObservableList<User> getAllUsers() throws SQLException, Exception{
-        JDBC.openConnection();
         ObservableList<User> allUsers = FXCollections.observableArrayList();
         String sqlStatement = "SELECT * FROM users";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
@@ -75,8 +98,6 @@ public class UserDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return null;
     }
 
@@ -91,7 +112,6 @@ public class UserDAO {
      * @throws Exception
      */
     public static Boolean validateUser(String userName, String password) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "SELECT * FROM users WHERE User_Name = '" + userName + "' AND Password = '" + password +"'";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
         ResultSet result = preparedStatement.executeQuery();
@@ -109,7 +129,6 @@ public class UserDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-        JDBC.closeConnection();
         return Boolean.FALSE;
     }
 
@@ -124,7 +143,6 @@ public class UserDAO {
      * @throws Exception
      */
     public static int insertUser(int userID, String userName, String password) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "INSERT INTO USERS (User_ID, User_Name, Password) VALUES(?, ?, ?)";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
 
@@ -138,7 +156,6 @@ public class UserDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-        JDBC.closeConnection();
         return -1;
     }
 
@@ -153,7 +170,6 @@ public class UserDAO {
      * @throws Exception
      */
     public static int updateUser(String userName, String password, int userID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "UPDATE USERS SET User_Name = ? AND SET Password = ? WHERE User_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
 
@@ -167,7 +183,6 @@ public class UserDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-        JDBC.closeConnection();
         return -1;
     }
 
@@ -180,7 +195,6 @@ public class UserDAO {
      * @throws Exception
      */
     public static int deleteUser(int userID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "DELETE FROM USERS WHERE User_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
 
@@ -192,7 +206,6 @@ public class UserDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-        JDBC.closeConnection();
         return -1;
     }
 
