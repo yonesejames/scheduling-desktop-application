@@ -3,6 +3,10 @@ import com.example.schedulingdesktopapplication.DAO.AppointmentDAO;
 import com.example.schedulingdesktopapplication.DAO.ContactDAO;
 import com.example.schedulingdesktopapplication.DAO.CustomerDAO;
 import com.example.schedulingdesktopapplication.Main;
+import com.example.schedulingdesktopapplication.model.Appointment;
+import com.example.schedulingdesktopapplication.model.Customer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -111,6 +115,11 @@ public class AddAppointmentController implements Initializable {
     public Button addAppointmentCancelButton;
 
     /**
+     *  List of all conflicted appointments.
+     */
+    private ObservableList<Appointment> conflictedAppointments = FXCollections.observableArrayList();
+
+    /**
      * Initialize method for the AddAppointmentController to initialize the stage and items.
      *
      * @param url for the url path.
@@ -120,6 +129,11 @@ public class AddAppointmentController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             addAppointmentContactComboBox.setItems(ContactDAO.getContactNames());
+
+            /**
+             * Lambda Expression takes an argument picker and returns an instance of DateCell that
+             * represents a cell within the date picker's day cells while disabling days previous from today.
+             */
             addAppointmentStartDateDatePicker.setDayCellFactory((picker -> new DateCell() {
                 public void updateItem(LocalDate date, boolean empty) {
                     super.updateItem(date, empty);
@@ -128,6 +142,11 @@ public class AddAppointmentController implements Initializable {
                     setDisable(empty || date.compareTo(today) < 0 );
                 }
             }));
+
+            /**
+             * Lambda Expression takes an argument picker and returns an instance of DateCell that
+             * represents a cell within the date picker's day cells while disabling days previous from today.
+             */
             addAppointmentEndDateDatePicker.setDayCellFactory((picker -> new DateCell() {
                 public void updateItem(LocalDate date, boolean empty) {
                     super.updateItem(date, empty);
@@ -136,6 +155,7 @@ public class AddAppointmentController implements Initializable {
                     setDisable(empty || date.compareTo(today) < 0 );
                 }
             }));
+
             for(int i = 0; i < 24; i++) {
                 addAppointmentStartTimeComboBox.getItems().add(LocalTime.of(i, 0));
                 addAppointmentEndTimeComboBox.getItems().add(LocalTime.of(i, 0));
@@ -208,9 +228,7 @@ public class AddAppointmentController implements Initializable {
         LocalTime appointmentEndTime = addAppointmentEndTimeComboBox.getValue();
         Integer appointmentCustomerID = addAppointmentCustomerIDComboBox.getValue();
         String appointmentContact = String.valueOf(addAppointmentContactComboBox.getValue());
-        System.out.println(appointmentContact);
         Integer appointmentContactID = getContactID(appointmentContact);
-        System.out.println(appointmentContactID);
         Integer userID = getUserID(String.valueOf(LoginScreenController.username));
 
         LocalDateTime appointmentStartDateTime = LocalDateTime.of(appointmentStartDate, appointmentStartTime);
@@ -224,6 +242,9 @@ public class AddAppointmentController implements Initializable {
         ZonedDateTime endBusinessHoursEST = ZonedDateTime.of(appointmentEndDate,LocalTime.of(22, 0),
                 ZoneId.of("America/New_York"));
 
+
+        conflictedAppointments = AppointmentDAO.getConflictedAppointments(Timestamp.valueOf(appointmentStartDateTime),
+                appointmentCustomerID);
 
         if (appointmentTitle.isBlank()) {
             alertMessage("Error", "PLEASE ENTER TITLE");
@@ -252,18 +273,23 @@ public class AddAppointmentController implements Initializable {
         else if (appointmentCustomerID == null) {
             alertMessage("Error", "PLEASE ENTER Customer ID");
         }
+        else if (!conflictedAppointments.isEmpty()) {
+            alertMessage("Error", "CONFLICTED APPOINTMENT");
+        }
+        else {
 
-        String createdBy = String.valueOf(LoginScreenController.username);
+            String createdBy = String.valueOf(LoginScreenController.username);
 
-        int appointmentAdded = AppointmentDAO.insertAppointment(appointmentTitle, appointmentDescription, appointmentLocation,
-                appointmentType, Timestamp.valueOf(appointmentStartDateTime), Timestamp.valueOf(appointmentEndDateTime),
-                createdBy, createdBy, appointmentContactID, userID, appointmentCustomerID);
+            int appointmentAdded = AppointmentDAO.insertAppointment(appointmentTitle, appointmentDescription, appointmentLocation,
+                    appointmentType, Timestamp.valueOf(appointmentStartDateTime), Timestamp.valueOf(appointmentEndDateTime),
+                    createdBy, createdBy, appointmentContactID, userID, appointmentCustomerID);
 
-        if (appointmentAdded != -1) {
-            alertMessage("Confirmation", "APPOINTMENT HAS BEEN ADDED");
-            showScreen(actionEvent, "view/AppointmentScreenView.fxml", "Appointments");
-        } else {
-            alertMessage("Error", "APPOINTMENT HAS NOT BEEN ADDED");
+            if (appointmentAdded != -1) {
+                alertMessage("Confirmation", "APPOINTMENT HAS BEEN ADDED");
+                showScreen(actionEvent, "view/AppointmentScreenView.fxml", "Appointments");
+            } else {
+                alertMessage("Error", "APPOINTMENT HAS NOT BEEN ADDED");
+            }
         }
     }
 

@@ -1,5 +1,4 @@
 package com.example.schedulingdesktopapplication.DAO;
-
 import com.example.schedulingdesktopapplication.model.Country;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,6 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+/**
+ * DAO class to access the countries database.
+ *
+ * @author Yonese James
+ */
 public class CountryDAO {
     /**
      * Getter for customer in the customer database by customerID.
@@ -18,7 +22,6 @@ public class CountryDAO {
      * @throws Exception
      */
     public static Country getCountry (int countryID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "SELECT * FROM countries WHERE Country_ID  = '" + countryID + "'";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
         Country countryResult;
@@ -38,8 +41,6 @@ public class CountryDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return null;
     }
 
@@ -51,7 +52,6 @@ public class CountryDAO {
      * @throws Exception
      */
     public static ObservableList<Country> getAllCountries () throws SQLException, Exception{
-        JDBC.openConnection();
         ObservableList<Country> countries = FXCollections.observableArrayList();
         String sqlStatement = "SELECT * FROM countries";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
@@ -68,7 +68,6 @@ public class CountryDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
         return countries;
     }
 
@@ -87,7 +86,6 @@ public class CountryDAO {
      */
     public static int insertCountry (int countryID, String country, Timestamp createDate, String createdBy,
                                      Timestamp lastUpdate, String lastUpdatedBy) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "INSERT INTO countries (Country_ID, Country, Create_Date, Created_By, Last_Update, " +
                 "Last_Updated_By) VALUES(?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
@@ -105,8 +103,6 @@ public class CountryDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return -1;
     }
 
@@ -125,7 +121,6 @@ public class CountryDAO {
      */
     public static int updateCountry (String country, Timestamp createDate, String createdBy, Timestamp lastUpdate,
                                      String lastUpdatedBy, int countryID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "UPDATE countries SET Country = ? AND SET Create_Date = ? AND SET Created_By = ? " +
                 "AND SET Last_Update = ? AND SET Last_Updated_By = ? AND SET Division_ID = ? WHERE Country_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
@@ -143,8 +138,6 @@ public class CountryDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return -1;
     }
 
@@ -157,7 +150,6 @@ public class CountryDAO {
      * @throws Exception
      */
     public static int deleteCountry (int countryID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "DELETE FROM countries WHERE Country_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
 
@@ -169,8 +161,6 @@ public class CountryDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return -1;
     }
 }

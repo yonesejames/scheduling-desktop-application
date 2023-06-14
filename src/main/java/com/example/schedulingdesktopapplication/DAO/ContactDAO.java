@@ -6,7 +6,65 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * DAO class to access the contacts database.
+ *
+ * @author Yonese James
+ */
 public class ContactDAO {
+    /**
+     * Getter for contact's names in the contact database.
+     *
+     * @return ObservableList of all contacts.
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static ObservableList<Contact> getContactNames() throws SQLException, Exception{
+        ObservableList<Contact> contactNames = FXCollections.observableArrayList();
+        String sqlStatement = "SELECT Contact_Name FROM contacts";
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        ResultSet result = preparedStatement.executeQuery();
+
+        try {
+            while(result.next()){
+                String contactName = result.getString("Contact_Name");
+                Contact contactResult = new Contact(contactName);
+                contactNames.add(contactResult);
+            }
+            return contactNames;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Getter for contact ID in the contact database.
+     *
+     * @return Integer of the contact.
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static Integer getContactID(String contactName) throws SQLException, Exception{
+        String sqlStatement = "SELECT Contact_ID, Contact_Name FROM contacts WHERE Contact_Name = ?";
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        preparedStatement.setString(1, contactName);
+        ResultSet result = preparedStatement.executeQuery();
+
+        try {
+            Integer contactID = null;
+            while (result.next()) {
+                contactID = result.getInt("Contact_ID");
+            }
+            return contactID;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      * Getter for all contacts in the contact database.
      *
@@ -38,25 +96,26 @@ public class ContactDAO {
     }
 
     /**
-     * Getter for contact's names in the contact database.
+     * Getter for contact in the contact database by contactID.
      *
-     * @return ObservableList of all contacts.
+     * @param contactID
+     * @return contact.
      * @throws SQLException
      * @throws Exception
      */
-    public static ObservableList<Contact> getContactNames() throws SQLException, Exception{
-        ObservableList<Contact> contactNames = FXCollections.observableArrayList();
-        String sqlStatement = "SELECT Contact_Name FROM contacts";
+    public static Contact getContact(int contactID) throws SQLException, Exception{
+        String sqlStatement = "SELECT * FROM contacts WHERE Contact_ID  = '" + contactID + "'";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        Contact contactResult;
         ResultSet result = preparedStatement.executeQuery();
 
         try {
             while(result.next()){
                 String contactName = result.getString("Contact_Name");
-                Contact contactResult = new Contact(contactName);
-                contactNames.add(contactResult);
+                String email = result.getString("Email");
+                contactResult = new Contact(contactID, contactName, email);
+                return contactResult;
             }
-            return contactNames;
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -75,7 +134,6 @@ public class ContactDAO {
      * @throws Exception
      */
     public static int insertContact(int contactID, String contactName, String email) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "INSERT INTO contacts (Contact_ID, Contact_Name, Email) VALUES(?, ?, ?)";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
 
@@ -89,35 +147,7 @@ public class ContactDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return -1;
-    }
-
-    /**
-     * Getter for contact ID in the contact database.
-     *
-     * @return Integer of the contact.
-     * @throws SQLException
-     * @throws Exception
-     */
-    public static Integer getContactID(String contactName) throws SQLException, Exception{
-        String sqlStatement = "SELECT Contact_ID, Contact_Name FROM contacts WHERE Contact_Name = ?";
-        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
-        preparedStatement.setString(1, contactName);
-        ResultSet result = preparedStatement.executeQuery();
-
-        try {
-            Integer contactID = null;
-            while (result.next()) {
-                contactID = result.getInt("Contact_ID");
-            }
-            return contactID;
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     /**
@@ -131,7 +161,6 @@ public class ContactDAO {
      * @throws Exception
      */
     public static int updateContact(String contactName, String email, int contactID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "UPDATE customers SET Contact_Name = ? AND SET Email = ? WHERE Contact_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
 
@@ -145,8 +174,6 @@ public class ContactDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return -1;
     }
 
@@ -159,7 +186,6 @@ public class ContactDAO {
      * @throws Exception
      */
     public static int deleteContact(int contactID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "DELETE FROM contact WHERE Contact_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
 
@@ -171,40 +197,7 @@ public class ContactDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return -1;
     }
-
-//    /**
-//     * Getter for contact in the contact database by contactID.
-//     *
-//     * @param contactID
-//     * @return contact.
-//     * @throws SQLException
-//     * @throws Exception
-//     */
-//    public static Contact getContact(int contactID) throws SQLException, Exception{
-//        JDBC.openConnection();
-//        String sqlStatement = "SELECT * FROM contacts WHERE Contact_ID  = '" + contactID + "'";
-//        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
-//        Contact contactResult;
-//        ResultSet result = preparedStatement.executeQuery();
-//
-//        try {
-//            while(result.next()){
-//                String contactName = result.getString("Contact_Name");
-//                String email = result.getString("Email");
-//                contactResult = new Contact(contactID, contactName, email);
-//                return contactResult;
-//            }
-//        }
-//        catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        JDBC.closeConnection();
-//        return null;
-//    }
 
 }

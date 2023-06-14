@@ -1,14 +1,16 @@
 package com.example.schedulingdesktopapplication.DAO;
-import com.example.schedulingdesktopapplication.model.Appointment;
 import com.example.schedulingdesktopapplication.model.Report;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 
+/**
+ * DAO class to access different tables in the database.
+ *
+ * @author Yonese James
+ */
 public class ReportDAO {
 
     /**

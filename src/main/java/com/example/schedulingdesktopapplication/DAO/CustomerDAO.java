@@ -6,7 +6,13 @@ import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
+/**
+ * DAO class to access the customers database.
+ *
+ * @author Yonese James
+ */
 public class CustomerDAO {
     /**
      * Getter for all customers in the customer's database.
@@ -172,7 +178,6 @@ public class CustomerDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
         return -1;
     }
 
@@ -200,43 +205,40 @@ public class CustomerDAO {
         return -1;
     }
 
-//    /**
-//     * Getter for customer in the customer's database by customerID.
-//     *
-//     * @param customerID
-//     * @return customer.
-//     * @throws SQLException
-//     * @throws Exception
-//     */
-//    public static Customer getCustomer(int customerID) throws SQLException, Exception{
-//        JDBC.openConnection();
-//        String sqlStatement = "SELECT * FROM customers WHERE Customer_ID  = '" + customerID + "'";
-//        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
-//        Customer customerResult;
-//        ResultSet result = preparedStatement.executeQuery();
-//
-//        try {
-//            while(result.next()){
-//                String customerName = result.getString("Customer_Name");
-//                String address = result.getString("Address");
-//                String postalCode = result.getString("Postal_code");
-//                String phone = result.getString("Phone");
-//                Timestamp createDate = result.getTimestamp("Create_Date");
-//                String createdBy = result.getString("Created_By");
-//                Timestamp lastUpdate = result.getTimestamp("Last_Update");
-//                String lastUpdatedBy = result.getString("Last_Update_BY");
-//                int divisionID = result.getInt("Division_ID");
-//                customerResult = new Customer(customerID, customerName, address, postalCode, phone, createDate,
-//                        createdBy, lastUpdate, lastUpdatedBy,divisionID);
-//                return customerResult;
-//            }
-//        }
-//        catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        JDBC.closeConnection();
-//        return null;
-//    }
+    /**
+     * Getter for customer in the customer's database by customerID.
+     *
+     * @param customerID
+     * @return customer.
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static Customer getCustomer(int customerID) throws SQLException, Exception{
+        String sqlStatement = "SELECT * FROM customers WHERE Customer_ID  = '" + customerID + "'";
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        Customer customerResult;
+        ResultSet result = preparedStatement.executeQuery();
+
+        try {
+            while(result.next()){
+                String customerName = result.getString("Customer_Name");
+                String address = result.getString("Address");
+                String postalCode = result.getString("Postal_code");
+                String phone = result.getString("Phone");
+                Timestamp createDate = result.getTimestamp("Create_Date");
+                String createdBy = result.getString("Created_By");
+                Timestamp lastUpdate = result.getTimestamp("Last_Update");
+                String lastUpdatedBy = result.getString("Last_Update_BY");
+                int divisionID = result.getInt("Division_ID");
+                customerResult = new Customer(customerID, customerName, address, postalCode, phone, createDate,
+                        createdBy, lastUpdate, lastUpdatedBy,divisionID);
+                return customerResult;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

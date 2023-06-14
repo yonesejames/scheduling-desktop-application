@@ -1,13 +1,10 @@
 package com.example.schedulingdesktopapplication.DAO;
-
 import com.example.schedulingdesktopapplication.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import com.example.schedulingdesktopapplication.DAO.JDBC;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * DAO class to access the user database.

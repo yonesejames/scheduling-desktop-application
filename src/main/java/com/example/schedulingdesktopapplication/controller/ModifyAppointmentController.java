@@ -4,6 +4,8 @@ import com.example.schedulingdesktopapplication.DAO.ContactDAO;
 import com.example.schedulingdesktopapplication.DAO.CustomerDAO;
 import com.example.schedulingdesktopapplication.Main;
 import com.example.schedulingdesktopapplication.model.Appointment;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -116,6 +118,11 @@ public class ModifyAppointmentController implements Initializable {
      *  Appointment that has been selected when user clicks on appointment.
      */
     Appointment selectedAppointment;
+
+    /**
+     *  List of all conflicted appointments.
+     */
+    private ObservableList<Appointment> conflictedAppointments = FXCollections.observableArrayList();
 
     /**
      * Initialize method for the ModifyAppointmentController to initialize the stage and items.
@@ -245,6 +252,8 @@ public class ModifyAppointmentController implements Initializable {
         ZonedDateTime endBusinessHoursEST = ZonedDateTime.of(appointmentEndDate,LocalTime.of(22, 0),
                 ZoneId.of("America/New_York"));
 
+        conflictedAppointments = AppointmentDAO.getConflictedAppointments(Timestamp.valueOf(appointmentStartDateTime),
+                appointmentCustomerID);
 
         if (appointmentTitle.isBlank()) {
             alertMessage("Error", "PLEASE ENTER TITLE");
@@ -273,16 +282,21 @@ public class ModifyAppointmentController implements Initializable {
         else if (appointmentCustomerID == null) {
             alertMessage("Error", "PLEASE ENTER CUSTOMER ID");
         }
+        else if (!conflictedAppointments.isEmpty()) {
+            alertMessage("Error", "CONFLICTED APPOINTMENT");
+        }
+        else {
 
-        int appointmentUpdated = AppointmentDAO.updateAppointment(appointmentTitle, appointmentDescription, appointmentLocation,
-                appointmentType, Timestamp.valueOf(appointmentStartDateTime), Timestamp.valueOf(appointmentEndDateTime),
-                appointmentCustomerID, userID, appointmentContactID, appointmentID);
+            int appointmentUpdated = AppointmentDAO.updateAppointment(appointmentTitle, appointmentDescription, appointmentLocation,
+                    appointmentType, Timestamp.valueOf(appointmentStartDateTime), Timestamp.valueOf(appointmentEndDateTime),
+                    appointmentCustomerID, userID, appointmentContactID, appointmentID);
 
-        if (appointmentUpdated != -1) {
-            alertMessage("Confirmation", "APPOINTMENT HAS BEEN UPDATED");
-            showScreen(actionEvent, "view/AppointmentScreenView.fxml", "Appointments");
-        } else {
-            alertMessage("Error", "APPOINTMENT HAS NOT BEEN UPDATED");
+            if (appointmentUpdated != -1) {
+                alertMessage("Confirmation", "APPOINTMENT HAS BEEN UPDATED");
+                showScreen(actionEvent, "view/AppointmentScreenView.fxml", "Appointments");
+            } else {
+                alertMessage("Error", "APPOINTMENT HAS NOT BEEN UPDATED");
+            }
         }
     }
 

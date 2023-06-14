@@ -1,6 +1,4 @@
 package com.example.schedulingdesktopapplication.DAO;
-
-import com.example.schedulingdesktopapplication.model.Customer;
 import com.example.schedulingdesktopapplication.model.FirstLevelDivision;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
+/**
+ * DAO class to access the first_level_divisions database.
+ *
+ * @author Yonese James
+ */
 public class FirstLevelDivisionDAO {
     /**
      * Getter for first level divisions in the first_level_divisions database by divisionID.
@@ -19,7 +22,6 @@ public class FirstLevelDivisionDAO {
      * @throws Exception
      */
     public static FirstLevelDivision getFirstLevelDivision (int divisionID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "SELECT * FROM first_level_divisions WHERE Division_ID  = '" + divisionID + "'";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
         FirstLevelDivision countryResult;
@@ -41,8 +43,6 @@ public class FirstLevelDivisionDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return null;
     }
 
@@ -55,7 +55,6 @@ public class FirstLevelDivisionDAO {
      * @throws Exception
      */
     public static ObservableList<FirstLevelDivision> getDivision(String country) throws SQLException, Exception{
-        JDBC.openConnection();
         ObservableList<FirstLevelDivision> divisions = FXCollections.observableArrayList();
         String sqlStatement =  "SELECT country.Country, country.Country_ID,  division.Division_ID, division.Division" +
                 " FROM countries as country RIGHT OUTER JOIN " +
@@ -85,7 +84,6 @@ public class FirstLevelDivisionDAO {
      * @throws Exception
      */
     public static int getDivisionID(String divisionName) throws SQLException, Exception {
-        JDBC.openConnection();
         String sqlStatement = "SELECT Division, Division_ID FROM first_level_divisions WHERE Division = '"
                 + divisionName + "'";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
@@ -111,7 +109,6 @@ public class FirstLevelDivisionDAO {
      * @throws Exception
      */
     public static ObservableList<FirstLevelDivision> getAllFirstLevelDivision () throws SQLException, Exception{
-        JDBC.openConnection();
         ObservableList<FirstLevelDivision> firstLevelDivisions = FXCollections.observableArrayList();
         String sqlStatement = "SELECT * FROM first_level_divisions";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
@@ -136,8 +133,6 @@ public class FirstLevelDivisionDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return null;
     }
 
@@ -158,7 +153,6 @@ public class FirstLevelDivisionDAO {
      */
     public static int insertFirstLevelDivision (int divisionID, String division, Timestamp createDate, String createdBy,
                                      Timestamp lastUpdate, String lastUpdatedBy, int countryID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "INSERT INTO first_level_divisions (Division_ID, Division, Create_Date, Created_By, Last_Update, " +
                 "Last_Updated_By, Country_ID) VALUES(?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
@@ -177,8 +171,6 @@ public class FirstLevelDivisionDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return -1;
     }
 
@@ -199,7 +191,6 @@ public class FirstLevelDivisionDAO {
      */
     public static int updateFirstLevelDivision (int divisionID, String division, Timestamp createDate, String createdBy,
                                                 Timestamp lastUpdate, String lastUpdatedBy, int countryID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "UPDATE first_level_divisions SET Division = ? AND SET Create_Date = ? " +
                 "AND SET Created_By = ? AND SET Last_Update = ? AND SET Last_Updated_By = ? AND SET Country_ID = ? " +
                 "WHERE Division_ID = ?";
@@ -219,8 +210,6 @@ public class FirstLevelDivisionDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return -1;
     }
 
@@ -233,7 +222,6 @@ public class FirstLevelDivisionDAO {
      * @throws Exception
      */
     public static int deleteFirstLevelDivision (int divisionID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "DELETE FROM first_level_divisions WHERE Division_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
 
@@ -245,8 +233,6 @@ public class FirstLevelDivisionDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return -1;
     }
 }

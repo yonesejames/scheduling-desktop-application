@@ -1,9 +1,13 @@
 package com.example.schedulingdesktopapplication.DAO;
-
 import java.sql.Statement;
 import java.sql.ResultSet;
 import static com.example.schedulingdesktopapplication.DAO.JDBC.connection;
 
+/**
+ * Query class to access database with SQL queries.
+ *
+ * @author Yonese James
+ */
 public class Query {
     private static String query;
     private static Statement statement;

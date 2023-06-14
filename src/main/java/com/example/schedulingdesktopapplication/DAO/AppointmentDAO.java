@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.ZonedDateTime;
 
 /**
  * DAO class to access the appointment database.
@@ -201,6 +200,46 @@ public class AppointmentDAO {
     }
 
     /**
+     * Getter for all appointments that are conflicted with other appointments in the appointment database.
+     *
+     * @return ObservableList of all appointments.
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static ObservableList<Appointment> getConflictedAppointments(Timestamp date, int customerID) throws SQLException, Exception{
+        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+        String sqlStatement = "SELECT * FROM appointments as appointment LEFT OUTER JOIN contacts as contact ON " +
+                "appointment.Contact_ID = contact.Contact_ID WHERE datediff(appointment.Start, '" + date +"') = 0 AND " +
+                "Customer_ID = " + customerID;
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        ResultSet result = preparedStatement.executeQuery();
+
+        try {
+            while(result.next()){
+                int appointmentID = result.getInt("Appointment_ID");
+                String appointmentTitle = result.getString("Title");
+                String appointmentDescription = result.getString("Description");
+                String appointmentLocation = result.getString("Location");
+                String appointmentType = result.getString("Type");
+                Timestamp start = result.getTimestamp("Start");
+                Timestamp end = result.getTimestamp("End");
+                int appointmentCustomerID = result.getInt("Customer_ID");
+                int userID = result.getInt("User_ID");
+                int contactID = result.getInt("Contact_ID");
+                String contactName = result.getString("Contact_Name");
+                Appointment appointment = new Appointment(appointmentID, appointmentTitle, appointmentDescription,
+                        appointmentLocation, appointmentType, start, end, appointmentCustomerID, userID, contactID, contactName);
+                allAppointments.add(appointment);
+            }
+            return allAppointments;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
      * Method that inserts an appointment by appointmentID, title, description, location, type, startDateTime,
      * endDateTime, createDate, createdBy, lastUpdate, lastUpdatedBy, customerID, userID, and contactID.
      *
@@ -297,6 +336,8 @@ public class AppointmentDAO {
         }
         return -1;
     }
+
+
 
     /**
      * Method that deletes an appointment in the appointment database by appointmentID.
