@@ -247,7 +247,6 @@ public class CustomerScreenController implements Initializable {
         }
         else
         {
-            alertMessage("Confirmation", "PLEASE CONFIRM IF YOU WOULD LIKE TO DELETE THIS CUSTOMER");
             Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
             confirmationAlert.setTitle("CONFIRMATION");
             confirmationAlert.setContentText("PLEASE CONFIRM IF YOU WOULD LIKE TO DELETE THIS CUSTOMER");
