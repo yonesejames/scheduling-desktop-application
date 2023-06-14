@@ -1,12 +1,16 @@
 package com.example.schedulingdesktopapplication.controller;
 
+import com.example.schedulingdesktopapplication.DAO.AppointmentDAO;
 import com.example.schedulingdesktopapplication.Main;
+import com.example.schedulingdesktopapplication.model.Appointment;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -51,7 +55,76 @@ public class MainScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            ObservableList<Appointment> upcomingFifteenAppointments = AppointmentDAO.getFifteenMinuteAppointments();
 
+
+            if (!upcomingFifteenAppointments.isEmpty()) {
+                for (Appointment appointment : upcomingFifteenAppointments) {
+                    String informationMessage = "UPCOMING APPOINTMENT: Appointment ID: " + appointment.getAppointmentID()
+                            + " | Date: " + appointment.getStartDateTime().toLocalDateTime().toLocalDate() + " Time: "
+                            + appointment.getStartDateTime().toLocalDateTime().toLocalTime();
+                    alertMessage("Information", informationMessage);
+                }
+            } else {
+                alertMessage("Information", "NO UPCOMING APPOINTMENTS WITHIN 15 MINUTES");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * showScreen method that allows another screen to be shown.
+     *
+     * @throws Exception
+     * @param actionEvent
+     * @param viewPath
+     * @param title
+     */
+    public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /**
+     * alertMessage method that shows an alert message and text.
+     *
+     * @param alertType
+     * @param alertText
+     */
+    public void alertMessage(String alertType, String alertText) {
+        switch (alertType) {
+            case "Error":
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("ERROR");
+                errorAlert.setContentText(alertText);
+                errorAlert.showAndWait();
+                break;
+            case "Warning":
+                Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+                warningAlert.setTitle("WARNING");
+                warningAlert.setContentText(alertText);
+                warningAlert.showAndWait();
+                break;
+            case "Confirmation":
+                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmationAlert.setTitle("CONFIRMATION");
+                confirmationAlert.setContentText(alertText);
+                confirmationAlert.showAndWait();
+                break;
+            case "Information":
+                Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
+                informationAlert.setTitle("INFORMATION");
+                informationAlert.setContentText(alertText);
+                informationAlert.showAndWait();
+                break;
+        }
     }
 
     /**
@@ -60,12 +133,7 @@ public class MainScreenController implements Initializable {
      * @param actionEvent
      */
     public void mainCustomersButtonAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/CustomerScreenView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Customers");
-        stage.setScene(scene);
-        stage.show();
+        showScreen(actionEvent, "view/CustomerScreenView.fxml", "Customers");
     }
 
     /**
@@ -74,12 +142,7 @@ public class MainScreenController implements Initializable {
      * @param actionEvent
      */
     public void mainAppointmentsButtonAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/AppointmentScreenView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Appointments");
-        stage.setScene(scene);
-        stage.show();
+        showScreen(actionEvent, "view/AppointmentScreenView.fxml", "Appointments");
     }
 
     /**
@@ -88,12 +151,7 @@ public class MainScreenController implements Initializable {
      * @param actionEvent
      */
     public void mainReportsButtonAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/ReportScreenView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Reports");
-        stage.setScene(scene);
-        stage.show();
+        showScreen(actionEvent, "view/ReportScreenView.fxml", "Reports");
     }
 
     /**

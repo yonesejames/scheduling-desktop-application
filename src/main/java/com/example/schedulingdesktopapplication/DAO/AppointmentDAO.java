@@ -57,7 +57,43 @@ public class AppointmentDAO {
     /**
      * Getter for weekly appointments in the appointment database.
      *
-     * @return ObservableList of all appointments.
+     * @return ObservableList of appointments in 15 minutes.
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static ObservableList<Appointment> getFifteenMinuteAppointments() throws SQLException, Exception {
+        ObservableList<Appointment> weeklyAppointments = FXCollections.observableArrayList();
+        String sqlStatement = "SELECT * FROM appointments WHERE Start BETWEEN now() - INTERVAL 15 minute AND now()";
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        ResultSet result = preparedStatement.executeQuery();
+
+        try {
+            while(result.next()){
+                int appointmentID = result.getInt("Appointment_ID");
+                String appointmentTitle = result.getString("Title");
+                String appointmentDescription = result.getString("Description");
+                String appointmentLocation = result.getString("Location");
+                String appointmentType = result.getString("Type");
+                Timestamp start = result.getTimestamp("Start");
+                Timestamp end = result.getTimestamp("End");
+                int customerID = result.getInt("Customer_ID");
+                int userID = result.getInt("User_ID");
+                int contactID = result.getInt("Contact_ID");
+                Appointment appointment = new Appointment(appointmentID, appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, start, end, customerID, userID, contactID);
+                weeklyAppointments.add(appointment);
+            }
+            return weeklyAppointments;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Getter for weekly appointments in the appointment database.
+     *
+     * @return ObservableList of appointments in 7 days.
      * @throws SQLException
      * @throws Exception
      */
@@ -93,7 +129,7 @@ public class AppointmentDAO {
     /**
      * Getter for monthly appointments in the appointment database.
      *
-     * @return ObservableList of all appointments.
+     * @return ObservableList of appointments in 30 days.
      * @throws SQLException
      * @throws Exception
      */

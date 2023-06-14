@@ -160,7 +160,7 @@ public class ModifyAppointmentController implements Initializable {
             modifyAppointmentCustomerIDComboBox.setItems(CustomerDAO.getCustomerIDs());
             modifyAppointmentContactComboBox.getSelectionModel().select(selectedAppointment.getContactName());
             modifyAppointmentCustomerIDComboBox.getSelectionModel().select(selectedAppointment.getCustomerID());
-            modifyAppointmentStartDateDatePicker.setValue(selectedAppointment.getEndDateTime().toLocalDateTime().toLocalDate());
+            modifyAppointmentStartDateDatePicker.setValue(selectedAppointment.getStartDateTime().toLocalDateTime().toLocalDate());
             modifyAppointmentStartTimeComboBox.getSelectionModel().select(selectedAppointment.getStartDateTime().toLocalDateTime().toLocalTime());
             modifyAppointmentEndDateDatePicker.setValue(selectedAppointment.getEndDateTime().toLocalDateTime().toLocalDate());
             modifyAppointmentEndTimeComboBox.getSelectionModel().select(selectedAppointment.getEndDateTime().toLocalDateTime().toLocalTime());
