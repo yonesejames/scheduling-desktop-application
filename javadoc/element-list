@@ -1,0 +1,5 @@
+module:com.example.schedulingdesktopapplication
+com.example.schedulingdesktopapplication
+com.example.schedulingdesktopapplication.controller
+com.example.schedulingdesktopapplication.DAO
+com.example.schedulingdesktopapplication.model
