@@ -1,6 +1,12 @@
 package com.example.schedulingdesktopapplication.controller;
-
+import com.example.schedulingdesktopapplication.DAO.AppointmentDAO;
+import com.example.schedulingdesktopapplication.DAO.ContactDAO;
+import com.example.schedulingdesktopapplication.DAO.ReportDAO;
 import com.example.schedulingdesktopapplication.Main;
+import com.example.schedulingdesktopapplication.model.Appointment;
+import com.example.schedulingdesktopapplication.model.Report;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,9 +14,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 /**
@@ -23,61 +31,61 @@ public class ReportScreenController implements Initializable {
      *  FXML table view variable for all of the reports.
      */
     @FXML
-    public TableView reportsMainTableView;
+    public TableView<Appointment> reportsMainTableView;
 
     /**
      *  FXML table column variable for the report's IDs.
      */
     @FXML
-    public TableColumn reportsTableColumnID;
+    public TableColumn<Appointment, Integer> reportsTableColumnID;
 
     /**
      *  FXML table column variable for the report's title.
      */
     @FXML
-    public TableColumn reportsTableColumnTitle;
+    public TableColumn<Appointment, String> reportsTableColumnTitle;
 
     /**
      *  FXML table column variable for the report's description.
      */
     @FXML
-    public TableColumn reportsTableColumnDescription;
+    public TableColumn<Appointment, String> reportsTableColumnDescription;
 
     /**
      *  FXML table column variable for the report's type.
      */
     @FXML
-    public TableColumn reportsTableColumnType;
+    public TableColumn<Appointment, String> reportsTableColumnType;
 
     /**
      *  FXML table column variable for the report's location.
      */
     @FXML
-    public TableColumn reportsTableColumnLocation;
+    public TableColumn<Appointment, String> reportsTableColumnLocation;
 
     /**
      *  FXML table column variable for the report's start date and time.
      */
     @FXML
-    public TableColumn reportsTableColumnStartDateAndTime;
+    public TableColumn<Appointment, Date> reportsTableColumnStartDateAndTime;
 
     /**
      *  FXML table column variable for the report's end date and time.
      */
     @FXML
-    public TableColumn reportsTableColumnEndDateAndTime;
+    public TableColumn<Appointment, Date> reportsTableColumnEndDateAndTime;
 
     /**
      *  FXML table column variable for the report's customer IDs.
      */
     @FXML
-    public TableColumn reportsTableColumnCustomerID;
+    public TableColumn<Appointment, Integer> reportsTableColumnCustomerID;
 
     /**
      * FXML choice box variable to select a contact for the report.
      */
     @FXML
-    public ComboBox reportsSelectContactChoiceBox;
+    public ComboBox reportsSelectContactComboBox;
 
     /**
      *  FXML back button variable to revert to the main screen.
@@ -101,19 +109,25 @@ public class ReportScreenController implements Initializable {
      *  FXML table column variable for the appointment report's month.
      */
     @FXML
-    public TableColumn reportsColumnAppointmentMonth;
+    public TableColumn<Report, String> reportsColumnAppointmentMonth;
 
     /**
      *  FXML table column variable for the appointment report's type.
      */
     @FXML
-    public TableColumn reportsColumnAppointmentType;
+    public TableColumn<Report, String> reportsColumnAppointmentType;
 
     /**
-     *  FXML table column variable for the appointment report's total appointments.
+     *  FXML table column variable for the appointment report's total months.
      */
     @FXML
-    public TableColumn reportsColumnTotalAppointments;
+    public TableColumn<Report, Integer> reportsColumnTotalMonths;
+
+    /**
+     *  FXML table column variable for the appointment report's total types.
+     */
+    @FXML
+    public TableColumn<Report, Integer> reportsColumnTotalTypes;
 
     /**
      *  FXML table view variable for the division reports.
@@ -133,6 +147,34 @@ public class ReportScreenController implements Initializable {
     @FXML
     public TableColumn reportsColumnTotalCustomers;
 
+    /**
+     *  List of all appointments.
+     */
+    private ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+
+    /**
+     *  List total appointments by month and type.
+     */
+    private ObservableList<Report> allMonthAndTypeReports = FXCollections.observableArrayList();
+
+    /**
+     *  List total customers by division name.
+     */
+    private ObservableList<Report> allCustomerByDivisionReports = FXCollections.observableArrayList();
+
+    public void reportsSelectContactAction(ActionEvent actionEvent) throws Exception {
+        String contactName = String.valueOf(reportsSelectContactComboBox.getSelectionModel().getSelectedItem());
+        allAppointments = AppointmentDAO.getAppointmentsByContact(contactName);
+        reportsMainTableView.setItems(allAppointments);
+        reportsTableColumnID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        reportsTableColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        reportsColumnAppointmentType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        reportsTableColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        reportsTableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+        reportsTableColumnStartDateAndTime.setCellValueFactory(new PropertyValueFactory<>("startDateTime"));
+        reportsTableColumnEndDateAndTime.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
+        reportsTableColumnCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+    }
 
     /**
      * Initialize method for the ReportScreenController to initialize the stage and items.
@@ -142,7 +184,36 @@ public class ReportScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            reportsSelectContactComboBox.setItems(ContactDAO.getContactNames());
+            reportsSelectContactComboBox.getSelectionModel().selectFirst();
+            String contactName = reportsSelectContactComboBox.getSelectionModel().getSelectedItem().toString();
+            allAppointments = AppointmentDAO.getAppointmentsByContact(contactName);
+            reportsMainTableView.setItems(allAppointments);
+            reportsTableColumnID.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+            reportsTableColumnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+            reportsColumnAppointmentType.setCellValueFactory(new PropertyValueFactory<>("type"));
+            reportsTableColumnDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+            reportsTableColumnLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+            reportsTableColumnStartDateAndTime.setCellValueFactory(new PropertyValueFactory<>("startDateTime"));
+            reportsTableColumnEndDateAndTime.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
+            reportsTableColumnCustomerID.setCellValueFactory(new PropertyValueFactory<>("customerID"));
 
+            allMonthAndTypeReports = ReportDAO.getAllAppointmentsByMonthAndType();
+            reportsLeftTableView.setItems(allMonthAndTypeReports);
+            reportsColumnAppointmentMonth.setCellValueFactory(new PropertyValueFactory<>("appointmentMonth"));
+            reportsColumnTotalMonths.setCellValueFactory(new PropertyValueFactory<>("appointmentMonthTotal"));
+            reportsColumnAppointmentType.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
+            reportsColumnTotalTypes.setCellValueFactory(new PropertyValueFactory<>("appointmentTypeTotal"));
+
+            allCustomerByDivisionReports = ReportDAO.getTotalCustomersByDivision();
+            reportsRightTableView.setItems(allCustomerByDivisionReports);
+            reportsColumnDivisionName.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
+            reportsColumnTotalCustomers.setCellValueFactory(new PropertyValueFactory<>("customerTotal"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -167,4 +238,5 @@ public class ReportScreenController implements Initializable {
     public void reportsLogoutButtonAction(ActionEvent actionEvent) {
         System.exit(0);
     }
+
 }

@@ -79,7 +79,7 @@ public class AddCustomerController implements Initializable {
 
 
     /**
-     * addCustomerCountryAction method that set items to the division combobox.
+     * addCustomerCountryAction method that set items to the division combo box.
      *
      * @throws Exception
      */

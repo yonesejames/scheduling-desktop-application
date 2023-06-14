@@ -22,16 +22,17 @@
                     </columns>
                 </TableView>
             <Label layoutX="497.0" layoutY="14.0" text="Select A Contact:" />
-            <ComboBox fx:id="reportsSelectContactChoiceBox" layoutX="597.0" layoutY="10.0" prefHeight="25.0" prefWidth="126.0" />
+            <ComboBox fx:id="reportsSelectContactComboBox" layoutX="597.0" layoutY="10.0" onAction="#reportsSelectContactAction" prefHeight="25.0" prefWidth="126.0" />
             </children>
         </AnchorPane>
         <Button fx:id="reportsBackButton" layoutX="554.0" layoutY="527.0" mnemonicParsing="false" onAction="#reportsBackButtonAction" prefHeight="25.0" prefWidth="78.0" text="Back" />
         <Button fx:id="reportsLogoutButton" layoutX="648.0" layoutY="527.0" mnemonicParsing="false" onAction="#reportsLogoutButtonAction" prefHeight="25.0" prefWidth="67.0" text="Logout" />
       <TableView fx:id="reportsLeftTableView" layoutX="14.0" layoutY="318.0" prefHeight="184.0" prefWidth="425.0">
          <columns>
-            <TableColumn fx:id="reportsColumnAppointmentMonth" prefWidth="141.0" text="Appointment Month" />
-            <TableColumn fx:id="reportsColumnAppointmentType" prefWidth="150.0" text="Appointment Type" />
-            <TableColumn fx:id="reportsColumnTotalAppointments" prefWidth="133.0" text="Total Appointments" />
+            <TableColumn fx:id="reportsColumnAppointmentMonth" prefWidth="135.0" text="Appointment Month" />
+            <TableColumn fx:id="reportsColumnTotalMonths" prefWidth="83.0" text="Total" />
+            <TableColumn fx:id="reportsColumnAppointmentType" prefWidth="139.0" text="Appointment Type" />
+            <TableColumn fx:id="reportsColumnTotalTypes" minWidth="0.0" prefWidth="67.0" text="Total" />
          </columns>
       </TableView>
       <TableView fx:id="reportsRightTableView" layoutX="455.0" layoutY="318.0" prefHeight="184.0" prefWidth="282.0">

@@ -43,7 +43,44 @@ public class AppointmentDAO {
                 int contactID = result.getInt("Contact_ID");
                 String contactName = result.getString("Contact_Name");
                 Appointment appointment = new Appointment(appointmentID, appointmentTitle, appointmentDescription,
-                        appointmentLocation, appointmentType, start, end, customerID, userID, contactID,contactName);
+                        appointmentLocation, appointmentType, start, end, customerID, userID, contactID, contactName);
+                allAppointments.add(appointment);
+            }
+            return allAppointments;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Getter for all appointments by contact in the appointment database.
+     *
+     * @return ObservableList of all appointments.
+     * @throws SQLException
+     * @throws Exception
+     */
+    public static ObservableList<Appointment> getAppointmentsByContact(String contactName) throws SQLException, Exception{
+        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+        String sqlStatement = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID " +
+                "FROM appointments as appointment LEFT OUTER JOIN contacts as contact ON " +
+                "appointment.Contact_ID = contact.Contact_ID WHERE contact.Contact_Name = '" + contactName + "'";
+        PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+        ResultSet result = preparedStatement.executeQuery();
+
+        try {
+            while(result.next()){
+                int appointmentID = result.getInt("Appointment_ID");
+                String appointmentTitle = result.getString("Title");
+                String appointmentDescription = result.getString("Description");
+                String appointmentLocation = result.getString("Location");
+                String appointmentType = result.getString("Type");
+                Timestamp start = result.getTimestamp("Start");
+                Timestamp end = result.getTimestamp("End");
+                int customerID = result.getInt("Customer_ID");
+                Appointment appointment = new Appointment(appointmentID, appointmentTitle, appointmentDescription,
+                        appointmentLocation, appointmentType, start, end, customerID);
                 allAppointments.add(appointment);
             }
             return allAppointments;
@@ -63,7 +100,7 @@ public class AppointmentDAO {
      */
     public static ObservableList<Appointment> getFifteenMinuteAppointments() throws SQLException, Exception {
         ObservableList<Appointment> weeklyAppointments = FXCollections.observableArrayList();
-        String sqlStatement = "SELECT * FROM appointments WHERE Start BETWEEN now() - INTERVAL 15 minute AND now()";
+        String sqlStatement = "SELECT * FROM appointments WHERE Start BETWEEN now() AND DATE_ADD(now(), INTERVAL 15 minute)";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
         ResultSet result = preparedStatement.executeQuery();
 
@@ -99,7 +136,7 @@ public class AppointmentDAO {
      */
     public static ObservableList<Appointment> getWeeklyAppointments() throws SQLException, Exception {
         ObservableList<Appointment> weeklyAppointments = FXCollections.observableArrayList();
-        String sqlStatement = "SELECT * FROM appointments WHERE Start BETWEEN now() - INTERVAL 7 day AND now()";
+        String sqlStatement = "SELECT * FROM appointments WHERE DATE(Start) BETWEEN DATE(now()) AND DATE(DATE_ADD(now(), INTERVAL 7 day))";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
         ResultSet result = preparedStatement.executeQuery();
 
@@ -135,7 +172,7 @@ public class AppointmentDAO {
      */
     public static ObservableList<Appointment> getMonthlyAppointments() throws SQLException, Exception {
         ObservableList<Appointment> monthlyAppointments = FXCollections.observableArrayList();
-        String sqlStatement = "SELECT * FROM appointments WHERE Start BETWEEN now() - INTERVAL 30 day AND now()";
+        String sqlStatement = "SELECT * FROM appointments WHERE DATE(Start) BETWEEN DATE(now()) AND DATE(DATE_ADD(now(), INTERVAL 30 day))";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
         ResultSet result = preparedStatement.executeQuery();
 
