@@ -3,8 +3,6 @@ import com.example.schedulingdesktopapplication.DAO.AppointmentDAO;
 import com.example.schedulingdesktopapplication.DAO.ContactDAO;
 import com.example.schedulingdesktopapplication.DAO.CustomerDAO;
 import com.example.schedulingdesktopapplication.Main;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,12 +15,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import static com.example.schedulingdesktopapplication.DAO.ContactDAO.getContactID;
 import static com.example.schedulingdesktopapplication.DAO.UserDAO.getUserID;
-import static com.example.schedulingdesktopapplication.model.Logger.getZoneId;
+import static com.example.schedulingdesktopapplication.model.LoginActivity.getZoneId;
 
 /**
  * Controller class that adds appointments in the application.

@@ -1,5 +1,6 @@
 package com.example.schedulingdesktopapplication.controller;
 import com.example.schedulingdesktopapplication.Main;
+import com.example.schedulingdesktopapplication.model.LoginActivity;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -173,10 +174,12 @@ public class LoginScreenController implements Initializable {
             if(validateUser(username, password))
             {
                 showScreen(actionEvent, "view/MainScreenView.fxml", "Main");
+                LoginActivity.getUserActivity(username, true);
             }
             else
             {
                 alertMessage("Error", "USER DOES NOT EXIST");
+                LoginActivity.getUserActivity(username, false);
             }
         }
         catch (SQLException e)

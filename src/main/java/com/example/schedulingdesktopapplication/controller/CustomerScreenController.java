@@ -14,6 +14,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.time.ZoneId;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import static com.example.schedulingdesktopapplication.DAO.CustomerDAO.*;
@@ -136,6 +137,9 @@ public class CustomerScreenController implements Initializable {
             customerTableColumnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phone"));
             customerTableColumnDivision.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
             customerTableColumnPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+
+            customerTimeZone.setText(String.valueOf(ZoneId.systemDefault()));
+
         } catch (Exception e) {
             e.printStackTrace(); }
     }

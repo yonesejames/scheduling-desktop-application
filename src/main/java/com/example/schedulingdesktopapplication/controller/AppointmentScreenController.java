@@ -1,7 +1,6 @@
 package com.example.schedulingdesktopapplication.controller;
 import com.example.schedulingdesktopapplication.Main;
 import com.example.schedulingdesktopapplication.model.Appointment;
-import com.example.schedulingdesktopapplication.model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,7 +19,6 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import static com.example.schedulingdesktopapplication.DAO.AppointmentDAO.*;
-import static com.example.schedulingdesktopapplication.DAO.CustomerDAO.*;
 
 /**
  * Controller class that views appointments in the application.

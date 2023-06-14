@@ -1,9 +1,17 @@
 package com.example.schedulingdesktopapplication.model;
 import com.example.schedulingdesktopapplication.DAO.JDBC;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Locale;
 
 /**
@@ -11,10 +19,11 @@ import java.util.Locale;
  *
  * @author Yonese James
  */
-public class Logger {
+public class LoginActivity {
     private static User user;
     private static Locale locale = Locale.getDefault();
     private static ZoneId zoneId = ZoneId.systemDefault();
+    private static final String loginActivityPath = "login_activity.txt";
 
     public static int isUserLoggedIn(String username, String password) throws SQLException {
         JDBC.openConnection();
@@ -38,9 +47,20 @@ public class Logger {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
         return -1;
+    }
 
+    public static void getUserActivity(String userName, Boolean successful) throws IOException {
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(loginActivityPath, true));
+            bufferedWriter.append("USERNAME: " + userName +" | DATE AND TIME: " + ZonedDateTime.now(ZoneOffset.UTC).toString() +
+                    " | LOGIN " + (successful ? "SUCCESSFUL" : "UNSUCCESSFUL") + "\n");
+            bufferedWriter.flush();
+            bufferedWriter.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

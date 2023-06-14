@@ -1,11 +1,9 @@
 package com.example.schedulingdesktopapplication.controller;
 import com.example.schedulingdesktopapplication.DAO.AppointmentDAO;
 import com.example.schedulingdesktopapplication.DAO.ContactDAO;
-import com.example.schedulingdesktopapplication.DAO.CountryDAO;
 import com.example.schedulingdesktopapplication.DAO.CustomerDAO;
 import com.example.schedulingdesktopapplication.Main;
 import com.example.schedulingdesktopapplication.model.Appointment;
-import com.example.schedulingdesktopapplication.model.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +20,7 @@ import java.util.ResourceBundle;
 
 import static com.example.schedulingdesktopapplication.DAO.ContactDAO.getContactID;
 import static com.example.schedulingdesktopapplication.DAO.UserDAO.getUserID;
-import static com.example.schedulingdesktopapplication.model.Logger.getZoneId;
+import static com.example.schedulingdesktopapplication.model.LoginActivity.getZoneId;
 
 /**
  * Controller class that edits the appointments in the application.
