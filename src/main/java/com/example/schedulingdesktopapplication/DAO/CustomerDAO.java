@@ -18,8 +18,8 @@ public class CustomerDAO {
      * Getter for all customers in the customer's database.
      *
      * @return ObservableList of all customers.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<Customer> getAllCustomers() throws SQLException, Exception{
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
@@ -55,8 +55,8 @@ public class CustomerDAO {
      * Getter for all customer IDs in the customer's database.
      *
      * @return ObservableList of all customer IDs.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<Integer> getCustomerIDs() throws SQLException, Exception{
         ObservableList<Integer> allCustomers = FXCollections.observableArrayList();
@@ -81,14 +81,14 @@ public class CustomerDAO {
      * Method that inserts a customer by customerID, customerName, address, postalCode, phone, createDate, createdBy,
      * lastUpdate, lastUpdatedBy, and divisionID.
      *
-     * @param customerName
-     * @param address
-     * @param postalCode
-     * @param phone
-     * @param divisionID
+     * @param customerName for customer.
+     * @param address for customer.
+     * @param postalCode for customer.
+     * @param phone for customer.
+     * @param divisionID for customer.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when customer does not insert.
      */
     public static int insertCustomer(String customerName, String address, String postalCode, String phone,
                                      int divisionID) throws SQLException, Exception{
@@ -123,15 +123,15 @@ public class CustomerDAO {
      * Method that updates a customer by customerName, address, postalCode, phone, createDate, createdBy,
      * lastUpdate, lastUpdatedBy, and divisionID.
      *
-     * @param customerName
-     * @param address
-     * @param postalCode
-     * @param phone
-     * @param divisionID
-     * @param customerID
+     * @param customerName for customer.
+     * @param address for customer.
+     * @param postalCode for customer.
+     * @param phone for customer.
+     * @param divisionID for customer.
+     * @param customerID for customer.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when customer does not update.
      */
     public static int updateCustomer(String customerName, String address, String postalCode, String phone,
                                      int divisionID, int customerID) throws SQLException, Exception{
@@ -161,10 +161,10 @@ public class CustomerDAO {
     /**
      * Method that deletes a customer in the customers database by customerID.
      *
-     * @param customerID
+     * @param customerID for customer.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when customer does not delete.
      */
     public static int deleteCustomer(int customerID) throws SQLException, Exception{
         String sqlStatement = "DELETE FROM customers WHERE Customer_ID = ?";
@@ -184,10 +184,10 @@ public class CustomerDAO {
     /**
      * Method that deletes all appointments related to the customer in the appointments database by customerID.
      *
-     * @param customerID
+     * @param customerID for customer.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static int deleteCustomerAppointments(int customerID) throws SQLException, Exception{
         String sqlStatement = "DELETE FROM appointments WHERE Customer_ID = ?";
@@ -208,10 +208,10 @@ public class CustomerDAO {
     /**
      * Getter for customer in the customer's database by customerID.
      *
-     * @param customerID
+     * @param customerID for customer.
      * @return customer.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static Customer getCustomer(int customerID) throws SQLException, Exception{
         String sqlStatement = "SELECT * FROM customers WHERE Customer_ID  = '" + customerID + "'";

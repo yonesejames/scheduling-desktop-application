@@ -18,8 +18,8 @@ public class AppointmentDAO {
      * Getter for all appointments in the appointment database.
      *
      * @return ObservableList of all appointments.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<Appointment> getAllAppointments() throws SQLException, Exception{
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
@@ -57,8 +57,8 @@ public class AppointmentDAO {
      * Getter for all appointments by contact in the appointment database.
      *
      * @return ObservableList of all appointments.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<Appointment> getAppointmentsByContact(String contactName) throws SQLException, Exception{
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
@@ -94,8 +94,8 @@ public class AppointmentDAO {
      * Getter for weekly appointments in the appointment database.
      *
      * @return ObservableList of appointments in 15 minutes.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<Appointment> getFifteenMinuteAppointments() throws SQLException, Exception {
         ObservableList<Appointment> weeklyAppointments = FXCollections.observableArrayList();
@@ -130,7 +130,7 @@ public class AppointmentDAO {
      * Getter for weekly appointments in the appointment database.
      *
      * @return ObservableList of appointments in 7 days.
-     * @throws SQLException
+     * @throws SQLException when SQL does not query correctly.
      * @throws Exception
      */
     public static ObservableList<Appointment> getWeeklyAppointments() throws SQLException, Exception {
@@ -166,8 +166,8 @@ public class AppointmentDAO {
      * Getter for monthly appointments in the appointment database.
      *
      * @return ObservableList of appointments in 30 days.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<Appointment> getMonthlyAppointments() throws SQLException, Exception {
         ObservableList<Appointment> monthlyAppointments = FXCollections.observableArrayList();
@@ -199,12 +199,15 @@ public class AppointmentDAO {
         return null;
     }
 
-    /**
+
+    /***
      * Getter for all appointments that are conflicted with other appointments in the appointment database.
      *
+     * @param date for appointment.
+     * @param customerID for appointment.
      * @return ObservableList of all appointments.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<Appointment> getConflictedAppointments(Timestamp date, int customerID) throws SQLException, Exception{
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
@@ -243,20 +246,20 @@ public class AppointmentDAO {
      * Method that inserts an appointment by appointmentID, title, description, location, type, startDateTime,
      * endDateTime, createDate, createdBy, lastUpdate, lastUpdatedBy, customerID, userID, and contactID.
      *
-     * @param title
-     * @param description
-     * @param location
-     * @param type
-     * @param startDateTime
-     * @param endDateTime
-     * @param createdBy
-     * @param lastUpdatedBy
-     * @param customerID
-     * @param userID
-     * @param contactID
+     * @param title for appointment.
+     * @param description for appointment.
+     * @param location for appointment.
+     * @param type for appointment.
+     * @param startDateTime for appointment.
+     * @param endDateTime for appointment.
+     * @param createdBy for appointment.
+     * @param lastUpdatedBy for appointment.
+     * @param customerID for appointment.
+     * @param userID for appointment.
+     * @param contactID for appointment.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when appointment does not insert.
      */
     public static int insertAppointment(String title, String description, String location,
                                         String type, Timestamp startDateTime, Timestamp endDateTime,
@@ -293,19 +296,19 @@ public class AppointmentDAO {
      * Method that updates an appointment by title, description, location, type, startDateTime,
      * endDateTime, createDate, createdBy, lastUpdate, lastUpdatedBy, customerID, userID, and contactID.
      *
-     * @param title
-     * @param description
-     * @param location
-     * @param type
-     * @param startDateTime
-     * @param endDateTime
-     * @param customerID
-     * @param userID
-     * @param contactID
-     * @param appointmentID
+     * @param title for appointment.
+     * @param description for appointment.
+     * @param location for appointment.
+     * @param type for appointment.
+     * @param startDateTime for appointment.
+     * @param endDateTime for appointment.
+     * @param customerID for appointment.
+     * @param userID for appointment.
+     * @param contactID for appointment.
+     * @param appointmentID for appointment.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when appointment does not update.
      */
     public static int updateAppointment(String title, String description, String location,
                                         String type, Timestamp startDateTime, Timestamp endDateTime, int customerID,
@@ -342,10 +345,10 @@ public class AppointmentDAO {
     /**
      * Method that deletes an appointment in the appointment database by appointmentID.
      *
-     * @param appointmentID
+     * @param appointmentID for appointment.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when appointment does not delete.
      */
     public static int deleteAppointment(int appointmentID) throws SQLException, Exception{
         String sqlStatement = "DELETE FROM appointments WHERE Appointment_ID = ?";

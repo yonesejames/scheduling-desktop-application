@@ -20,7 +20,6 @@ import java.sql.Timestamp;
 import java.time.*;
 import java.util.ResourceBundle;
 import java.util.stream.IntStream;
-
 import static com.example.schedulingdesktopapplication.DAO.ContactDAO.getContactID;
 import static com.example.schedulingdesktopapplication.DAO.UserDAO.getUserID;
 import static com.example.schedulingdesktopapplication.model.LoginActivity.getZoneId;
@@ -202,10 +201,10 @@ public class ModifyAppointmentController implements Initializable {
     /**
      * showScreen method that allows another screen to be shown.
      *
-     * @throws Exception
-     * @param actionEvent
-     * @param viewPath
-     * @param title
+     * @throws IOException when screen does not show.
+     * @param actionEvent for screen.
+     * @param viewPath for view file
+     * @param title for screen title.
      */
     public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
@@ -219,8 +218,8 @@ public class ModifyAppointmentController implements Initializable {
     /**
      * alertMessage method that shows an alert message and text.
      *
-     * @param alertType
-     * @param alertText
+     * @param alertType for alert type.
+     * @param alertText for alert message.
      */
     public void alertMessage(String alertType, String alertText) {
         switch (alertType) {
@@ -248,7 +247,8 @@ public class ModifyAppointmentController implements Initializable {
     /**
      * modifyAppointmentSaveButtonAction method to save the modified appointment.
      *
-     * @param actionEvent
+     * @throws Exception when save button does not work.
+     * @param actionEvent for save.
      */
     public void modifyAppointmentSaveButtonAction(ActionEvent actionEvent) throws Exception {
         String appointmentTitle = modifyAppointmentTitleTextField.getText();
@@ -327,7 +327,8 @@ public class ModifyAppointmentController implements Initializable {
     /**
      * modifyAppointmentCancelButtonAction method to revert back to the appointment screen.
      *
-     * @param actionEvent
+     * @throws IOException when cancel button does not work.
+     * @param actionEvent for cancel.
      */
     public void modifyAppointmentCancelButtonAction(ActionEvent actionEvent) throws IOException {
         showScreen(actionEvent, "view/AppointmentScreenView.fxml", "Appointments");
@@ -336,7 +337,7 @@ public class ModifyAppointmentController implements Initializable {
     /**
      * modifyAppointmentTitleTextFieldAction method for the appointment's title.
      *
-     * @param actionEvent
+     * @param actionEvent for title.
      */
     public void modifyAppointmentTitleAction(ActionEvent actionEvent) {
     }
@@ -344,7 +345,7 @@ public class ModifyAppointmentController implements Initializable {
     /**
      * modifyAppointmentTypeTextFieldAction method for the appointment's type.
      *
-     * @param actionEvent
+     * @param actionEvent for type.
      */
     public void modifyAppointmentTypeAction(ActionEvent actionEvent) {
     }
@@ -352,7 +353,7 @@ public class ModifyAppointmentController implements Initializable {
     /**
      * modifyAppointmentDescriptionTextFieldAction method for the appointment's description.
      *
-     * @param actionEvent
+     * @param actionEvent for description.
      */
     public void modifyAppointmentDescriptionAction(ActionEvent actionEvent) {
     }
@@ -360,7 +361,7 @@ public class ModifyAppointmentController implements Initializable {
     /**
      * modifyAppointmentLocationTextFieldAction method for the appointment's location.
      *
-     * @param actionEvent
+     * @param actionEvent for location.
      */
     public void modifyAppointmentLocationAction(ActionEvent actionEvent) {
     }
@@ -368,7 +369,7 @@ public class ModifyAppointmentController implements Initializable {
     /**
      * modifyAppointmentStartDateDatePickerAction method for the appointment's start date picker.
      *
-     * @param actionEvent
+     * @param actionEvent for start date.
      */
     public void modifyAppointmentStartDateAction(ActionEvent actionEvent) {
     }
@@ -376,7 +377,7 @@ public class ModifyAppointmentController implements Initializable {
     /**
      * modifyAppointmentEndDateDatePickerAction method for the appointment's end date picker.
      *
-     * @param actionEvent
+     * @param actionEvent for end date.
      */
     public void modifyAppointmentEndDateAction(ActionEvent actionEvent) {
     }
@@ -384,7 +385,7 @@ public class ModifyAppointmentController implements Initializable {
     /**
      * modifyAppointmentStartTimeAction method for appointment's start time.
      *
-     * @param actionEvent
+     * @param actionEvent for start time.
      */
     public void modifyAppointmentStartTimeAction(ActionEvent actionEvent) {
     }
@@ -392,7 +393,7 @@ public class ModifyAppointmentController implements Initializable {
     /**
      * modifyAppointmentContactAction method for appointment's contact.
      *
-     * @param actionEvent
+     * @param actionEvent for contact.
      */
     public void modifyAppointmentContactAction(ActionEvent actionEvent) {
     }
@@ -400,7 +401,7 @@ public class ModifyAppointmentController implements Initializable {
     /**
      * modifyAppointmentCustomerIDAction method for appointment's customer ID.
      *
-     * @param actionEvent
+     * @param actionEvent for customerID.
      */
     public void modifyAppointmentCustomerIDAction(ActionEvent actionEvent) {
     }
@@ -408,7 +409,7 @@ public class ModifyAppointmentController implements Initializable {
     /**
      * modifyAppointmentEndTimeAction method for appointment's end time.
      *
-     * @param actionEvent
+     * @param actionEvent for end time.
      */
     public void modifyAppointmentEndTimeAction(ActionEvent actionEvent) {
     }

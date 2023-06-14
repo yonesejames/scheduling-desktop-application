@@ -4,7 +4,6 @@ import com.example.schedulingdesktopapplication.DAO.ContactDAO;
 import com.example.schedulingdesktopapplication.DAO.CustomerDAO;
 import com.example.schedulingdesktopapplication.Main;
 import com.example.schedulingdesktopapplication.model.Appointment;
-import com.example.schedulingdesktopapplication.model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,7 +20,6 @@ import java.sql.Timestamp;
 import java.time.*;
 import java.util.ResourceBundle;
 import java.util.stream.IntStream;
-
 import static com.example.schedulingdesktopapplication.DAO.ContactDAO.getContactID;
 import static com.example.schedulingdesktopapplication.DAO.UserDAO.getUserID;
 import static com.example.schedulingdesktopapplication.model.LoginActivity.getZoneId;
@@ -181,10 +179,10 @@ public class AddAppointmentController implements Initializable {
     /**
      * showScreen method that allows another screen to be shown.
      *
-     * @throws Exception
-     * @param actionEvent
-     * @param viewPath
-     * @param title
+     * @throws IOException when screen does not show.
+     * @param actionEvent for screen.
+     * @param viewPath for view file
+     * @param title for screen title.
      */
     public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
@@ -198,8 +196,8 @@ public class AddAppointmentController implements Initializable {
     /**
      * alertMessage method that shows an alert message and text.
      *
-     * @param alertType
-     * @param alertText
+     * @param alertType for alert type.
+     * @param alertText for alert message.
      */
     public void alertMessage(String alertType, String alertText) {
         switch (alertType) {
@@ -233,7 +231,7 @@ public class AddAppointmentController implements Initializable {
     /**
      * addAppointmentSaveAction method to save appointment.
      *
-     * @param actionEvent
+     * @param actionEvent for save.
      */
     public void addAppointmentSaveAction(ActionEvent actionEvent) throws Exception {
         String appointmentTitle = addAppointmentTitleTextField.getText();
@@ -314,7 +312,7 @@ public class AddAppointmentController implements Initializable {
     /**
      * addAppointmentCancelAction method to cancel appointment.
      *
-     * @param actionEvent
+     * @param actionEvent for cancel.
      */
     public void addAppointmentCancelAction(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/AppointmentScreenView.fxml"));
@@ -328,7 +326,7 @@ public class AddAppointmentController implements Initializable {
     /**
      * addAppointmentTitleAction method for the appointment's title.
      *
-     * @param actionEvent
+     * @param actionEvent for title.
      */
     public void addAppointmentTitleAction(ActionEvent actionEvent) {
     }
@@ -336,7 +334,7 @@ public class AddAppointmentController implements Initializable {
     /**
      * addAppointmentTypeAction method for the appointment's type.
      *
-     * @param actionEvent
+     * @param actionEvent for type.
      */
     public void addAppointmentTypeAction(ActionEvent actionEvent) {
     }
@@ -344,7 +342,7 @@ public class AddAppointmentController implements Initializable {
     /**
      * modifyAppointmentDescriptionAction method for the appointment's description.
      *
-     * @param actionEvent
+     * @param actionEvent for description.
      */
     public void addAppointmentDescriptionAction(ActionEvent actionEvent) {
     }
@@ -352,7 +350,7 @@ public class AddAppointmentController implements Initializable {
     /**
      * addAppointmentLocationAction method for the appointment's location.
      *
-     * @param actionEvent
+     * @param actionEvent for location.
      */
     public void addAppointmentLocationAction(ActionEvent actionEvent) {
     }
@@ -360,7 +358,7 @@ public class AddAppointmentController implements Initializable {
     /**
      * addAppointmentStartTime method for appointment's start time.
      *
-     * @param actionEvent
+     * @param actionEvent for start time.
      */
     public void addAppointmentStartTime(ActionEvent actionEvent) {
     }
@@ -368,7 +366,7 @@ public class AddAppointmentController implements Initializable {
     /**
      * modifyAppointmentEndTimeAction method for appointment's end time.
      *
-     * @param actionEvent
+     * @param actionEvent for end time.
      */
     public void addAppointmentEndTimeAction(ActionEvent actionEvent) {
     }
@@ -376,7 +374,7 @@ public class AddAppointmentController implements Initializable {
     /**
      * modifyAppointmentStartDateDatePickerAction method for the appointment's start date picker.
      *
-     * @param actionEvent
+     * @param actionEvent for start date.
      */
     public void addAppointmentStartDateAction(ActionEvent actionEvent) {
     }
@@ -384,7 +382,7 @@ public class AddAppointmentController implements Initializable {
     /**
      * modifyAppointmentEndDateDatePickerAction method for the appointment's end date picker.
      *
-     * @param actionEvent
+     * @param actionEvent for end date.
      */
     public void addAppointmentEndDateAction(ActionEvent actionEvent) {
     }
@@ -392,11 +390,16 @@ public class AddAppointmentController implements Initializable {
     /**
      * modifyAppointmentContactAction method for appointment's contact.
      *
-     * @param actionEvent
+     * @param actionEvent for contact.
      */
     public void addAppointmentContactAction(ActionEvent actionEvent) {
     }
 
+    /**
+     * addAppointmentCustomerIDAction method for appointment's ID.
+     *
+     * @param actionEvent for customerID.
+     */
     public void addAppointmentCustomerIDAction(ActionEvent actionEvent) {
     }
 }

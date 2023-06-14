@@ -16,10 +16,10 @@ public class FirstLevelDivisionDAO {
     /**
      * Getter for first level divisions in the first_level_divisions database by divisionID.
      *
-     * @param divisionID
+     * @param divisionID for first_level_division.
      * @return country.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static FirstLevelDivision getFirstLevelDivision (int divisionID) throws SQLException, Exception{
         String sqlStatement = "SELECT * FROM first_level_divisions WHERE Division_ID  = '" + divisionID + "'";
@@ -49,10 +49,10 @@ public class FirstLevelDivisionDAO {
     /**
      * Getter for all first level divisions in the first_level_divisions database.
      *
-     * @param country
+     * @param country for first_level_division.
      * @return divisions.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<FirstLevelDivision> getDivision(String country) throws SQLException, Exception{
         ObservableList<FirstLevelDivision> divisions = FXCollections.observableArrayList();
@@ -78,10 +78,10 @@ public class FirstLevelDivisionDAO {
     /**
      * Getter for all first level divisions in the first_level_divisions database.
      *
-     * @param divisionName
+     * @param divisionName for first_level_division.
      * @return division.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static int getDivisionID(String divisionName) throws SQLException, Exception {
         String sqlStatement = "SELECT Division, Division_ID FROM first_level_divisions WHERE Division = '"
@@ -105,8 +105,8 @@ public class FirstLevelDivisionDAO {
      * Getter for all first level divisions in the first_level_divisions database.
      *
      * @return ObservableList of all firstLevelDivisions.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<FirstLevelDivision> getAllFirstLevelDivision () throws SQLException, Exception{
         ObservableList<FirstLevelDivision> firstLevelDivisions = FXCollections.observableArrayList();
@@ -140,16 +140,16 @@ public class FirstLevelDivisionDAO {
      * Method that inserts a firstLevelDivisions by divisionID, division ,createDate, createdBy, lastUpdate, lastUpdatedBy,
      * and countryID.
      *
-     * @param divisionID
-     * @param division
-     * @param createDate
-     * @param createdBy
-     * @param lastUpdate
-     * @param lastUpdatedBy
-     * @param countryID
+     * @param divisionID for first_level_division.
+     * @param division for first_level_division.
+     * @param createDate for first_level_division.
+     * @param createdBy for first_level_division.
+     * @param lastUpdate for first_level_division.
+     * @param lastUpdatedBy for first_level_division.
+     * @param countryID for first_level_division.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when first_level_division does not insert.
      */
     public static int insertFirstLevelDivision (int divisionID, String division, Timestamp createDate, String createdBy,
                                      Timestamp lastUpdate, String lastUpdatedBy, int countryID) throws SQLException, Exception{
@@ -178,16 +178,16 @@ public class FirstLevelDivisionDAO {
      * Method that updates a firstLevelDivision by divisionID, division ,createDate, createdBy, lastUpdate, lastUpdatedBy,
      * and countryID.
      *
-     * @param divisionID
-     * @param division
-     * @param createDate
-     * @param createdBy
-     * @param lastUpdate
-     * @param lastUpdatedBy
-     * @param countryID
+     * @param divisionID for first_level_division.
+     * @param division for first_level_division.
+     * @param createDate for first_level_division.
+     * @param createdBy for first_level_division.
+     * @param lastUpdate for first_level_division.
+     * @param lastUpdatedBy for first_level_division.
+     * @param countryID for first_level_division.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when first_level_division does not update.
      */
     public static int updateFirstLevelDivision (int divisionID, String division, Timestamp createDate, String createdBy,
                                                 Timestamp lastUpdate, String lastUpdatedBy, int countryID) throws SQLException, Exception{
@@ -216,10 +216,10 @@ public class FirstLevelDivisionDAO {
     /**
      * Method that deletes a country in the country database by countryID.
      *
-     * @param divisionID
+     * @param divisionID for first_level_division.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when first_level_division does not delete.
      */
     public static int deleteFirstLevelDivision (int divisionID) throws SQLException, Exception{
         String sqlStatement = "DELETE FROM first_level_divisions WHERE Division_ID = ?";

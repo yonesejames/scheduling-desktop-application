@@ -16,10 +16,10 @@ public class CountryDAO {
     /**
      * Getter for customer in the customer database by customerID.
      *
-     * @param countryID
+     * @param countryID for country.
      * @return country.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static Country getCountry (int countryID) throws SQLException, Exception{
         String sqlStatement = "SELECT * FROM countries WHERE Country_ID  = '" + countryID + "'";
@@ -48,8 +48,8 @@ public class CountryDAO {
      * Getter for all countries in the countries database.
      *
      * @return ObservableList of all customers.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<Country> getAllCountries () throws SQLException, Exception{
         ObservableList<Country> countries = FXCollections.observableArrayList();
@@ -74,15 +74,15 @@ public class CountryDAO {
     /**
      * Method that inserts a country by countryID, country ,createDate, createdBy, lastUpdate, and lastUpdatedBy.
      *
-     * @param countryID
-     * @param country
-     * @param createDate
-     * @param createdBy
-     * @param lastUpdate
-     * @param lastUpdatedBy
+     * @param countryID for country.
+     * @param country for country.
+     * @param createDate for country.
+     * @param createdBy for country.
+     * @param lastUpdate for country.
+     * @param lastUpdatedBy for country.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when country does not insert.
      */
     public static int insertCountry (int countryID, String country, Timestamp createDate, String createdBy,
                                      Timestamp lastUpdate, String lastUpdatedBy) throws SQLException, Exception{
@@ -109,15 +109,15 @@ public class CountryDAO {
     /**
      * Method that updates a country by country ,createDate, createdBy, lastUpdate, and lastUpdatedBy.
      *
-     * @param country
-     * @param createDate
-     * @param createdBy
-     * @param lastUpdate
-     * @param lastUpdatedBy
-     * @param countryID
+     * @param country for country.
+     * @param createDate for country.
+     * @param createdBy for country.
+     * @param lastUpdate for country.
+     * @param lastUpdatedBy for country.
+     * @param countryID for country.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when country does not update.
      */
     public static int updateCountry (String country, Timestamp createDate, String createdBy, Timestamp lastUpdate,
                                      String lastUpdatedBy, int countryID) throws SQLException, Exception{
@@ -144,10 +144,10 @@ public class CountryDAO {
     /**
      * Method that deletes a country in the country database by countryID.
      *
-     * @param countryID
+     * @param countryID for country.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when country does not delete.
      */
     public static int deleteCountry (int countryID) throws SQLException, Exception{
         String sqlStatement = "DELETE FROM countries WHERE Country_ID = ?";

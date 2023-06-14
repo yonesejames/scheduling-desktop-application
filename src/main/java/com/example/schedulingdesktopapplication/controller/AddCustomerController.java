@@ -81,7 +81,7 @@ public class AddCustomerController implements Initializable {
     /**
      * addCustomerCountryAction method that set items to the division combo box.
      *
-     * @throws Exception
+     * @throws Exception when country does not display.
      */
     public void addCustomerCountryAction() throws Exception {
         addCustomerDivisionComboBox.setItems(FirstLevelDivisionDAO.getDivision(String.valueOf(addCustomerCountryComboBox.getValue())));
@@ -107,10 +107,10 @@ public class AddCustomerController implements Initializable {
     /**
      * showScreen method that allows another screen to be shown.
      *
-     * @throws Exception
-     * @param actionEvent
-     * @param viewPath
-     * @param title
+     * @throws IOException when screen does not show.
+     * @param actionEvent for screen.
+     * @param viewPath for view file
+     * @param title for screen title.
      */
     public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
@@ -124,8 +124,8 @@ public class AddCustomerController implements Initializable {
     /**
      * alertMessage method that shows an alert message and text.
      *
-     * @param alertType
-     * @param alertText
+     * @param alertType for alert type.
+     * @param alertText for alert message.
      */
     public void alertMessage(String alertType, String alertText) {
         switch (alertType) {
@@ -159,8 +159,8 @@ public class AddCustomerController implements Initializable {
     /**
      * addCustomerSaveAction method to save customer.
      *
-     * @throws Exception
-     * @param actionEvent
+     * @throws Exception when customer does not save.
+     * @param actionEvent for save.
      */
     public void addCustomerSaveAction(ActionEvent actionEvent) throws Exception {
         String customerName = addCustomerNameTextField.getText();
@@ -206,8 +206,8 @@ public class AddCustomerController implements Initializable {
     /**
      * addCustomerCancelAction method to revert back to the customers screen.
      *
-     * @throws Exception
-     * @param actionEvent
+     * @throws IOException when customer does not cancel.
+     * @param actionEvent for cancel.
      */
     public void addCustomerCancelAction(ActionEvent actionEvent) throws IOException {
         showScreen(actionEvent, "view/CustomerScreenView.fxml", "Customers");
@@ -216,7 +216,7 @@ public class AddCustomerController implements Initializable {
     /**
      * addCustomerNameAction method for the customer's name.
      *
-     * @param actionEvent
+     * @param actionEvent for name.
      */
     public void addCustomerNameAction(ActionEvent actionEvent) {
     }
@@ -224,7 +224,7 @@ public class AddCustomerController implements Initializable {
     /**
      * addCustomerAddressAction method for the customer's address.
      *
-     * @param actionEvent
+     * @param actionEvent for address.
      */
     public void addCustomerAddressAction(ActionEvent actionEvent) {
     }
@@ -232,7 +232,7 @@ public class AddCustomerController implements Initializable {
     /**
      * addCustomerPhoneNumberAction method for the customer's phone number.
      *
-     * @param actionEvent
+     * @param actionEvent for phone number.
      */
     public void addCustomerPhoneNumberAction(ActionEvent actionEvent) {
     }
@@ -240,7 +240,7 @@ public class AddCustomerController implements Initializable {
     /**
      * addCustomerDivisionAction method for the customer's division.
      *
-     * @param actionEvent
+     * @param actionEvent for division.
      */
     public void addCustomerDivisionAction(ActionEvent actionEvent) {
     }
@@ -248,7 +248,7 @@ public class AddCustomerController implements Initializable {
     /**
      * addCustomerPostalCodeAction method for the customer's postal code.
      *
-     * @param actionEvent
+     * @param actionEvent for postal code.
      */
     public void addCustomerPostalCodeAction(ActionEvent actionEvent) {
     }

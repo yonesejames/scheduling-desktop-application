@@ -225,10 +225,10 @@ public class ReportScreenController implements Initializable {
     /**
      * showScreen method that allows another screen to be shown.
      *
-     * @throws Exception
-     * @param actionEvent
-     * @param viewPath
-     * @param title
+     * @throws IOException when screen does not show.
+     * @param actionEvent for screen.
+     * @param viewPath for view file
+     * @param title for screen title.
      */
     public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
@@ -242,8 +242,8 @@ public class ReportScreenController implements Initializable {
     /**
      * alertMessage method that shows an alert message and text.
      *
-     * @param alertType
-     * @param alertText
+     * @param alertType for alert type.
+     * @param alertText for alert message.
      */
     public void alertMessage(String alertType, String alertText) {
         switch (alertType) {
@@ -277,7 +277,8 @@ public class ReportScreenController implements Initializable {
     /**
      * reportsBackButtonAction method to go back to main screen.
      *
-     * @param actionEvent
+     * @throws IOException when back button does not work.
+     * @param actionEvent for back.
      */
     public void reportsBackButtonAction(ActionEvent actionEvent) throws IOException {
         showScreen(actionEvent, "view/MainScreenView.fxml", "Scheduling Desktop Application");
@@ -286,7 +287,7 @@ public class ReportScreenController implements Initializable {
     /**
      * reportsLogoutButtonAction method to log out of the application.
      *
-     * @param actionEvent
+     * @param actionEvent for logout.
      */
     public void reportsLogoutButtonAction(ActionEvent actionEvent) {
         System.exit(0);

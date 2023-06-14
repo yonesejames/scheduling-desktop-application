@@ -202,8 +202,8 @@ public class AppointmentScreenController implements Initializable {
     /**
      * appointmentCurrentWeekRadioButtonAction method to view current week of appointments.
      *
-     * @throws Exception
-     * @param actionEvent
+     * @throws Exception when appointments for the week does not show.
+     * @param actionEvent for weekly appointments.
      */
     public void appointmentCurrentWeekRadioButtonAction(ActionEvent actionEvent) throws Exception {
         ObservableList<Appointment> weeklyAppointments = getWeeklyAppointments();
@@ -227,8 +227,8 @@ public class AppointmentScreenController implements Initializable {
     /**
      * appointmentCurrentMonthRadioButtonAction method to view current month of appointments.
      *
-     * @throws Exception
-     * @param actionEvent
+     * @throws Exception when appointments for the month does not show.
+     * @param actionEvent for monthly appointments.
      */
     public void appointmentCurrentMonthRadioButtonAction(ActionEvent actionEvent) throws Exception {
         ObservableList<Appointment> monthlyAppointments = getMonthlyAppointments();
@@ -251,8 +251,7 @@ public class AppointmentScreenController implements Initializable {
     /**
      * allAppointmentsRadioButtonAction method to view all appointments.
      *
-     * @throws Exception
-     * @param actionEvent
+     * @param actionEvent for all appointments.
      */
     public void allAppointmentsRadioButtonAction(ActionEvent actionEvent) {
         appointmentTableView.setItems(allAppointments);
@@ -273,10 +272,10 @@ public class AppointmentScreenController implements Initializable {
     /**
      * showScreen method that allows another screen to be shown.
      *
-     * @throws Exception
-     * @param actionEvent
-     * @param viewPath
-     * @param title
+     * @throws IOException when screen does not show.
+     * @param actionEvent for screen.
+     * @param viewPath for view file
+     * @param title for screen title.
      */
     public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
@@ -290,8 +289,8 @@ public class AppointmentScreenController implements Initializable {
     /**
      * alertMessage method that shows an alert message and text.
      *
-     * @param alertType
-     * @param alertText
+     * @param alertType for alert type.
+     * @param alertText for alert message.
      */
     public void alertMessage(String alertType, String alertText) {
         switch (alertType) {
@@ -325,8 +324,8 @@ public class AppointmentScreenController implements Initializable {
     /**
      * appointmentReportsButtonAction method to go to the reports page and view reports.
      *
-     * @throws Exception
-     * @param actionEvent
+     * @throws IOException when reports does not show.
+     * @param actionEvent for reports.
      */
     public void appointmentReportsButtonAction(ActionEvent actionEvent) throws IOException {
         showScreen(actionEvent, "view/ReportScreenView.fxml", "Reports");
@@ -335,7 +334,8 @@ public class AppointmentScreenController implements Initializable {
     /**
      * appointmentModifyButtonAction method to modify a selected appointment.
      *
-     * @param actionEvent
+     * @throws IOException when appointment does not modify.
+     * @param actionEvent for modify.
      */
     public void appointmentModifyButtonAction(ActionEvent actionEvent) throws IOException {
         selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
@@ -352,7 +352,8 @@ public class AppointmentScreenController implements Initializable {
     /**
      * appointmentAddButtonAction method to add an appointment.
      *
-     * @param actionEvent
+     * @throws IOException when appointment does not add.
+     * @param actionEvent for add.
      */
     public void appointmentAddButtonAction(ActionEvent actionEvent) throws IOException {
         showScreen(actionEvent, "view/AddAppointmentView.fxml", "Add Appointment");
@@ -370,7 +371,7 @@ public class AppointmentScreenController implements Initializable {
     /**
      * appointmentDeleteButtonAction method to delete a selected appointment.
      *
-     * @param actionEvent
+     * @param actionEvent for delete.
      */
     public void appointmentDeleteButtonAction(ActionEvent actionEvent) throws Exception {
         selectedAppointment = appointmentTableView.getSelectionModel().getSelectedItem();
@@ -413,7 +414,7 @@ public class AppointmentScreenController implements Initializable {
     /**
      * appointmentBackButtonAction method to go to the main menu of the application.
      *
-     * @param actionEvent
+     * @param actionEvent for back.
      */
     public void appointmentsBackButtonAction(ActionEvent actionEvent) throws IOException {
         showScreen(actionEvent, "view/MainScreenView.fxml", "Scheduling Desktop Application");
@@ -422,7 +423,7 @@ public class AppointmentScreenController implements Initializable {
     /**
      * allAppointmentsRadioButtonAction method to exit the application.
      *
-     * @param actionEvent
+     * @param actionEvent for logout.
      */
     public void appointmentsLogoutButtonAction(ActionEvent actionEvent) {
         System.exit(0);

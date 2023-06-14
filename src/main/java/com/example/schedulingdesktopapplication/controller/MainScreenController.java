@@ -78,10 +78,10 @@ public class MainScreenController implements Initializable {
     /**
      * showScreen method that allows another screen to be shown.
      *
-     * @throws Exception
-     * @param actionEvent
-     * @param viewPath
-     * @param title
+     * @throws IOException when screen does not show.
+     * @param actionEvent for screen.
+     * @param viewPath for view file
+     * @param title for screen title.
      */
     public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
@@ -95,8 +95,8 @@ public class MainScreenController implements Initializable {
     /**
      * alertMessage method that shows an alert message and text.
      *
-     * @param alertType
-     * @param alertText
+     * @param alertType for alert type.
+     * @param alertText for alert message.
      */
     public void alertMessage(String alertType, String alertText) {
         switch (alertType) {
@@ -130,7 +130,8 @@ public class MainScreenController implements Initializable {
     /**
      * mainCustomersButtonAction method to go to the customers page and view customers.
      *
-     * @param actionEvent
+     * @throws IOException when customers button does not work.
+     * @param actionEvent for customers.
      */
     public void mainCustomersButtonAction(ActionEvent actionEvent) throws IOException {
         showScreen(actionEvent, "view/CustomerScreenView.fxml", "Customers");
@@ -139,7 +140,8 @@ public class MainScreenController implements Initializable {
     /**
      * mainAppointmentsButtonAction method to go to the appointments page and view appointments.
      *
-     * @param actionEvent
+     * @throws IOException when appointments button does not work.
+     * @param actionEvent for appointments.
      */
     public void mainAppointmentsButtonAction(ActionEvent actionEvent) throws IOException {
         showScreen(actionEvent, "view/AppointmentScreenView.fxml", "Appointments");
@@ -148,7 +150,8 @@ public class MainScreenController implements Initializable {
     /**
      * mainReportsButtonAction method to go to the reports page and view reports.
      *
-     * @param actionEvent
+     * @throws IOException when reports button does not work.
+     * @param actionEvent for reports.
      */
     public void mainReportsButtonAction(ActionEvent actionEvent) throws IOException {
         showScreen(actionEvent, "view/ReportScreenView.fxml", "Reports");
@@ -157,7 +160,7 @@ public class MainScreenController implements Initializable {
     /**
      * mainLogoutButtonAction method to log out of the application.
      *
-     * @param actionEvent
+     * @param actionEvent for logout.
      */
     public void mainLogoutButtonAction(ActionEvent actionEvent) {
         System.exit(0);

@@ -16,8 +16,8 @@ public class ContactDAO {
      * Getter for contact's names in the contact database.
      *
      * @return ObservableList of all contacts.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<Contact> getContactNames() throws SQLException, Exception{
         ObservableList<Contact> contactNames = FXCollections.observableArrayList();
@@ -43,8 +43,8 @@ public class ContactDAO {
      * Getter for contact ID in the contact database.
      *
      * @return Integer of the contact.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static Integer getContactID(String contactName) throws SQLException, Exception{
         String sqlStatement = "SELECT Contact_ID, Contact_Name FROM contacts WHERE Contact_Name = ?";
@@ -69,8 +69,8 @@ public class ContactDAO {
      * Getter for all contacts in the contact database.
      *
      * @return ObservableList of all contacts.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<Contact> getAllContacts() throws SQLException, Exception{
         ObservableList<Contact> allContacts = FXCollections.observableArrayList();
@@ -100,8 +100,8 @@ public class ContactDAO {
      *
      * @param contactID
      * @return contact.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static Contact getContact(int contactID) throws SQLException, Exception{
         String sqlStatement = "SELECT * FROM contacts WHERE Contact_ID  = '" + contactID + "'";
@@ -130,8 +130,8 @@ public class ContactDAO {
      * @param contactName
      * @param email
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when contact does not insert.
      */
     public static int insertContact(int contactID, String contactName, String email) throws SQLException, Exception{
         String sqlStatement = "INSERT INTO contacts (Contact_ID, Contact_Name, Email) VALUES(?, ?, ?)";
@@ -157,8 +157,8 @@ public class ContactDAO {
      * @param email
      * @param contactID
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when contact does not update.
      */
     public static int updateContact(String contactName, String email, int contactID) throws SQLException, Exception{
         String sqlStatement = "UPDATE customers SET Contact_Name = ? AND SET Email = ? WHERE Contact_ID = ?";
@@ -182,8 +182,8 @@ public class ContactDAO {
      *
      * @param contactID
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when contact does not delete.
      */
     public static int deleteContact(int contactID) throws SQLException, Exception{
         String sqlStatement = "DELETE FROM contact WHERE Contact_ID = ?";

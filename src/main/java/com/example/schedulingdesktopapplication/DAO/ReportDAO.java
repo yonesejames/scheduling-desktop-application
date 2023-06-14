@@ -17,8 +17,8 @@ public class ReportDAO {
      * Getter for all appointment months and types in the appointment database.
      *
      * @return ObservableList of all appointments by months and types.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<Report> getAllAppointmentsByMonthAndType() throws SQLException, Exception{
         ObservableList<Report> allAppointments = FXCollections.observableArrayList();
@@ -49,8 +49,8 @@ public class ReportDAO {
      * Getter for total customers based on certain divisions.
      *
      * @return ObservableList of customers based on certain divisions.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<Report> getTotalCustomersByDivision() throws SQLException, Exception{
         ObservableList<Report> allAppointments = FXCollections.observableArrayList();

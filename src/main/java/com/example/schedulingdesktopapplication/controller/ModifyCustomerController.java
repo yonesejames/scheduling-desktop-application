@@ -81,6 +81,11 @@ public class ModifyCustomerController implements Initializable {
      */
     Customer selectedCustomer;
 
+    /**
+     * modifyCustomerCountryAction method that set items to the division combo box.
+     *
+     * @throws Exception when country does not display.
+     */
     public void modifyCustomerCountryAction() throws Exception {
         modifyCustomerDivisionComboBox.setItems(FirstLevelDivisionDAO.getDivision(String.valueOf(modifyCustomerCountryComboBox.getValue())));
         modifyCustomerDivisionComboBox.getSelectionModel().select(selectedCustomer.getDivisionName());
@@ -112,10 +117,10 @@ public class ModifyCustomerController implements Initializable {
     /**
      * showScreen method that allows another screen to be shown.
      *
-     * @throws Exception
-     * @param actionEvent
-     * @param viewPath
-     * @param title
+     * @throws IOException when screen does not show.
+     * @param actionEvent for screen.
+     * @param viewPath for view file
+     * @param title for screen title.
      */
     public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
@@ -129,8 +134,8 @@ public class ModifyCustomerController implements Initializable {
     /**
      * alertMessage method that shows an alert message and text.
      *
-     * @param alertType
-     * @param alertText
+     * @param alertType for alert type.
+     * @param alertText for alert message.
      */
     public void alertMessage(String alertType, String alertText) {
         switch (alertType) {
@@ -164,8 +169,8 @@ public class ModifyCustomerController implements Initializable {
     /**
      * modifyCustomerSaveButtonAction method to save the modified customer.
      *
-     * @throws Exception
-     * @param actionEvent
+     * @throws Exception when save button does not work.
+     * @param actionEvent for save.
      */
     public void modifyCustomerSaveButtonAction(ActionEvent actionEvent) throws Exception {
         int customerID = Integer.parseInt(modifyCustomerIDLabel.getText());
@@ -212,8 +217,8 @@ public class ModifyCustomerController implements Initializable {
     /**
      * modifyCustomerCancelButtonAction method revert back to the customer screen.
      *
-     * @throws Exception
-     * @param actionEvent
+     * @throws IOException when cancel button does not work.
+     * @param actionEvent for cancel.
      */
     public void modifyCustomerCancelButtonAction(ActionEvent actionEvent) throws IOException {
         showScreen(actionEvent, "view/CustomerScreenView.fxml", "Customers");
@@ -222,7 +227,7 @@ public class ModifyCustomerController implements Initializable {
     /**
      * modifyCustomerNameAction method for the customer's name.
      *
-     * @param actionEvent
+     * @param actionEvent for name.
      */
     public void modifyCustomerNameAction(ActionEvent actionEvent) {
     }
@@ -230,7 +235,7 @@ public class ModifyCustomerController implements Initializable {
     /**
      * modifyCustomerAddressAction method for the customer's address.
      *
-     * @param actionEvent
+     * @param actionEvent for address.
      */
     public void modifyCustomerAddressAction(ActionEvent actionEvent) {
     }
@@ -238,7 +243,7 @@ public class ModifyCustomerController implements Initializable {
     /**
      * modifyCustomerPhoneAction method for the customer's phone number.
      *
-     * @param actionEvent
+     * @param actionEvent for phone.
      */
     public void modifyCustomerPhoneAction(ActionEvent actionEvent) {
     }
@@ -246,7 +251,7 @@ public class ModifyCustomerController implements Initializable {
     /**
      * modifyCustomerDivisionAction method for the customer's division.
      *
-     * @param actionEvent
+     * @param actionEvent for division.
      */
     public void modifyCustomerDivisionAction(ActionEvent actionEvent) {
     }
@@ -254,7 +259,7 @@ public class ModifyCustomerController implements Initializable {
     /**
      * modifyCustomerPostalCodeAction method for the customer's postal code.
      *
-     * @param actionEvent
+     * @param actionEvent for postal code.
      */
     public void modifyCustomerPostalCodeAction(ActionEvent actionEvent) {
     }

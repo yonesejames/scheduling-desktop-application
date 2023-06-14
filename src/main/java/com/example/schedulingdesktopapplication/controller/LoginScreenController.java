@@ -117,10 +117,10 @@ public class LoginScreenController implements Initializable {
     /**
      * showScreen method that allows another screen to be shown.
      *
-     * @throws Exception
-     * @param actionEvent
-     * @param viewPath
-     * @param title
+     * @throws IOException when screen does not show.
+     * @param actionEvent for screen.
+     * @param viewPath for view file
+     * @param title for screen title.
      */
     public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
@@ -134,8 +134,8 @@ public class LoginScreenController implements Initializable {
     /**
      * alertMessage method that shows an alert message and text.
      *
-     * @param alertType
-     * @param alertText
+     * @param alertType for alert type.
+     * @param alertText for alert message.
      */
     public void alertMessage(String alertType, String alertText) {
         switch (alertType) {
@@ -169,7 +169,7 @@ public class LoginScreenController implements Initializable {
     /**
      * loginButtonAction method to log into the application.
      *
-     * @param actionEvent
+     * @param actionEvent for login.
      */
     public void loginButtonAction(ActionEvent actionEvent) throws Exception {
         username = loginUsernameTextField.getText();
@@ -197,14 +197,14 @@ public class LoginScreenController implements Initializable {
     /**
      * loginExitButtonAction method to exit the application.
      *
-     * @param actionEvent
+     * @param actionEvent for exit.
      */
     public void loginExitButtonAction(ActionEvent actionEvent) { System.exit(0); }
 
     /**
      * loginUsernameAction method for the username field.
      *
-     * @param actionEvent
+     * @param actionEvent for username.
      */
     public void loginUsernameAction(ActionEvent actionEvent) {
     }
@@ -212,7 +212,7 @@ public class LoginScreenController implements Initializable {
     /**
      * loginPasswordAction method for the password field.
      *
-     * @param actionEvent
+     * @param actionEvent for password.
      */
     public void loginPasswordAction(ActionEvent actionEvent) {
     }

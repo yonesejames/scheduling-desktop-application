@@ -147,10 +147,10 @@ public class CustomerScreenController implements Initializable {
     /**
      * showScreen method that allows another screen to be shown.
      *
-     * @throws Exception
-     * @param actionEvent
-     * @param viewPath
-     * @param title
+     * @throws IOException when screen does not show.
+     * @param actionEvent for screen.
+     * @param viewPath for view file
+     * @param title for screen title.
      */
     public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
@@ -164,8 +164,8 @@ public class CustomerScreenController implements Initializable {
     /**
      * alertMessage method that shows an alert message and text.
      *
-     * @param alertType
-     * @param alertText
+     * @param alertType for alert type.
+     * @param alertText for alert message.
      */
     public void alertMessage(String alertType, String alertText) {
         switch (alertType) {
@@ -199,8 +199,8 @@ public class CustomerScreenController implements Initializable {
     /**
      * customerReportsButtonAction method to go to the reports page and view reports.
      *
-     * @throws Exception
-     * @param actionEvent
+     * @throws IOException when reports button does not work.
+     * @param actionEvent for reports.
      */
     public void customerReportsButtonAction(ActionEvent actionEvent) throws IOException {
         showScreen(actionEvent, "view/ReportScreenView.fxml", "Reports");
@@ -209,8 +209,8 @@ public class CustomerScreenController implements Initializable {
     /**
      * customerModifyButtonAction method to go to the modify customer page and modify the customer.
      *
-     * @throws Exception
-     * @param actionEvent
+     * @throws IOException when customer does not modify.
+     * @param actionEvent for modify.
      */
     public void customerModifyButtonAction(ActionEvent actionEvent) throws IOException {
         selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
@@ -227,8 +227,8 @@ public class CustomerScreenController implements Initializable {
     /**
      * customerAddButtonAction method to go to the add customer page and add a customer.
      *
-     * @throws Exception
-     * @param actionEvent
+     * @throws IOException when customer does not add.
+     * @param actionEvent for add.
      */
     public void customerAddButtonAction(ActionEvent actionEvent) throws IOException {
         showScreen(actionEvent, "view/AddCustomerView.fxml", "Add Customer");
@@ -246,8 +246,8 @@ public class CustomerScreenController implements Initializable {
     /**
      * customerDeleteButtonAction method to delete a selected customer.
      *
-     * @throws Exception
-     * @param actionEvent
+     * @throws Exception when delete button does not work.
+     * @param actionEvent for delete.
      */
     public void customerDeleteButtonAction(ActionEvent actionEvent) throws Exception {
         selectedCustomer = customerTableView.getSelectionModel().getSelectedItem();
@@ -286,8 +286,8 @@ public class CustomerScreenController implements Initializable {
     /**
      * customerBackButtonAction method to go to the main menu of the application.
      *
-     * @throws Exception
-     * @param actionEvent
+     * @throws IOException when back button does not work.
+     * @param actionEvent for back.
      */
     public void customerBackButtonAction(ActionEvent actionEvent) throws IOException {
         showScreen(actionEvent, "view/MainScreenView.fxml", "Scheduling Desktop Application");
@@ -296,7 +296,7 @@ public class CustomerScreenController implements Initializable {
     /**
      * customerLogoutButtonAction method to logout of the application.
      *
-     * @param actionEvent
+     * @param actionEvent for logout.
      */
     public void customerLogoutButtonAction(ActionEvent actionEvent) {
         System.exit(0);

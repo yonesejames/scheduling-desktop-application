@@ -16,10 +16,10 @@ public class UserDAO {
     /**
      * Getter for user in the user database by userName.
      *
-     * @param username
+     * @param username for user.
      * @return user.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static User getUser(String username) throws SQLException, Exception{
         String sqlStatement = "SELECT * FROM users WHERE User_Name  = '" + username + "'";
@@ -44,10 +44,10 @@ public class UserDAO {
     /**
      * Getter for userID in the user database by userName.
      *
-     * @param username
+     * @param username for user.
      * @return user.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static Integer getUserID(String username) throws SQLException, Exception{
         String sqlStatement = "SELECT User_ID FROM users WHERE User_Name = ?";
@@ -72,8 +72,8 @@ public class UserDAO {
      * Getter for all users in the user database.
      *
      * @return ObservableList of all users.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static ObservableList<User> getAllUsers() throws SQLException, Exception{
         ObservableList<User> allUsers = FXCollections.observableArrayList();
@@ -102,11 +102,11 @@ public class UserDAO {
      * Method that validates if the user exists or not.
      * It will return the user if the user exists, but if not then it will return null.
      *
-     * @param userName
-     * @param password
+     * @param userName for user.
+     * @param password for user.
      * @return user or null.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when function does not work correctly.
      */
     public static Boolean validateUser(String userName, String password) throws SQLException, Exception{
         String sqlStatement = "SELECT * FROM users WHERE User_Name = '" + userName + "' AND Password = '" + password +"'";
@@ -132,12 +132,12 @@ public class UserDAO {
     /**
      * Method that inserts a user by userID, userName, and password.
      *
-     * @param userID
-     * @param userName
-     * @param password
+     * @param userID for user.
+     * @param userName for user.
+     * @param password for user.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when user does not insert.
      */
     public static int insertUser(int userID, String userName, String password) throws SQLException, Exception{
         String sqlStatement = "INSERT INTO USERS (User_ID, User_Name, Password) VALUES(?, ?, ?)";
@@ -159,12 +159,12 @@ public class UserDAO {
     /**
      * Method that updates the user in the user database by userName, and password.
      *
-     * @param userName
-     * @param password
-     * @param userID
+     * @param userName for user.
+     * @param password for user.
+     * @param userID for user.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when user does not update.
      */
     public static int updateUser(String userName, String password, int userID) throws SQLException, Exception{
         String sqlStatement = "UPDATE USERS SET User_Name = ? AND SET Password = ? WHERE User_ID = ?";
@@ -186,10 +186,10 @@ public class UserDAO {
     /**
      * Method that deletes a user in the user database by userID.
      *
-     * @param userID
+     * @param userID for user.
      * @return the number of rows affected by this change.
-     * @throws SQLException
-     * @throws Exception
+     * @throws SQLException when SQL does not query correctly.
+     * @throws Exception when user does not delete.
      */
     public static int deleteUser(int userID) throws SQLException, Exception{
         String sqlStatement = "DELETE FROM USERS WHERE User_ID = ?";
