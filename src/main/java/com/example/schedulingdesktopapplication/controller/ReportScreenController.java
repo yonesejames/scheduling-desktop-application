@@ -162,6 +162,12 @@ public class ReportScreenController implements Initializable {
      */
     private ObservableList<Report> allCustomerByDivisionReports = FXCollections.observableArrayList();
 
+    /**
+     * reportsSelectContactAction method that changes the main tableview to show appointments based on contact selected.
+     *
+     * @param actionEvent
+     * @throws Exception
+     */
     public void reportsSelectContactAction(ActionEvent actionEvent) throws Exception {
         String contactName = String.valueOf(reportsSelectContactComboBox.getSelectionModel().getSelectedItem());
         allAppointments = AppointmentDAO.getAppointmentsByContact(contactName);
@@ -217,17 +223,64 @@ public class ReportScreenController implements Initializable {
     }
 
     /**
+     * showScreen method that allows another screen to be shown.
+     *
+     * @throws Exception
+     * @param actionEvent
+     * @param viewPath
+     * @param title
+     */
+    public void showScreen(ActionEvent actionEvent, String viewPath, String title) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(viewPath));
+        Scene scene = new Scene(fxmlLoader.load());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /**
+     * alertMessage method that shows an alert message and text.
+     *
+     * @param alertType
+     * @param alertText
+     */
+    public void alertMessage(String alertType, String alertText) {
+        switch (alertType) {
+            case "Error":
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("ERROR");
+                errorAlert.setContentText(alertText);
+                errorAlert.showAndWait();
+                break;
+            case "Warning":
+                Alert warningAlert = new Alert(Alert.AlertType.WARNING);
+                warningAlert.setTitle("WARNING");
+                warningAlert.setContentText(alertText);
+                warningAlert.showAndWait();
+                break;
+            case "Confirmation":
+                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmationAlert.setTitle("CONFIRMATION");
+                confirmationAlert.setContentText(alertText);
+                confirmationAlert.showAndWait();
+                break;
+            case "Information":
+                Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
+                informationAlert.setTitle("INFORMATION");
+                informationAlert.setContentText(alertText);
+                informationAlert.showAndWait();
+                break;
+        }
+    }
+
+    /**
      * reportsBackButtonAction method to go back to main screen.
      *
      * @param actionEvent
      */
     public void reportsBackButtonAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/MainScreenView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Scheduling Desktop Application");
-        stage.setScene(scene);
-        stage.show();
+        showScreen(actionEvent, "view/MainScreenView.fxml", "Scheduling Desktop Application");
     }
 
     /**

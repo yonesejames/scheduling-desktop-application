@@ -20,6 +20,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.time.*;
 import java.util.ResourceBundle;
+import java.util.stream.IntStream;
 
 import static com.example.schedulingdesktopapplication.DAO.ContactDAO.getContactID;
 import static com.example.schedulingdesktopapplication.DAO.UserDAO.getUserID;
@@ -156,10 +157,21 @@ public class AddAppointmentController implements Initializable {
                 }
             }));
 
-            for(int i = 0; i < 24; i++) {
-                addAppointmentStartTimeComboBox.getItems().add(LocalTime.of(i, 0));
-                addAppointmentEndTimeComboBox.getItems().add(LocalTime.of(i, 0));
-            }
+//            for(int i = 0; i < 24; i++) {
+//                addAppointmentStartTimeComboBox.getItems().add(LocalTime.of(i, 0));
+//                addAppointmentEndTimeComboBox.getItems().add(LocalTime.of(i, 0));
+//            }
+            /**
+             * Lambda Expression that generates a stream of integers from 0 to 23, representing the hours in a day.
+             * Then, the forEach operation is used to iterate over each integer value (i), and within the lambda body,
+             * the addAppointmentStartTimeComboBox and addAppointmentEndTimeComboBox are populated
+             * with LocalTime values using LocalTime.of(i, 0).
+             */
+            IntStream.range(0, 24)
+                    .forEach(i -> {
+                        addAppointmentStartTimeComboBox.getItems().add(LocalTime.of(i, 0));
+                        addAppointmentEndTimeComboBox.getItems().add(LocalTime.of(i, 0));
+                    });
             addAppointmentCustomerIDComboBox.setItems(CustomerDAO.getCustomerIDs());
         } catch (Exception e) {
             e.printStackTrace();
@@ -208,6 +220,12 @@ public class AddAppointmentController implements Initializable {
                 confirmationAlert.setTitle("CONFIRMATION");
                 confirmationAlert.setContentText(alertText);
                 confirmationAlert.showAndWait();
+                break;
+            case "Information":
+                Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
+                informationAlert.setTitle("INFORMATION");
+                informationAlert.setContentText(alertText);
+                informationAlert.showAndWait();
                 break;
         }
     }

@@ -152,6 +152,12 @@ public class ModifyCustomerController implements Initializable {
                 confirmationAlert.setContentText(alertText);
                 confirmationAlert.showAndWait();
                 break;
+            case "Information":
+                Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
+                informationAlert.setTitle("INFORMATION");
+                informationAlert.setContentText(alertText);
+                informationAlert.showAndWait();
+                break;
         }
     }
 
@@ -189,15 +195,17 @@ public class ModifyCustomerController implements Initializable {
         else if (customerPostalCode.isBlank()) {
             alertMessage("Error", "PLEASE ENTER POSTAL CODE");
         }
+        else {
 
-        int customerUpdated = CustomerDAO.updateCustomer(customerName, customerAddress, customerPostalCode, customerPhone,
-                customerDivisionID, customerID);
+            int customerUpdated = CustomerDAO.updateCustomer(customerName, customerAddress, customerPostalCode, customerPhone,
+                    customerDivisionID, customerID);
 
-        if (customerUpdated != -1) {
-            alertMessage("Confirmation", "CUSTOMER HAS BEEN UPDATED");
-            showScreen(actionEvent, "view/CustomerScreenView.fxml", "Customers");
-        } else {
-            alertMessage("Error", "CUSTOMER HAS NOT BEEN UPDATED");
+            if (customerUpdated != -1) {
+                alertMessage("Confirmation", "CUSTOMER HAS BEEN UPDATED");
+                showScreen(actionEvent, "view/CustomerScreenView.fxml", "Customers");
+            } else {
+                alertMessage("Error", "CUSTOMER HAS NOT BEEN UPDATED");
+            }
         }
     }
 

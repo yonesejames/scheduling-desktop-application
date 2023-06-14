@@ -19,6 +19,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.time.*;
 import java.util.ResourceBundle;
+import java.util.stream.IntStream;
 
 import static com.example.schedulingdesktopapplication.DAO.ContactDAO.getContactID;
 import static com.example.schedulingdesktopapplication.DAO.UserDAO.getUserID;
@@ -141,6 +142,10 @@ public class ModifyAppointmentController implements Initializable {
         modifyAppointmentUserIDLabel.setText(String.valueOf(selectedAppointment.getUserID()));
 
         try {
+            /**
+             * Lambda Expression takes an argument picker and returns an instance of DateCell that
+             * represents a cell within the date picker's day cells while disabling days previous from today.
+             */
             modifyAppointmentContactComboBox.setItems(ContactDAO.getContactNames());
             modifyAppointmentStartDateDatePicker.setDayCellFactory((picker -> new DateCell() {
                 public void updateItem(LocalDate date, boolean empty) {
@@ -150,6 +155,11 @@ public class ModifyAppointmentController implements Initializable {
                     setDisable(empty || date.compareTo(today) < 0 );
                 }
             }));
+
+            /**
+             * Lambda Expression takes an argument picker and returns an instance of DateCell that
+             * represents a cell within the date picker's day cells while disabling days previous from today.
+             */
             modifyAppointmentEndDateDatePicker.setDayCellFactory((picker -> new DateCell() {
                 public void updateItem(LocalDate date, boolean empty) {
                     super.updateItem(date, empty);
@@ -158,10 +168,24 @@ public class ModifyAppointmentController implements Initializable {
                     setDisable(empty || date.compareTo(today) < 0 );
                 }
             }));
-            for(int i = 0; i < 24; i++) {
-                modifyAppointmentStartTimeComboBox.getItems().add(LocalTime.of(i, 0));
-                modifyAppointmentEndTimeComboBox.getItems().add(LocalTime.of(i, 0));
-            }
+
+//            for(int i = 0; i < 24; i++) {
+//                modifyAppointmentStartTimeComboBox.getItems().add(LocalTime.of(i, 0));
+//                modifyAppointmentEndTimeComboBox.getItems().add(LocalTime.of(i, 0));
+//            }
+
+            /**
+             * Lambda Expression that generates a stream of integers from 0 to 23, representing the hours in a day.
+             * Then, the forEach operation is used to iterate over each integer value (i), and within the lambda body,
+             * the addAppointmentStartTimeComboBox and addAppointmentEndTimeComboBox are populated
+             * with LocalTime values using LocalTime.of(i, 0).
+             */
+            IntStream.range(0, 24)
+                    .forEach(i -> {
+                        modifyAppointmentStartTimeComboBox.getItems().add(LocalTime.of(i, 0));
+                        modifyAppointmentEndTimeComboBox.getItems().add(LocalTime.of(i, 0));
+                    });
+
             modifyAppointmentCustomerIDComboBox.setItems(CustomerDAO.getCustomerIDs());
             modifyAppointmentContactComboBox.getSelectionModel().select(selectedAppointment.getContactName());
             modifyAppointmentCustomerIDComboBox.getSelectionModel().select(selectedAppointment.getCustomerID());

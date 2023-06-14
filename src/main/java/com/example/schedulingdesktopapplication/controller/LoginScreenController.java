@@ -157,6 +157,12 @@ public class LoginScreenController implements Initializable {
                 confirmationAlert.setContentText(alertText);
                 confirmationAlert.showAndWait();
                 break;
+            case "Information":
+                Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
+                informationAlert.setTitle("INFORMATION");
+                informationAlert.setContentText(alertText);
+                informationAlert.showAndWait();
+                break;
         }
     }
 

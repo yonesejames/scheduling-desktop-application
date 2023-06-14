@@ -147,6 +147,12 @@ public class AddCustomerController implements Initializable {
                 confirmationAlert.setContentText(alertText);
                 confirmationAlert.showAndWait();
                 break;
+            case "Information":
+                Alert informationAlert = new Alert(Alert.AlertType.INFORMATION);
+                informationAlert.setTitle("INFORMATION");
+                informationAlert.setContentText(alertText);
+                informationAlert.showAndWait();
+                break;
         }
     }
 
@@ -183,15 +189,17 @@ public class AddCustomerController implements Initializable {
         else if (customerPostalCode.isBlank()) {
             alertMessage("Error", "PLEASE ENTER POSTAL CODE");
         }
+        else {
 
-        int customerAdded = CustomerDAO.insertCustomer(customerName, customerAddress, customerPostalCode, customerPhone,
-                customerDivisionID);
+            int customerAdded = CustomerDAO.insertCustomer(customerName, customerAddress, customerPostalCode, customerPhone,
+                    customerDivisionID);
 
-        if (customerAdded != -1) {
-            alertMessage("Confirmation", "CUSTOMER HAS BEEN ADDED");
-            showScreen(actionEvent, "view/CustomerScreenView.fxml", "Customers");
-        } else {
-            alertMessage("Error", "CUSTOMER HAS NOT BEEN ADDED");
+            if (customerAdded != -1) {
+                alertMessage("Confirmation", "CUSTOMER HAS BEEN ADDED");
+                showScreen(actionEvent, "view/CustomerScreenView.fxml", "Customers");
+            } else {
+                alertMessage("Error", "CUSTOMER HAS NOT BEEN ADDED");
+            }
         }
     }
 
