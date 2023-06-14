@@ -63,7 +63,7 @@ public class AppointmentDAO {
      */
     public static ObservableList<Appointment> getWeeklyAppointments() throws SQLException, Exception {
         ObservableList<Appointment> weeklyAppointments = FXCollections.observableArrayList();
-        String sqlStatement = "SELECT * FROM appointments WHERE Start BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 7 DAY)";
+        String sqlStatement = "SELECT * FROM appointments WHERE Start BETWEEN now() - INTERVAL 7 day AND now()";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
         ResultSet result = preparedStatement.executeQuery();
 
@@ -99,7 +99,7 @@ public class AppointmentDAO {
      */
     public static ObservableList<Appointment> getMonthlyAppointments() throws SQLException, Exception {
         ObservableList<Appointment> monthlyAppointments = FXCollections.observableArrayList();
-        String sqlStatement = "SELECT * FROM appointments WHERE Start BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 30 DAY)";
+        String sqlStatement = "SELECT * FROM appointments WHERE Start BETWEEN now() - INTERVAL 30 day AND now()";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
         ResultSet result = preparedStatement.executeQuery();
 
