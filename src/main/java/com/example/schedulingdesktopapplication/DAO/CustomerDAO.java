@@ -149,7 +149,6 @@ public class CustomerDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
         return -1;
     }
 

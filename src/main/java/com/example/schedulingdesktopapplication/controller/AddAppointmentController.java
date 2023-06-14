@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -210,19 +211,14 @@ public class AddAppointmentController implements Initializable {
         LocalTime appointmentEndTime = addAppointmentEndTimeComboBox.getValue();
         Integer appointmentCustomerID = addAppointmentCustomerIDComboBox.getValue();
         String appointmentContact = String.valueOf(addAppointmentContactComboBox.getValue());
+        System.out.println(appointmentContact);
         Integer appointmentContactID = getContactID(appointmentContact);
+        System.out.println(appointmentContactID);
         Integer userID = getUserID(String.valueOf(LoginScreenController.username));
 
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-mm-dd");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime appointmentStartDateTime = LocalDateTime.of(appointmentStartDate, appointmentStartTime);
+        LocalDateTime appointmentEndDateTime = LocalDateTime.of(appointmentEndDate, appointmentEndTime);
 
-        LocalDateTime appointmentStartDateTime = null;
-        LocalDateTime appointmentEndDateTime = null;
-        appointmentStartDateTime = LocalDateTime.of(LocalDate.parse(String.valueOf(appointmentStartDate), dateFormatter),
-                LocalTime.parse(String.valueOf(appointmentStartTime),
-                timeFormatter));
-        System.out.println(appointmentStartDateTime);
-        appointmentEndDateTime = LocalDateTime.of(appointmentEndDate, appointmentEndTime);
 
         ZonedDateTime appointmentZoneStartDateTime = ZonedDateTime.of(appointmentStartDateTime, getZoneId());
         ZonedDateTime appointmentZoneEndDateTime = ZonedDateTime.of(appointmentEndDateTime, getZoneId());
@@ -231,15 +227,6 @@ public class AddAppointmentController implements Initializable {
         ZonedDateTime endBusinessHoursEST = ZonedDateTime.of(appointmentEndDate,LocalTime.of(22, 0),
                 ZoneId.of("America/New_York"));
 
-        ZonedDateTime appointmentUTCStartDateTime = appointmentZoneStartDateTime.withZoneSameInstant(ZoneOffset.UTC);
-        String stringUTCStart = String.valueOf(appointmentUTCStartDateTime);
-        ZonedDateTime startZDT = ZonedDateTime.parse(stringUTCStart, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-        String start = String.valueOf(startZDT);
-
-        ZonedDateTime appointmentUTCEndDateTime = appointmentZoneEndDateTime.withZoneSameInstant(ZoneOffset.UTC);
-        String stringUTCEnd = String.valueOf(appointmentUTCEndDateTime);
-        ZonedDateTime  endZDT = ZonedDateTime.parse(stringUTCEnd, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-        String end = String.valueOf(endZDT);
 
         if (appointmentTitle.isBlank()) {
             alertMessage("Error", "PLEASE ENTER TITLE");
@@ -272,8 +259,8 @@ public class AddAppointmentController implements Initializable {
         String createdBy = String.valueOf(LoginScreenController.username);
 
         int appointmentAdded = AppointmentDAO.insertAppointment(appointmentTitle, appointmentDescription, appointmentLocation,
-                appointmentType, start, end, createdBy, createdBy, appointmentContactID,
-                userID, appointmentCustomerID);
+                appointmentType, Timestamp.valueOf(appointmentStartDateTime), Timestamp.valueOf(appointmentEndDateTime),
+                createdBy, createdBy, appointmentContactID, userID, appointmentCustomerID);
 
         if (appointmentAdded != -1) {
             alertMessage("Confirmation", "APPOINTMENT HAS BEEN ADDED");
@@ -297,27 +284,78 @@ public class AddAppointmentController implements Initializable {
         stage.show();
     }
 
+    /**
+     * addAppointmentTitleAction method for the appointment's title.
+     *
+     * @param actionEvent
+     */
     public void addAppointmentTitleAction(ActionEvent actionEvent) {
     }
 
+    /**
+     * addAppointmentTypeAction method for the appointment's type.
+     *
+     * @param actionEvent
+     */
     public void addAppointmentTypeAction(ActionEvent actionEvent) {
     }
 
+    /**
+     * modifyAppointmentDescriptionAction method for the appointment's description.
+     *
+     * @param actionEvent
+     */
     public void addAppointmentDescriptionAction(ActionEvent actionEvent) {
     }
 
+    /**
+     * addAppointmentLocationAction method for the appointment's location.
+     *
+     * @param actionEvent
+     */
     public void addAppointmentLocationAction(ActionEvent actionEvent) {
     }
 
+    /**
+     * addAppointmentStartTime method for appointment's start time.
+     *
+     * @param actionEvent
+     */
     public void addAppointmentStartTime(ActionEvent actionEvent) {
     }
 
+    /**
+     * modifyAppointmentEndTimeAction method for appointment's end time.
+     *
+     * @param actionEvent
+     */
     public void addAppointmentEndTimeAction(ActionEvent actionEvent) {
     }
 
+    /**
+     * modifyAppointmentStartDateDatePickerAction method for the appointment's start date picker.
+     *
+     * @param actionEvent
+     */
     public void addAppointmentStartDateAction(ActionEvent actionEvent) {
     }
 
+    /**
+     * modifyAppointmentEndDateDatePickerAction method for the appointment's end date picker.
+     *
+     * @param actionEvent
+     */
     public void addAppointmentEndDateAction(ActionEvent actionEvent) {
+    }
+
+    /**
+     * modifyAppointmentContactAction method for appointment's contact.
+     *
+     * @param actionEvent
+     */
+    public void addAppointmentContactAction(ActionEvent actionEvent) {
+    }
+
+    public void addAppointmentCustomerIDAction(ActionEvent actionEvent) {
     }
 }

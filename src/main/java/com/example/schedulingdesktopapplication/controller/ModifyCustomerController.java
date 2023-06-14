@@ -190,14 +190,14 @@ public class ModifyCustomerController implements Initializable {
             alertMessage("Error", "PLEASE ENTER POSTAL CODE");
         }
 
-        int customerAdded = CustomerDAO.updateCustomer(customerName, customerAddress, customerPostalCode, customerPhone,
+        int customerUpdated = CustomerDAO.updateCustomer(customerName, customerAddress, customerPostalCode, customerPhone,
                 customerDivisionID, customerID);
 
-        if (customerAdded != -1) {
+        if (customerUpdated != -1) {
             alertMessage("Confirmation", "CUSTOMER HAS BEEN UPDATED");
             showScreen(actionEvent, "view/CustomerScreenView.fxml", "Customers");
         } else {
-            alertMessage("Error", "CUSTOMER HAS NOT BEEN ADDED");
+            alertMessage("Error", "CUSTOMER HAS NOT BEEN UPDATED");
         }
     }
 

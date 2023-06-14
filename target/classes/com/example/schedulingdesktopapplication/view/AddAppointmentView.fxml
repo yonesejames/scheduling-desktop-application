@@ -25,9 +25,9 @@
       <TextField fx:id="addAppointmentDescriptionTextField" layoutX="237.0" layoutY="234.0" onAction="#addAppointmentDescriptionAction" prefHeight="25.0" prefWidth="185.0" />
       <TextField fx:id="addAppointmentLocationTextField" layoutX="237.0" layoutY="264.0" onAction="#addAppointmentLocationAction" prefHeight="25.0" prefWidth="185.0" />
       <ComboBox fx:id="addAppointmentStartTimeComboBox" layoutX="237.0" layoutY="354.0" onAction="#addAppointmentStartTime" prefHeight="25.0" prefWidth="185.0" />
-      <ComboBox fx:id="addAppointmentContactComboBox" layoutX="237.0" layoutY="474.0" prefHeight="25.0" prefWidth="185.0" />
+      <ComboBox fx:id="addAppointmentContactComboBox" layoutX="237.0" layoutY="474.0" onAction="#addAppointmentContactAction" prefHeight="25.0" prefWidth="185.0" />
       <Label fx:id="addAppointmentUserIDLabel" layoutX="237.0" layoutY="444.0" prefHeight="25.0" prefWidth="185.0" />
-      <ComboBox fx:id="addAppointmentCustomerIDComboBox" layoutX="237.0" layoutY="414.0" prefHeight="25.0" prefWidth="185.0" />
+      <ComboBox fx:id="addAppointmentCustomerIDComboBox" layoutX="237.0" layoutY="414.0" onAction="#addAppointmentCustomerIDAction" prefHeight="25.0" prefWidth="185.0" />
       <ComboBox fx:id="addAppointmentEndTimeComboBox" layoutX="237.0" layoutY="384.0" onAction="#addAppointmentEndTimeAction" prefHeight="25.0" prefWidth="185.0" />
       <DatePicker fx:id="addAppointmentStartDateDatePicker" layoutX="237.0" layoutY="294.0" onAction="#addAppointmentStartDateAction" prefHeight="25.0" prefWidth="185.0" />
       <DatePicker fx:id="addAppointmentEndDateDatePicker" layoutX="237.0" layoutY="324.0" onAction="#addAppointmentEndDateAction" prefHeight="25.0" prefWidth="185.0" />

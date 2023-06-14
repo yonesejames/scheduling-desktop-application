@@ -1,4 +1,5 @@
 package com.example.schedulingdesktopapplication.controller;
+import com.example.schedulingdesktopapplication.DAO.AppointmentDAO;
 import com.example.schedulingdesktopapplication.DAO.ContactDAO;
 import com.example.schedulingdesktopapplication.DAO.CountryDAO;
 import com.example.schedulingdesktopapplication.DAO.CustomerDAO;
@@ -15,9 +16,13 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.sql.Timestamp;
+import java.time.*;
 import java.util.ResourceBundle;
+
+import static com.example.schedulingdesktopapplication.DAO.ContactDAO.getContactID;
+import static com.example.schedulingdesktopapplication.DAO.UserDAO.getUserID;
+import static com.example.schedulingdesktopapplication.model.Logger.getZoneId;
 
 /**
  * Controller class that edits the appointments in the application.
@@ -77,7 +82,7 @@ public class ModifyAppointmentController implements Initializable {
      * FXML combo box variable to select a customer ID for the appointment.
      */
     @FXML
-    public ComboBox modifyAppointmentCustomerIDComboBox;
+    public ComboBox<Integer> modifyAppointmentCustomerIDComboBox;
 
     /**
      * FXML combo box variable to select an end time for the appointment.
@@ -129,7 +134,7 @@ public class ModifyAppointmentController implements Initializable {
         modifyAppointmentDescriptionTextField.setText(selectedAppointment.getDescription());
         modifyAppointmentLocationTextField.setText(selectedAppointment.getLocation());
         modifyAppointmentUserIDLabel.setText(String.valueOf(selectedAppointment.getUserID()));
-        System.out.println(selectedAppointment.getUserID());
+
         try {
             modifyAppointmentContactComboBox.setItems(ContactDAO.getContactNames());
             modifyAppointmentStartDateDatePicker.setDayCellFactory((picker -> new DateCell() {
@@ -153,36 +158,16 @@ public class ModifyAppointmentController implements Initializable {
                 modifyAppointmentEndTimeComboBox.getItems().add(LocalTime.of(i, 0));
             }
             modifyAppointmentCustomerIDComboBox.setItems(CustomerDAO.getCustomerIDs());
+            modifyAppointmentContactComboBox.getSelectionModel().select(selectedAppointment.getContactName());
+            modifyAppointmentCustomerIDComboBox.getSelectionModel().select(selectedAppointment.getCustomerID());
+            modifyAppointmentStartDateDatePicker.setValue(selectedAppointment.getEndDateTime().toLocalDateTime().toLocalDate());
+            modifyAppointmentStartTimeComboBox.getSelectionModel().select(selectedAppointment.getStartDateTime().toLocalDateTime().toLocalTime());
+            modifyAppointmentEndDateDatePicker.setValue(selectedAppointment.getEndDateTime().toLocalDateTime().toLocalDate());
+            modifyAppointmentEndTimeComboBox.getSelectionModel().select(selectedAppointment.getEndDateTime().toLocalDateTime().toLocalTime());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        modifyAppointmentContactComboBox.getSelectionModel().select(selectedAppointment.getContactID());
-        modifyAppointmentCustomerIDComboBox.getSelectionModel().select(selectedAppointment.getCustomerID());
-
-    }
-
-    /**
-     * modifyAppointmentSaveButtonAction method to save the modified appointment.
-     *
-     * @param actionEvent
-     */
-    public void modifyAppointmentSaveButtonAction(ActionEvent actionEvent) {
-    }
-
-    /**
-     * modifyAppointmentCancelButtonAction method to revert back to the appointment screen.
-     *
-     * @param actionEvent
-     */
-    public void modifyAppointmentCancelButtonAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/AppointmentScreenView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setTitle("Appointments");
-        stage.setScene(scene);
-        stage.show();
     }
 
     /**
@@ -232,11 +217,84 @@ public class ModifyAppointmentController implements Initializable {
     }
 
     /**
-     * modifyAppointmentIDTextFieldAction method for the appointment's ID.
+     * modifyAppointmentSaveButtonAction method to save the modified appointment.
      *
      * @param actionEvent
      */
-    public void modifyAppointmentIDTextFieldAction(ActionEvent actionEvent) {
+    public void modifyAppointmentSaveButtonAction(ActionEvent actionEvent) throws Exception {
+        String appointmentTitle = modifyAppointmentTitleTextField.getText();
+        String appointmentType = modifyAppointmentTypeTextField.getText();
+        String appointmentDescription = modifyAppointmentDescriptionTextField.getText();
+        String appointmentLocation = modifyAppointmentLocationTextField.getText();
+        LocalDate appointmentStartDate = modifyAppointmentStartDateDatePicker.getValue();
+        LocalDate appointmentEndDate = modifyAppointmentEndDateDatePicker.getValue();
+        LocalTime appointmentStartTime = modifyAppointmentStartTimeComboBox.getValue();
+        LocalTime appointmentEndTime = modifyAppointmentEndTimeComboBox.getValue();
+        Integer appointmentCustomerID = modifyAppointmentCustomerIDComboBox.getValue();
+        String appointmentContact = String.valueOf(modifyAppointmentContactComboBox.getValue());
+        Integer appointmentContactID = getContactID(appointmentContact);
+        Integer userID = getUserID(String.valueOf(LoginScreenController.username));
+        Integer appointmentID = selectedAppointment.getAppointmentID();
+
+        LocalDateTime appointmentStartDateTime = LocalDateTime.of(appointmentStartDate, appointmentStartTime);
+        LocalDateTime appointmentEndDateTime = LocalDateTime.of(appointmentEndDate, appointmentEndTime);
+
+
+        ZonedDateTime appointmentZoneStartDateTime = ZonedDateTime.of(appointmentStartDateTime, getZoneId());
+        ZonedDateTime appointmentZoneEndDateTime = ZonedDateTime.of(appointmentEndDateTime, getZoneId());
+        ZonedDateTime startBusinessHoursEST = ZonedDateTime.of(appointmentStartDate, LocalTime.of(8,0),
+                ZoneId.of("America/New_York"));
+        ZonedDateTime endBusinessHoursEST = ZonedDateTime.of(appointmentEndDate,LocalTime.of(22, 0),
+                ZoneId.of("America/New_York"));
+
+
+        if (appointmentTitle.isBlank()) {
+            alertMessage("Error", "PLEASE ENTER TITLE");
+        }
+        else if (appointmentType.isBlank()) {
+            alertMessage("Error", "PLEASE ENTER TYPE");
+        }
+        else if (appointmentLocation.isBlank()) {
+            alertMessage("Error", "PLEASE ENTER LOCATION");
+        }
+        else if (appointmentEndDate.isBefore(appointmentStartDate)) {
+            alertMessage("Error", "END DATE CANNOT BE BEFORE START DATE");
+        }
+        else if (appointmentEndTime.isBefore(appointmentStartTime)) {
+            alertMessage("Error", "END TIME CANNOT BE BEFORE START TIME");
+        }
+        else if (appointmentContact.isBlank()) {
+            alertMessage("Error", "PLEASE ENTER CONTACT");
+        }
+        else if (appointmentZoneStartDateTime.isBefore(startBusinessHoursEST)) {
+            alertMessage("Error", "PLEASE ENTER TIME BETWEEN 8 AM - 10 PM EST.");
+        }
+        else if (appointmentZoneEndDateTime.isAfter(endBusinessHoursEST)) {
+            alertMessage("Error", "PLEASE ENTER TIME BETWEEN 8 AM - 10 PM EST.");
+        }
+        else if (appointmentCustomerID == null) {
+            alertMessage("Error", "PLEASE ENTER CUSTOMER ID");
+        }
+
+        int appointmentUpdated = AppointmentDAO.updateAppointment(appointmentTitle, appointmentDescription, appointmentLocation,
+                appointmentType, Timestamp.valueOf(appointmentStartDateTime), Timestamp.valueOf(appointmentEndDateTime),
+                appointmentCustomerID, userID, appointmentContactID, appointmentID);
+
+        if (appointmentUpdated != -1) {
+            alertMessage("Confirmation", "APPOINTMENT HAS BEEN UPDATED");
+            showScreen(actionEvent, "view/AppointmentScreenView.fxml", "Appointments");
+        } else {
+            alertMessage("Error", "APPOINTMENT HAS NOT BEEN UPDATED");
+        }
+    }
+
+    /**
+     * modifyAppointmentCancelButtonAction method to revert back to the appointment screen.
+     *
+     * @param actionEvent
+     */
+    public void modifyAppointmentCancelButtonAction(ActionEvent actionEvent) throws IOException {
+        showScreen(actionEvent, "view/AppointmentScreenView.fxml", "Appointments");
     }
 
     /**
@@ -244,7 +302,7 @@ public class ModifyAppointmentController implements Initializable {
      *
      * @param actionEvent
      */
-    public void modifyAppointmentTitleTextFieldAction(ActionEvent actionEvent) {
+    public void modifyAppointmentTitleAction(ActionEvent actionEvent) {
     }
 
     /**
@@ -252,7 +310,7 @@ public class ModifyAppointmentController implements Initializable {
      *
      * @param actionEvent
      */
-    public void modifyAppointmentTypeTextFieldAction(ActionEvent actionEvent) {
+    public void modifyAppointmentTypeAction(ActionEvent actionEvent) {
     }
 
     /**
@@ -260,7 +318,7 @@ public class ModifyAppointmentController implements Initializable {
      *
      * @param actionEvent
      */
-    public void modifyAppointmentDescriptionTextFieldAction(ActionEvent actionEvent) {
+    public void modifyAppointmentDescriptionAction(ActionEvent actionEvent) {
     }
 
     /**
@@ -268,7 +326,7 @@ public class ModifyAppointmentController implements Initializable {
      *
      * @param actionEvent
      */
-    public void modifyAppointmentLocationTextFieldAction(ActionEvent actionEvent) {
+    public void modifyAppointmentLocationAction(ActionEvent actionEvent) {
     }
 
     /**
@@ -276,7 +334,7 @@ public class ModifyAppointmentController implements Initializable {
      *
      * @param actionEvent
      */
-    public void modifyAppointmentStartDateDatePickerAction(ActionEvent actionEvent) {
+    public void modifyAppointmentStartDateAction(ActionEvent actionEvent) {
     }
 
     /**
@@ -284,6 +342,38 @@ public class ModifyAppointmentController implements Initializable {
      *
      * @param actionEvent
      */
-    public void modifyAppointmentEndDateDatePickerAction(ActionEvent actionEvent) {
+    public void modifyAppointmentEndDateAction(ActionEvent actionEvent) {
+    }
+
+    /**
+     * modifyAppointmentStartTimeAction method for appointment's start time.
+     *
+     * @param actionEvent
+     */
+    public void modifyAppointmentStartTimeAction(ActionEvent actionEvent) {
+    }
+
+    /**
+     * modifyAppointmentContactAction method for appointment's contact.
+     *
+     * @param actionEvent
+     */
+    public void modifyAppointmentContactAction(ActionEvent actionEvent) {
+    }
+
+    /**
+     * modifyAppointmentCustomerIDAction method for appointment's customer ID.
+     *
+     * @param actionEvent
+     */
+    public void modifyAppointmentCustomerIDAction(ActionEvent actionEvent) {
+    }
+
+    /**
+     * modifyAppointmentEndTimeAction method for appointment's end time.
+     *
+     * @param actionEvent
+     */
+    public void modifyAppointmentEndTimeAction(ActionEvent actionEvent) {
     }
 }

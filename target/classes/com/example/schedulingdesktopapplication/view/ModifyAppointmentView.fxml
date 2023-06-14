@@ -20,17 +20,17 @@
         <Label layoutX="123.0" layoutY="448.0" text="User ID" />
         <Label layoutX="123.0" layoutY="478.0" text="Contact" />
         <Label fx:id="modifyAppointmentIDLabel" layoutX="237.0" layoutY="144.0" prefHeight="25.0" prefWidth="185.0" />
-        <TextField fx:id="modifyAppointmentTitleTextField" layoutX="237.0" layoutY="174.0" onAction="#modifyAppointmentTitleTextFieldAction" prefHeight="25.0" prefWidth="185.0" />
-        <TextField fx:id="modifyAppointmentTypeTextField" layoutX="237.0" layoutY="204.0" onAction="#modifyAppointmentTypeTextFieldAction" prefHeight="25.0" prefWidth="185.0" />
-        <TextField fx:id="modifyAppointmentDescriptionTextField" layoutX="237.0" layoutY="234.0" onAction="#modifyAppointmentDescriptionTextFieldAction" prefHeight="25.0" prefWidth="185.0" />
-        <TextField fx:id="modifyAppointmentLocationTextField" layoutX="237.0" layoutY="264.0" onAction="#modifyAppointmentLocationTextFieldAction" prefHeight="25.0" prefWidth="185.0" />
-        <ComboBox fx:id="modifyAppointmentStartTimeComboBox" layoutX="237.0" layoutY="354.0" prefHeight="25.0" prefWidth="185.0" />
-        <ComboBox fx:id="modifyAppointmentContactComboBox" layoutX="237.0" layoutY="474.0" prefHeight="25.0" prefWidth="185.0" />
+        <TextField fx:id="modifyAppointmentTitleTextField" layoutX="237.0" layoutY="174.0" onAction="#modifyAppointmentTitleAction" prefHeight="25.0" prefWidth="185.0" />
+        <TextField fx:id="modifyAppointmentTypeTextField" layoutX="237.0" layoutY="204.0" onAction="#modifyAppointmentTypeAction" prefHeight="25.0" prefWidth="185.0" />
+        <TextField fx:id="modifyAppointmentDescriptionTextField" layoutX="237.0" layoutY="234.0" onAction="#modifyAppointmentDescriptionAction" prefHeight="25.0" prefWidth="185.0" />
+        <TextField fx:id="modifyAppointmentLocationTextField" layoutX="237.0" layoutY="264.0" onAction="#modifyAppointmentLocationAction" prefHeight="25.0" prefWidth="185.0" />
+        <ComboBox fx:id="modifyAppointmentStartTimeComboBox" layoutX="237.0" layoutY="354.0" onAction="#modifyAppointmentStartTimeAction" prefHeight="25.0" prefWidth="185.0" />
+        <ComboBox fx:id="modifyAppointmentContactComboBox" layoutX="237.0" layoutY="474.0" onAction="#modifyAppointmentContactAction" prefHeight="25.0" prefWidth="185.0" />
         <Label fx:id="modifyAppointmentUserIDLabel" layoutX="237.0" layoutY="444.0" prefHeight="25.0" prefWidth="185.0" />
-        <ComboBox fx:id="modifyAppointmentCustomerIDComboBox" layoutX="237.0" layoutY="414.0" prefHeight="25.0" prefWidth="185.0" />
-        <ComboBox fx:id="modifyAppointmentEndTimeComboBox" layoutX="237.0" layoutY="384.0" prefHeight="25.0" prefWidth="185.0" />
-        <DatePicker fx:id="modifyAppointmentStartDateDatePicker" layoutX="237.0" layoutY="294.0" onAction="#modifyAppointmentStartDateDatePickerAction" prefHeight="25.0" prefWidth="185.0" />
-        <DatePicker fx:id="modifyAppointmentEndDateDatePicker" layoutX="237.0" layoutY="324.0" onAction="#modifyAppointmentEndDateDatePickerAction" prefHeight="25.0" prefWidth="185.0" />
+        <ComboBox fx:id="modifyAppointmentCustomerIDComboBox" layoutX="237.0" layoutY="414.0" onAction="#modifyAppointmentCustomerIDAction" prefHeight="25.0" prefWidth="185.0" />
+        <ComboBox fx:id="modifyAppointmentEndTimeComboBox" layoutX="237.0" layoutY="384.0" onAction="#modifyAppointmentEndTimeAction" prefHeight="25.0" prefWidth="185.0" />
+        <DatePicker fx:id="modifyAppointmentStartDateDatePicker" layoutX="237.0" layoutY="294.0" onAction="#modifyAppointmentStartDateAction" prefHeight="25.0" prefWidth="185.0" />
+        <DatePicker fx:id="modifyAppointmentEndDateDatePicker" layoutX="237.0" layoutY="324.0" onAction="#modifyAppointmentEndDateAction" prefHeight="25.0" prefWidth="185.0" />
         <Button fx:id="modifyAppointmentSaveButton" layoutX="460.0" layoutY="563.0" mnemonicParsing="false" onAction="#modifyAppointmentSaveButtonAction" text="Save" />
         <Button fx:id="modifyAppointmentCancelButton" layoutX="515.0" layoutY="563.0" mnemonicParsing="false" onAction="#modifyAppointmentCancelButtonAction" text="Cancel" />
     </children>

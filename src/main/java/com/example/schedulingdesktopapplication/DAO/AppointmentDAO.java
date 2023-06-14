@@ -1,4 +1,5 @@
 package com.example.schedulingdesktopapplication.DAO;
+import com.example.schedulingdesktopapplication.controller.LoginScreenController;
 import com.example.schedulingdesktopapplication.model.Appointment;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -146,7 +147,7 @@ public class AppointmentDAO {
      * @throws Exception
      */
     public static int insertAppointment(String title, String description, String location,
-                                        String type, String startDateTime, String endDateTime,
+                                        String type, Timestamp startDateTime, Timestamp endDateTime,
                                         String createdBy, String lastUpdatedBy, int customerID,
                                         int userID, int contactID) throws SQLException, Exception{
         String sqlStatement = "INSERT INTO appointments (Title, Description, Location, Type, Start, End, " +
@@ -159,8 +160,8 @@ public class AppointmentDAO {
             preparedStatement.setString(2, description);
             preparedStatement.setString(3, location);
             preparedStatement.setString(4, type);
-            preparedStatement.setString(5, startDateTime);
-            preparedStatement.setString(6, endDateTime);
+            preparedStatement.setTimestamp(5, startDateTime);
+            preparedStatement.setTimestamp(6, endDateTime);
             preparedStatement.setString(7, createdBy);
             preparedStatement.setString(8, lastUpdatedBy);
             preparedStatement.setInt(9, customerID);
@@ -186,10 +187,6 @@ public class AppointmentDAO {
      * @param type
      * @param startDateTime
      * @param endDateTime
-     * @param createDate
-     * @param createdBy
-     * @param lastUpdate
-     * @param lastUpdatedBy
      * @param customerID
      * @param userID
      * @param contactID
@@ -199,15 +196,14 @@ public class AppointmentDAO {
      * @throws Exception
      */
     public static int updateAppointment(String title, String description, String location,
-                                        String type, Timestamp startDateTime, Timestamp endDateTime, Timestamp createDate,
-                                        String createdBy, Timestamp lastUpdate, String lastUpdatedBy, int customerID,
+                                        String type, Timestamp startDateTime, Timestamp endDateTime, int customerID,
                                         int userID, int contactID, int appointmentID) throws SQLException, Exception{
-        JDBC.openConnection();
-        String sqlStatement = "UPDATE appointments SET Title = ? AND SET Description = ? AND SET Location = ? " +
-                "AND SET Type = ? AND SET Start = ? AND SET End = ? AND SET Create_Date = ? AND SET Created_By = ? " +
-                "AND SET Last_Update = ? AND SET Last_Updated_By = ? AND SET Customer_ID = ? AND SET User_ID = ?" +
-                "AND SET Contact_ID = ? WHERE Appointment_ID = ?";
+        String sqlStatement = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?, " +
+                "Last_Update = now(), Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
+
+        String lastUpdatedBy = String.valueOf(LoginScreenController.username);
+
         try {
             preparedStatement.setString(1, title);
             preparedStatement.setString(2, description);
@@ -215,22 +211,17 @@ public class AppointmentDAO {
             preparedStatement.setString(4, type);
             preparedStatement.setTimestamp(5, startDateTime);
             preparedStatement.setTimestamp(6, endDateTime);
-            preparedStatement.setTimestamp(7, createDate);
-            preparedStatement.setString(8, createdBy);
-            preparedStatement.setTimestamp(9, lastUpdate);
-            preparedStatement.setString(10, lastUpdatedBy);
-            preparedStatement.setInt(11, customerID);
-            preparedStatement.setInt(12, userID);
-            preparedStatement.setInt(13, contactID);
-            preparedStatement.setInt(14, appointmentID);
+            preparedStatement.setString(7, lastUpdatedBy);
+            preparedStatement.setInt(8, customerID);
+            preparedStatement.setInt(9, userID);
+            preparedStatement.setInt(10, contactID);
+            preparedStatement.setInt(11, appointmentID);
             int rowsAffected = preparedStatement.executeUpdate();
             return rowsAffected;
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return -1;
     }
 
@@ -243,7 +234,6 @@ public class AppointmentDAO {
      * @throws Exception
      */
     public static int deleteAppointment(int appointmentID) throws SQLException, Exception{
-        JDBC.openConnection();
         String sqlStatement = "DELETE FROM appointments WHERE Appointment_ID = ?";
         PreparedStatement preparedStatement = JDBC.connection.prepareStatement(sqlStatement);
         try {
@@ -254,8 +244,6 @@ public class AppointmentDAO {
         catch (SQLException e) {
             e.printStackTrace();
         }
-
-        JDBC.closeConnection();
         return -1;
     }
 
