@@ -241,7 +241,7 @@ public class AddAppointmentController implements Initializable {
      * @param appointmentEndDateTime updated appointment end date time.
      * @return true if there is a conflicted appointment and false if there is not a conflicted appointment.
      */
-    public Boolean checkConflictedAppointments(ObservableList<Appointment>conflictedAppointments,
+    public Boolean checkConflictedAppointments(ObservableList<Appointment>conflictedAppointments, String appointmentTitle,
                                                LocalDateTime appointmentStartDateTime, LocalDateTime appointmentEndDateTime) {
         if (conflictedAppointments.isEmpty()) {
             return false;
@@ -252,21 +252,24 @@ public class AddAppointmentController implements Initializable {
                 LocalDateTime possibleConflictAppointmentStart = possibleConflictAppointment.getStartDateTime().toLocalDateTime();
                 LocalDateTime possibleConflictAppointmentEnd = possibleConflictAppointment.getEndDateTime().toLocalDateTime();
 
-                if (possibleConflictAppointmentStart.isBefore(appointmentStartDateTime) &
-                        possibleConflictAppointmentEnd.isAfter(appointmentEndDateTime)) {
-                    return true;
-                }
-                if (possibleConflictAppointmentStart.isBefore(appointmentEndDateTime) &
-                        possibleConflictAppointmentStart.isAfter(appointmentStartDateTime)) {
-                    return true;
-                }
-                if (possibleConflictAppointmentEnd.isBefore(appointmentEndDateTime) &
-                        possibleConflictAppointmentEnd.isAfter(appointmentStartDateTime)) {
-                    return true;
-                }
-                if (possibleConflictAppointmentStart.isEqual(appointmentStartDateTime) ||
-                        possibleConflictAppointmentEnd.isEqual(appointmentEndDateTime)) {
-                    return true;
+                if (possibleConflictAppointment.getTitle() != appointmentTitle) {
+
+                    if (possibleConflictAppointmentStart.isBefore(appointmentStartDateTime) &
+                            possibleConflictAppointmentEnd.isAfter(appointmentEndDateTime)) {
+                        return true;
+                    }
+                    if (possibleConflictAppointmentStart.isBefore(appointmentEndDateTime) &
+                            possibleConflictAppointmentStart.isAfter(appointmentStartDateTime)) {
+                        return true;
+                    }
+                    if (possibleConflictAppointmentEnd.isBefore(appointmentEndDateTime) &
+                            possibleConflictAppointmentEnd.isAfter(appointmentStartDateTime)) {
+                        return true;
+                    }
+                    if (possibleConflictAppointmentStart.isEqual(appointmentStartDateTime) ||
+                            possibleConflictAppointmentEnd.isEqual(appointmentEndDateTime)) {
+                        return true;
+                    }
                 }
             }
         }
@@ -335,7 +338,8 @@ public class AddAppointmentController implements Initializable {
         else if (appointmentCustomerID == null) {
             alertMessage("Error", "PLEASE ENTER Customer ID");
         }
-        else if (checkConflictedAppointments(conflictedAppointments, appointmentStartDateTime, appointmentEndDateTime)) {
+        else if (checkConflictedAppointments(conflictedAppointments, appointmentTitle, appointmentStartDateTime,
+                appointmentEndDateTime)) {
             alertMessage("Error", "CONFLICTED APPOINTMENT");
         }
         else {
