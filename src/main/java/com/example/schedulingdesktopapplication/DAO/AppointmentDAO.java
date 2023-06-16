@@ -230,6 +230,7 @@ public class AppointmentDAO {
                 int userID = result.getInt("User_ID");
                 int contactID = result.getInt("Contact_ID");
                 String contactName = result.getString("Contact_Name");
+
                 Appointment appointment = new Appointment(appointmentID, appointmentTitle, appointmentDescription,
                         appointmentLocation, appointmentType, start, end, appointmentCustomerID, userID, contactID, contactName);
                 allAppointments.add(appointment);

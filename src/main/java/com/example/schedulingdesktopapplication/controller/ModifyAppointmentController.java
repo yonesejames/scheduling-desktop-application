@@ -144,6 +144,9 @@ public class ModifyAppointmentController implements Initializable {
             /**
              * Lambda Expression takes an argument picker and returns an instance of DateCell that
              * represents a cell within the date picker's day cells while disabling days previous from today.
+             *
+             * I used this lambda to better customize the functionality and behavior of the date picker component to
+             * schedule the appointment. It's simple and clear with this lambda expression.
              */
             modifyAppointmentContactComboBox.setItems(ContactDAO.getContactNames());
             modifyAppointmentStartDateDatePicker.setDayCellFactory((picker -> new DateCell() {
@@ -158,6 +161,9 @@ public class ModifyAppointmentController implements Initializable {
             /**
              * Lambda Expression takes an argument picker and returns an instance of DateCell that
              * represents a cell within the date picker's day cells while disabling days previous from today.
+             *
+             * I used this lambda to better customize the functionality and behavior of the date picker component to
+             * schedule the appointment. It's simple and clear with this lambda expression.
              */
             modifyAppointmentEndDateDatePicker.setDayCellFactory((picker -> new DateCell() {
                 public void updateItem(LocalDate date, boolean empty) {
@@ -168,16 +174,14 @@ public class ModifyAppointmentController implements Initializable {
                 }
             }));
 
-//            for(int i = 0; i < 24; i++) {
-//                modifyAppointmentStartTimeComboBox.getItems().add(LocalTime.of(i, 0));
-//                modifyAppointmentEndTimeComboBox.getItems().add(LocalTime.of(i, 0));
-//            }
-
             /**
              * Lambda Expression that generates a stream of integers from 0 to 23, representing the hours in a day.
              * Then, the forEach operation is used to iterate over each integer value (i), and within the lambda body,
              * the addAppointmentStartTimeComboBox and addAppointmentEndTimeComboBox are populated
              * with LocalTime values using LocalTime.of(i, 0).
+             *
+             * I used this lambda to add times to the time combo box instead of using a for loop because
+             * it's simple and clear with this lambda expression.
              */
             IntStream.range(0, 24)
                     .forEach(i -> {
@@ -245,6 +249,47 @@ public class ModifyAppointmentController implements Initializable {
     }
 
     /**
+     * checkConflictedAppointments method checks to see if possible conflicted appointments match the updated appointment.
+     *
+     * @param conflictedAppointments list of possible conflicted appointments.
+     * @param appointmentStartDateTime updated appointment start date time.
+     * @param appointmentEndDateTime updated appointment end date time.
+     * @return true if there is a conflicted appointment and false if there is not a conflicted appointment.
+     */
+    public Boolean checkConflictedAppointments(ObservableList<Appointment>conflictedAppointments,
+                                             LocalDateTime appointmentStartDateTime, LocalDateTime appointmentEndDateTime) {
+        if (conflictedAppointments.isEmpty()) {
+            return false;
+        }
+        else {
+                for (Appointment possibleConflictAppointment : conflictedAppointments) {
+
+                    LocalDateTime possibleConflictAppointmentStart = possibleConflictAppointment.getStartDateTime().toLocalDateTime();
+                    LocalDateTime possibleConflictAppointmentEnd = possibleConflictAppointment.getEndDateTime().toLocalDateTime();
+
+                    if (possibleConflictAppointmentStart.isBefore(appointmentStartDateTime) &
+                            possibleConflictAppointmentEnd.isAfter(appointmentEndDateTime)) {
+                        return true;
+                    }
+                    if (possibleConflictAppointmentStart.isBefore(appointmentEndDateTime) &
+                            possibleConflictAppointmentStart.isAfter(appointmentStartDateTime)) {
+                        return true;
+                    }
+                    if (possibleConflictAppointmentEnd.isBefore(appointmentEndDateTime) &
+                            possibleConflictAppointmentEnd.isAfter(appointmentStartDateTime)) {
+                        return true;
+                    }
+                    if (possibleConflictAppointmentStart.isEqual(appointmentStartDateTime) ||
+                            possibleConflictAppointmentEnd.isEqual(appointmentEndDateTime)) {
+                        return true;
+                    }
+                }
+            }
+
+        return false;
+    }
+
+    /**
      * modifyAppointmentSaveButtonAction method to save the modified appointment.
      *
      * @throws Exception when save button does not work.
@@ -306,7 +351,7 @@ public class ModifyAppointmentController implements Initializable {
         else if (appointmentCustomerID == null) {
             alertMessage("Error", "PLEASE ENTER CUSTOMER ID");
         }
-        else if (!conflictedAppointments.isEmpty()) {
+        else if (checkConflictedAppointments(conflictedAppointments, appointmentStartDateTime, appointmentEndDateTime)) {
             alertMessage("Error", "CONFLICTED APPOINTMENT");
         }
         else {

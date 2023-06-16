@@ -267,6 +267,7 @@ public class AppointmentScreenController implements Initializable {
         appointmentTableColumnUserID.setCellValueFactory(new PropertyValueFactory<>("userID"));
 
         weekMonthOrAll.selectToggle(allAppointmentsRadioButton);
+
     }
 
     /**
@@ -389,6 +390,13 @@ public class AppointmentScreenController implements Initializable {
             if (confirmationButton.isPresent() && confirmationButton.get() == ButtonType.OK)
             {
                 deleteAppointment(selectedAppointment.getAppointmentID());
+                String appointmentType = selectedAppointment.getType();
+                int appointmentID = selectedAppointment.getAppointmentID();
+
+                System.out.println(appointmentType);
+
+                alertMessage("Confirmation", "APPOINTMENT ID: " + appointmentID + " | APPOINTMENT TYPE: " +
+                        appointmentType + " HAS BEEN DELETED");
 
                 allAppointments = getAllAppointments();
                 appointmentTableView.setItems(allAppointments);

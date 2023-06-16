@@ -101,7 +101,7 @@ public class LoginScreenController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loginTimeZoneLabel2.setText(String.valueOf(ZoneId.systemDefault()));
+
 
         ResourceBundle rb = ResourceBundle.getBundle("Natural", Locale.getDefault());
         loginTitleLabel.setText(rb.getString("title"));
@@ -110,7 +110,7 @@ public class LoginScreenController implements Initializable {
         loginButton.setText(rb.getString("login"));
         loginExitButton.setText(rb.getString("exit"));
         loginTimeZoneLabel1.setText(rb.getString("timezone"));
-        loginTimeZoneLabel2.setText((rb.getString("timezonelabel")));
+        loginTimeZoneLabel2.setText(String.valueOf(ZoneId.systemDefault()));
         loginLanguageLabel.setText(rb.getString("language"));
     }
 
@@ -184,8 +184,15 @@ public class LoginScreenController implements Initializable {
             }
             else
             {
-                alertMessage("Error", "USER DOES NOT EXIST");
-                LoginActivity.getUserActivity(username, false);
+                if (loginLanguageLabel.getText() == "English" )
+                {
+                    alertMessage("Error", "NAME AND/OR PASSWORD DOES NOT EXIST");
+                    LoginActivity.getUserActivity(username, false);
+                } else {
+                    alertMessage("Error", "Nom d'utilisateur et/ou mot de passe incorrect");
+                    LoginActivity.getUserActivity(username, false);
+                }
+
             }
         }
         catch (SQLException e)
