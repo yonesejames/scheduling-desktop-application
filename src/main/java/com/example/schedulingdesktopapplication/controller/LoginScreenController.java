@@ -92,6 +92,12 @@ public class LoginScreenController implements Initializable {
      */
     static public String password;
 
+    /**
+     * FXML label variable for location.
+     */
+    @FXML
+    public Label loginTimeZoneLocationLabel;
+
 
     /**
      * Initialize method for the LoginScreenController to initialize the stage and items.
@@ -102,7 +108,6 @@ public class LoginScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
         ResourceBundle rb = ResourceBundle.getBundle("Natural", Locale.getDefault());
         loginTitleLabel.setText(rb.getString("title"));
         loginUsernameLabel.setText(rb.getString("username"));
@@ -112,6 +117,7 @@ public class LoginScreenController implements Initializable {
         loginTimeZoneLabel1.setText(rb.getString("timezone"));
         loginTimeZoneLabel2.setText(String.valueOf(ZoneId.systemDefault()));
         loginLanguageLabel.setText(rb.getString("language"));
+        loginTimeZoneLocationLabel.setText(rb.getString("location"));
     }
 
     /**
